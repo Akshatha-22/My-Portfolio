@@ -1,78 +1,171 @@
-h1{
-    text-align: left;
-    width: 100%;
-    font-size: 100px;
-    color: #C83EFA;   
-    line-height: normal;
- }
-h3{
-    text-align: left;
-    width: 100%;
-    font-size: 40px;
-    color: #FFFFFF; 
-    line-height: normal;  
- }
+:root {
+    --color-bg: #1E1014;
+    --color-surface: #2a1a20;
+    --color-primary: #CA3CFF;
+    --color-text: #CAFFD0;
+    --color-text-muted: #C9E4E7;
+    --color-subtle: #B4A0E5;
+    --color-border: rgba(180, 160, 229, 0.25);
+    --color-highlight: #CA3CFF;
 
-}
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Helvetica", "Arial";
-
-} 
-
-button{
-    background-color: #FFFFFF;
-    border: none;
-    color: #000000;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
-    font-family:"Lucida Console", "Courier New", monospace;
-    transition-duration: 0.4s;
-    
+    --nav-bg: rgba(30, 16, 20, 0.8);
+    --skill-pill-bg: #1E1014;
+    --skill-pill-border: rgba(180, 160, 229, 0.5);
+    --tech-tag-bg: rgba(180, 160, 229, 0.2);
+    --tech-tag-text: #B4A0E5;
+    --btn-primary-bg: #CA3CFF;
+    --btn-primary-text: #1E1014;
+    --btn-ghost-border: #B4A0E5;
+    --btn-ghost-text: #CAFFD0;
+    --about-card-bg: rgba(30, 16, 20, 0.5);
+    --input-bg: #1E1014;
+    --input-border: rgba(180, 160, 229, 0.5);
+    --drawer-bg: rgba(30, 16, 20, 0.95);
+    --contact-form-bg: #1E1014;
 }
 
-button:hover {
-    background-color: #000000;
-    color:#FFFFFF;
-    border: 2px solid #FFFFFF;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+[data-theme="light"] {
+    --color-bg: #EEC8E0;
+    --color-surface: #ddb0cc;
+    --color-primary: #392F5A;
+    --color-text: #392F5A;
+    --color-text-muted: #5a4a7a;
+    --color-subtle: #6ea892;
+    --color-border: rgba(168, 199, 187, 0.5);
+    --color-highlight: #F092DD;
+
+    --nav-bg: rgba(238, 200, 224, 0.85);
+    --skill-pill-bg: rgba(168, 199, 187, 0.3);
+    --skill-pill-border: #6ea892;
+    --tech-tag-bg: rgba(168, 199, 187, 0.4);
+    --tech-tag-text: #392F5A;
+    --btn-primary-bg: #392F5A;
+    --btn-primary-text: #FFAFF0;
+    --btn-ghost-border: #6ea892;
+    --btn-ghost-text: #392F5A;
+    --about-card-bg: rgba(238, 200, 224, 0.5);
+    --input-bg: rgba(255, 175, 240, 0.3);
+    --input-border: #6ea892;
+    --drawer-bg: rgba(238, 200, 224, 0.95);
+    --contact-form-bg: rgba(238, 200, 224, 0.5);
 }
 
-button:active {
-    background-color: #555555;
-    font-weight: bold;
-    color: rgb(255, 255, 255);
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
+html {
+    transition: background-color 400ms ease, color 400ms ease;
 }
 
-
-body{
-        background-color: #000000;
-        font-family: Arial, sans-serif;
-        margin: 20px;
+* {
+    transition: background-color 300ms ease, border-color 300ms ease, color 200ms ease;
 }
 
-img{
-    border-radius: 500px;
-    max-width: 100%;
-    height: auto;
-    align-items: center;
-    display: block;
-    margin:auto;
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text-muted);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }
 
- 
+/* Floating Animation */
+@keyframes float {
 
-p{
-    color: #000;
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
-a{
-    text-decoration: none;
+.animate-float {
+    animation: float 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes floatShape1 {
+
+    0%,
+    100% {
+        transform: translate(0px, 0px) scale(1);
+    }
+
+    50% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+}
+
+.animate-float-shape-1 {
+    animation: floatShape1 8s ease-in-out infinite;
+}
+
+@keyframes floatShape2 {
+
+    0%,
+    100% {
+        transform: translate(0px, 0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-40px, 40px) rotate(45deg);
+    }
+}
+
+.animate-float-shape-2 {
+    animation: floatShape2 12s ease-in-out infinite;
+}
+
+/* Fade/Slide Up Animation */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, visibility;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Staggered load for Hero */
+.hero-text-1 {
+    animation: slideUpFade 0.8s ease backwards 0.1s;
+}
+
+.hero-text-2 {
+    animation: slideUpFade 0.8s ease backwards 0.3s;
+}
+
+.hero-text-3 {
+    animation: slideUpFade 0.8s ease backwards 0.5s;
+}
+
+.hero-text-4 {
+    animation: slideUpFade 0.8s ease backwards 0.7s;
+}
+
+.hero-buttons {
+    animation: slideUpFade 0.8s ease backwards 0.9s;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom Scrollbar for Certifications on Mobile */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
