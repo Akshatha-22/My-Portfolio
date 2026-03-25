@@ -1,162 +1,886 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akshatha's Portfolio</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React & ReactDOM CDNs -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <!-- Babel for JSX -->
+    <title>Akshatha Dungi | Software Developer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- React & ReactDOM (UMD via CDN) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel Standalone for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <!-- Tailwind Customization from original style.css -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              brandPurple: '#C83EFA',
-              brandBlack: '#000000',
-              brandDark: '#1a1a1a',
-              brandGray: '#555555',
-              brandWhite: '#FFFFFF',
-            },
-            fontFamily: {
-              sans: ['"Helvetica"', '"Arial"', 'sans-serif'],
-              mono: ['"Lucida Console"', '"Courier New"', 'monospace'],
-            },
-            boxShadow: {
-              'glow': '0 0 10px rgba(255, 255, 255, 0.3)',
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mint: '#CAFFD0',
+                        powder: '#C9E4E7',
+                        lavender: '#B4A0E5',
+                        purple: '#CA3CFF',
+                        dark: '#1E1014',
+                    },
+                    fontFamily: {
+                        heading: ['"Space Grotesk"', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
             }
-          }
         }
-      }
     </script>
+    
     <style>
-      body {
-        margin: 0;
-        background-color: #000000;
-        color: #FFFFFF;
-      }
-      /* Custom Animations */
-      @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-      }
-      .animate-float {
-        animation: float 4s ease-in-out infinite;
-      }
+        body {
+            background-color: #1E1014;
+            color: #C9E4E7;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        
+        @keyframes floatShape1 {
+            0%, 100% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(30px, -50px) scale(1.1); }
+        }
+        .animate-float-shape-1 {
+            animation: floatShape1 8s ease-in-out infinite;
+        }
+
+        @keyframes floatShape2 {
+            0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+            50% { transform: translate(-40px, 40px) rotate(45deg); }
+        }
+        .animate-float-shape-2 {
+            animation: floatShape2 12s ease-in-out infinite;
+        }
+
+        /* Fade/Slide Up Animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+        
+        /* Staggered load for Hero */
+        .hero-text-1 { animation: slideUpFade 0.8s ease backwards 0.1s; }
+        .hero-text-2 { animation: slideUpFade 0.8s ease backwards 0.3s; }
+        .hero-text-3 { animation: slideUpFade 0.8s ease backwards 0.5s; }
+        .hero-text-4 { animation: slideUpFade 0.8s ease backwards 0.7s; }
+        .hero-buttons { animation: slideUpFade 0.8s ease backwards 0.9s; }
+        
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Custom Scrollbar for Certifications on Mobile */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-brandBlack text-brandWhite font-sans min-h-screen">
+<body>
     <div id="root"></div>
 
-    <script type="text/babel">
-        // --- COMPONENTS ---
-        const { useState } = React;
+    <script type="text/babel" data-type="module">
+        const { useState, useEffect, useRef } = React;
 
-        const Button = ({ children, onClick, active }) => (
-            <button 
-                onClick={onClick}
-                className={`font-mono border-none text-brandBlack py-2 px-5 mx-1 my-1 cursor-pointer rounded-xl transition-all duration-400
-                  ${active 
-                      ? 'bg-brandGray font-bold text-brandWhite shadow-[0_5px_#666] translate-y-1' 
-                      : 'bg-brandWhite hover:bg-brandBlack hover:text-brandWhite hover:border-2 hover:border-brandWhite hover:shadow-glow'
-                   }
-                `}
-            >
-                {children}
-            </button>
+        // --- ICONS ---
+        const IconGithub = ({ size = 20, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        );
+        const IconLinkedin = ({ size = 20, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        );
+        const IconMail = ({ size = 20, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        );
+        const IconMapPin = ({ size = 20, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        );
+        const IconExternalLink = ({ size = 20, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        );
+        const IconAward = ({ size = 20, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+        );
+        const IconBriefcase = ({ size = 20, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        );
+        const IconMenu = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        );
+        const IconClose = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         );
 
-        const Header = ({ setPage }) => (
-            <header className="p-10 pb-4">
-                <h3 className="text-left w-full text-4xl leading-normal text-brandWhite font-sans">
-                  Welcome! I'm
-                </h3>
-                <h1 className="text-left w-full text-[60px] md:text-[80px] text-brandPurple leading-tight font-bold font-sans my-2">
-                  Akshatha Dungi
-                </h1>
-                <h3 className="text-left w-full text-3xl leading-normal text-brandWhite font-sans">
-                  and<br/>This is my Portfolio.
-                </h3>
-                <nav className="mt-8 flex flex-wrap gap-2">
-                    <Button onClick={() => setPage('about')}>About</Button>
-                    <Button onClick={() => setPage('skills')}>Skills</Button>
-                    <Button onClick={() => setPage('projects')}>Projects</Button>
-                    <Button onClick={() => setPage('certifications')}>Certifications</Button>
-                    <Button onClick={() => setPage('articles')}>Articles</Button>
-                    <Button onClick={() => setPage('contact')}>Contact</Button>
-                </nav>
-                <hr className="border-t border-brandGray mt-6 opacity-30" />
-            </header>
-        );
+        // --- HOOKS ---
+        const useFadeIn = () => {
+            const domRef = useRef();
+            const [isVisible, setVisible] = useState(false);
+            useEffect(() => {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setVisible(true);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+                const { current } = domRef;
+                if (current) observer.observe(current);
+                return () => { if (current) observer.unobserve(current); };
+            }, []);
+            return { ref: domRef, isVisible };
+        };
 
-        const About = () => (
-            <section className="px-10 py-6 max-w-4xl mx-auto flex flex-col md:flex-row gap-8 items-center md:items-start">
-               <div className="md:w-1/3">
-                 <img src="mei.jpeg" alt="Profile Picture" className="w-[300px] h-[300px] rounded-full object-cover shadow-glow animate-float border-4 border-brandPurple" />
-               </div>
-               <div className="md:w-2/3 space-y-4 text-lg text-brandWhite leading-relaxed">
-                 <h2 className="text-3xl text-brandPurple font-bold">About me</h2>
-                 <p>I'm the kind of developer who thrives on change.</p>
-                 <p>One day I'm deep in <b>Java</b> code, optimizing a Spring Boot microservice for thousands of concurrent users. The next, I'm experimenting with <b>LLM pipelines</b>, figuring out how to make an AI model understand business context. And I love every bit of it.</p>
-                 <p>Why? Because I've learned that the best solutions don't come from sticking to what you know—they come from being <b>adaptable</b>.</p>
-                 <div className="bg-brandDark p-6 rounded-2xl border border-brandGray mt-6">
-                   <h4 className="text-xl font-bold mb-4 text-brandWhite">What makes me adaptable:</h4>
-                   <ul className="space-y-2 list-disc pl-5">
-                      <li>☕ <b>Java and Python are my anchors</b> – I've built deep expertise here, so I can move confidently through the backend world.</li>
-                      <li>🧩 <b>Problem-solving is my default</b> – Give me a puzzle, and I'll find a way through it—even if I've never seen one like it before.</li>
-                      <li>🎯 <b>Decisions, not habits</b> – I don't do things "because that's how they've always been done." I evaluate, decide, and own the outcome.</li>
-                      <li>🤖 <b>Curiosity without ego</b> – I don't need to be the expert. I just need to be willing to learn, fast.</li>
-                   </ul>
-                 </div>
-                 <p className="mt-4 italic">💼 Open to roles where adaptability is valued as much as expertise.</p>
-               </div>
-            </section>
-        );
-
-        const PlaceholderPage = ({ title, description }) => (
-            <section className="px-10 py-10 max-w-4xl mx-auto text-center">
-                <h2 className="text-4xl text-brandPurple font-bold mb-4">{title}</h2>
-                <div className="h-[200px] flex items-center justify-center rounded-2xl bg-brandDark border border-brandGray shadow-glow">
-                   <p className="text-xl text-brandWhite opacity-70 animate-pulse">{description}</p>
-                </div>
-            </section>
-        );
-
-        const App = () => {
-            const [currentPage, setCurrentPage] = useState('about');
-            
-            const renderPage = () => {
-                switch(currentPage) {
-                    case 'about': return <About />;
-                    case 'skills': return <PlaceholderPage title="My Skills" description="Skills section coming soon..." />;
-                    case 'projects': return <PlaceholderPage title="Projects" description="Amazing projects loading..." />;
-                    case 'certifications': return <PlaceholderPage title="Certifications" description="Certifications gallery under construction." />;
-                    case 'articles': return <PlaceholderPage title="Articles" description="Technical articles loading..." />;
-                    case 'contact': return <PlaceholderPage title="Contact" description="Contact info coming soon. Feel free to get in touch!" />;
-                    default: return <About />;
-                }
-            };
-
+        const FadeInSection = ({ children, className = "" }) => {
+            const { ref, isVisible } = useFadeIn();
             return (
-                <div className="flex flex-col min-h-screen">
-                    <Header setPage={setCurrentPage} />
-                    <main className="flex-grow">
-                        {renderPage()}
-                    </main>
-                    <footer className="py-6 text-center text-brandGray text-sm">
-                        &copy; 2026 Akshatha Dungi. Crafted with React & Tailwind.
-                    </footer>
+                <div ref={ref} className={`fade-in-section ${isVisible ? 'is-visible' : ''} ${className}`}>
+                    {children}
                 </div>
             );
         };
 
-        // Render App
+        // --- SECTION NAVBAR ---
+        const Navbar = ({ activeSection }) => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+            const navLinks = ['Hero', 'About', 'Experience', 'Projects', 'Skills', 'Certifications', 'Contact'];
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 20);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const scrollToTarget = (id) => {
+                const element = document.getElementById(id.toLowerCase());
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                    setMobileMenuOpen(false);
+                }
+            };
+
+            return (
+                <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-dark/80 backdrop-blur-md py-4 shadow-lg' : 'bg-transparent py-6'}`}>
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center">
+                        <div className="font-heading font-bold text-2xl text-purple tracking-tighter" onClick={() => scrollToTarget('hero')} style={{ cursor: 'pointer' }}>
+                            AD
+                        </div>
+
+                        {/* Desktop Nav */}
+                        <div className="hidden md:flex space-x-8">
+                            {navLinks.map((link) => (
+                                <button 
+                                    key={link} 
+                                    onClick={() => scrollToTarget(link)}
+                                    className={`text-sm font-medium transition-colors hover:text-purple ${activeSection === link.toLowerCase() ? 'text-purple relative after:content-[""] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-purple after:rounded' : 'text-powder'}`}
+                                >
+                                    {link}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Mobile Toggle */}
+                        <button className="md:hidden text-powder hover:text-purple transition-colors" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                            {mobileMenuOpen ? <IconClose /> : <IconMenu />}
+                        </button>
+                    </div>
+
+                    {/* Mobile Drawer */}
+                    <div className={`md:hidden absolute top-full left-0 w-full bg-dark/95 backdrop-blur-md transition-all duration-300 overflow-hidden ${mobileMenuOpen ? 'max-h-screen py-4 border-b border-lavender/20' : 'max-h-0 py-0'}`}>
+                        <div className="flex flex-col space-y-4 px-6">
+                            {navLinks.map((link) => (
+                                <button 
+                                    key={link} 
+                                    onClick={() => scrollToTarget(link)}
+                                    className={`text-left text-lg font-medium transition-colors ${activeSection === link.toLowerCase() ? 'text-purple' : 'text-powder hover:text-mint'}`}
+                                >
+                                    {link}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </nav>
+            );
+        };
+
+        // --- SECTION HERO ---
+        const Hero = () => {
+            const scrollToProjects = () => {
+                document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <section id="hero" className="relative min-h-screen flex items-center pt-20 overflow-hidden px-6 lg:px-12 max-w-7xl mx-auto">
+                    {/* Abstract Shapes */}
+                    <div className="absolute top-1/4 right-[10%] w-64 h-64 bg-purple/10 rounded-full blur-3xl animate-float-shape-1 z-0"></div>
+                    <div className="absolute bottom-1/4 right-[20%] w-48 h-48 bg-mint/10 rounded-full blur-2xl animate-float-shape-2 z-0"></div>
+                    <div className="absolute top-1/3 left-[5%] w-72 h-72 bg-lavender/10 rounded-full blur-3xl animate-float-shape-1 z-0" style={{ animationDelay: '2s' }}></div>
+
+                    <div className="relative z-10 max-w-3xl">
+                        <p className="hero-text-1 text-powder font-medium text-lg mb-4">Hello, I'm</p>
+                        <h1 className="hero-text-2 font-heading font-bold text-purple mb-4" style={{ fontSize: 'clamp(48px, 6vw, 80px)', lineHeight: '1.1' }}>
+                            Akshatha Dungi
+                        </h1>
+                        <h2 className="hero-text-3 font-body font-medium text-mint text-xl md:text-2xl lg:text-3xl mb-6 tracking-wide">
+                            Software Developer &middot; Backend Specialist &middot; AI Curious
+                        </h2>
+                        <p className="hero-text-4 text-powder/90 md:text-lg max-w-2xl leading-relaxed mb-10">
+                            I build scalable backends, experiment with LLMs, and thrive on adaptability. 
+                            Merging solid software engineering principles with dynamic new technologies.
+                        </p>
+                        
+                        <div className="hero-buttons flex flex-wrap gap-4">
+                            <button onClick={scrollToProjects} className="bg-purple text-dark font-semibold px-8 py-3 rounded-full hover:brightness-110 hover:scale-[1.02] transition-all duration-200 ease-out shadow-[0_0_15px_rgba(202,60,255,0.4)]">
+                                View Projects
+                            </button>
+                            <a href="#" className="border-2 border-lavender text-mint font-medium px-8 py-3 rounded-full hover:bg-lavender/10 hover:scale-[1.02] transition-all duration-200 ease-out">
+                                Download Resume
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // --- SECTION ABOUT ---
+        const About = () => {
+            return (
+                <section id="about" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
+                    <FadeInSection>
+                        <div className="grid md:grid-cols-2 gap-12 items-center">
+                            <div className="flex justify-center md:justify-start order-2 md:order-1">
+                                <div className="relative">
+                                    <div className="absolute -inset-4 bg-purple/20 rounded-full blur-xl"></div>
+                                    <img 
+                                        src="mei.jpeg" 
+                                        alt="Akshatha Dungi" 
+                                        className="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-[3px] border-purple animate-float shadow-2xl z-10"
+                                        onError={(e) => {
+                                            e.target.onerror = null; 
+                                            e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23CA3CFF' opacity='0.5'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+                                            e.target.className = "relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-[3px] border-purple animate-float shadow-2xl z-10 bg-dark";
+                                        }}
+                                    />
+                                    <div className="absolute top-8 -right-4 bg-dark border border-lavender/30 py-2 px-4 rounded-full text-mint text-sm font-medium shadow-lg animate-float" style={{animationDelay: '1s'}}>
+                                        Adaptable &lt;/&gt;
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="order-1 md:order-2">
+                                <h2 className="font-heading font-bold text-3xl md:text-4xl text-purple mb-6">About Me</h2>
+                                <div className="space-y-4 text-powder leading-relaxed">
+                                    <p>
+                                        I'm the kind of developer who thrives on change. The tech landscape evolves rapidly, and I believe the best solutions come from being adaptable.
+                                    </p>
+                                    <p>
+                                        One day I'm deep in <span className="text-mint font-semibold">Java code</span> building robust architectures... The next, establishing <span className="text-mint font-semibold">LLM pipelines</span> to solve complex logical problems.
+                                    </p>
+                                    
+                                    <div className="mt-8 bg-dark/50 border border-lavender/30 rounded-xl p-6 shadow-lg">
+                                        <h3 className="text-mint font-semibold mb-3">What makes me adaptable:</h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start"><span className="mr-3">☕</span> <span>Fast learner, fueled by curiosity (and coffee).</span></li>
+                                            <li className="flex items-start"><span className="mr-3">🧩</span> <span>I treat every new technology like a puzzle to solve.</span></li>
+                                            <li className="flex items-start"><span className="mr-3">🎯</span> <span>Focused on the end goal, flexible on the path to get there.</span></li>
+                                            <li className="flex items-start"><span className="mr-3">🤖</span> <span>Continuously integrating AI to optimize my workflow.</span></li>
+                                        </ul>
+                                    </div>
+                                    <p className="italic text-lavender mt-6">
+                                        💼 Open to roles where adaptability is valued as much as expertise.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </FadeInSection>
+                </section>
+            );
+        };
+
+        // --- SECTION EXPERIENCE ---
+        const Experience = () => {
+            const jobs = [
+                {
+                    role: "Software Developer",
+                    company: "Tech Solutions Inc.",
+                    period: "2024 - Present",
+                    description: "Scaling backend infrastructure using Spring Boot, PostgreSQL, and AWS. Integrating LLM pipelines via LangChain to automate internal tools, saving 20 hours per week."
+                },
+                {
+                    role: "Junior Backend Engineer",
+                    company: "Innovate AI",
+                    period: "2023 - 2024",
+                    description: "Built and maintained REST APIs in Python (FastAPI). Containerized applications with Docker to streamline the deployment process."
+                },
+                {
+                    role: "Software Engineering Intern",
+                    company: "Startup Co.",
+                    period: "2022 - 2023",
+                    description: "Contributed to front-end development using React and Tailwind CSS. Developed internal admin dashboards."
+                }
+            ];
+
+            return (
+                <section id="experience" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
+                    <FadeInSection>
+                        <div className="text-center mb-16">
+                            <h2 className="font-heading font-bold text-3xl md:text-4xl text-purple mb-2">Experience</h2>
+                            <p className="text-lavender">My professional journey</p>
+                        </div>
+                        
+                        <div className="max-w-4xl mx-auto relative cursor-default">
+                            {/* Vertical Line */}
+                            <div className="absolute left-[15px] md:left-1/2 top-0 bottom-0 w-px bg-lavender/20 -translate-x-1/2 hidden md:block"></div>
+                            
+                            <div className="space-y-12 relative">
+                                {jobs.map((job, idx) => (
+                                    <div key={idx} className={`relative flex flex-col md:flex-row gap-8 items-start justify-between ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                                        
+                                        {/* Timeline Dot */}
+                                        <div className="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-dark border-[2px] border-purple text-purple flex items-center justify-center -translate-x-1/2 z-10 hidden md:flex">
+                                            <IconBriefcase size={14} />
+                                        </div>
+                                        
+                                        {/* Content Card */}
+                                        <div className="w-full md:w-[45%] bg-dark border border-lavender/30 rounded-2xl p-6 hover:border-mint/50 transition-colors shadow-lg relative group">
+                                            <div className="md:hidden inline-flex items-center gap-2 mb-3 text-purple bg-purple/10 px-3 py-1.5 rounded-full text-xs font-bold">
+                                                <IconBriefcase size={14} />
+                                                <span>{job.period}</span>
+                                            </div>
+                                            <h3 className="font-heading font-bold text-xl text-mint">{job.role}</h3>
+                                            <div className="flex justify-between items-center mb-4 mt-1">
+                                                <p className="text-powder font-medium">{job.company}</p>
+                                                <span className="text-sm font-semibold bg-lavender/10 text-lavender px-3 py-1 rounded-full hidden md:inline-block">
+                                                    {job.period}
+                                                </span>
+                                            </div>
+                                            <p className="text-[#C9E4E7] leading-relaxed text-sm lg:text-base">
+                                                {job.description}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </FadeInSection>
+                </section>
+            );
+        };
+
+        // --- SECTION PROJECTS ---
+        const Projects = () => {
+            const [filter, setFilter] = useState('All');
+            const filters = ['All', 'Backend', 'AI/ML', 'Web'];
+            
+            const projects = [
+                {
+                    title: "MicroCommerce",
+                    desc: "A scalable Spring Boot microservice backend for a modern e-commerce platform.",
+                    tags: ["Java", "Spring Boot", "PostgreSQL", "Kafka"],
+                    category: "Backend",
+                    github: "#",
+                    live: "#"
+                },
+                {
+                    title: "LLM Pipeline Toolkit",
+                    desc: "A Python-based utility suite for chaining dynamic LLM prompts and managing context windows.",
+                    tags: ["Python", "LangChain", "OpenAI API"],
+                    category: "AI/ML",
+                    github: "#",
+                    live: "#"
+                },
+                {
+                    title: "DevPortal API",
+                    desc: "A comprehensive REST API with role-based auth, rate limiting, and automated Swagger docs.",
+                    tags: ["FastAPI", "Python", "Redis", "Docker"],
+                    category: "Backend",
+                    github: "#",
+                    live: "#"
+                }
+            ];
+
+            const filteredProjects = filter === 'All' ? projects : projects.filter(p => p.category === filter);
+
+            return (
+                <section id="projects" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
+                    <FadeInSection>
+                        <div className="text-center mb-12">
+                            <h2 className="font-heading font-bold text-3xl md:text-4xl text-purple mb-2">Projects</h2>
+                            <p className="text-lavender">Things I've built</p>
+                        </div>
+                        
+                        <div className="flex flex-wrap justify-center gap-3 mb-12">
+                            {filters.map(f => (
+                                <button 
+                                    key={f} 
+                                    onClick={() => setFilter(f)}
+                                    className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${filter === f ? 'bg-purple text-dark shadow-md' : 'bg-dark border border-lavender/30 text-powder hover:border-purple'}`}
+                                >
+                                    {f}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {filteredProjects.map((project, idx) => (
+                                <div key={idx} className="group bg-dark border border-mint/20 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-purple/60 hover:shadow-[0_10px_30px_rgba(202,60,255,0.1)] flex flex-col h-full">
+                                    <h3 className="font-heading font-bold text-xl text-mint mb-3">{project.title}</h3>
+                                    <p className="text-powder mb-6 flex-grow">{project.desc}</p>
+                                    
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        {project.tags.map(tag => (
+                                            <span key={tag} className="text-xs font-medium bg-lavender/20 text-lavender px-3 py-1 rounded-full">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    
+                                    <div className="flex items-center gap-4 mt-auto pt-4 border-t border-lavender/10">
+                                        <a href={project.github} className="text-powder hover:text-purple transition-colors" aria-label="Github Repo">
+                                            <IconGithub size={20} />
+                                        </a>
+                                        <a href={project.live} className="text-powder hover:text-mint transition-colors" aria-label="Live Demo">
+                                            <IconExternalLink size={20} />
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </FadeInSection>
+                </section>
+            );
+        };
+
+        // --- SECTION SKILLS ---
+        const Skills = () => {
+            const skillCategories = [
+                {
+                    title: "Languages",
+                    skills: ["Java", "Python", "JavaScript", "SQL", "HTML/CSS"]
+                },
+                {
+                    title: "Frameworks & Tools",
+                    skills: ["Spring Boot", "FastAPI", "React", "Docker", "Git", "Maven"]
+                },
+                {
+                    title: "AI & ML",
+                    skills: ["LangChain", "OpenAI API", "Prompt Engineering", "HuggingFace"]
+                },
+                {
+                    title: "Cloud & DevOps",
+                    skills: ["AWS (Basics)", "CI/CD Actions", "Linux", "REST APIs", "Postman"]
+                }
+            ];
+
+            return (
+                <section id="skills" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
+                    <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-lavender/10 to-transparent -z-10"></div>
+                    <FadeInSection>
+                        <div className="text-center mb-16">
+                            <h2 className="font-heading font-bold text-3xl md:text-4xl text-purple mb-2">Skills</h2>
+                            <p className="text-lavender">What I bring to the table</p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+                            {skillCategories.map((category, idx) => (
+                                <div key={idx} className="bg-dark/80 backdrop-blur-sm border border-powder/20 rounded-2xl p-6 transition-all hover:border-mint/50">
+                                    <h3 className="font-heading font-bold text-xl text-mint mb-5">{category.title}</h3>
+                                    <div className="flex flex-wrap gap-3">
+                                        {category.skills.map(skill => (
+                                            <div key={skill} className="flex items-center gap-2 bg-dark border border-lavender/50 text-powder px-4 py-2 rounded-full text-sm shadow-sm transition-transform hover:scale-105">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-purple"></span>
+                                                {skill}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </FadeInSection>
+                </section>
+            );
+        };
+
+        // --- SECTION CERTIFICATIONS ---
+        const Certifications = () => {
+            const certs = [
+                { title: "Oracle Certified Professional: Java SE 11", issuer: "Oracle", year: "2023" },
+                { title: "AWS Cloud Practitioner", issuer: "Amazon Web Services", year: "2024" },
+                { title: "Deep Learning Specialization", issuer: "Coursera / DeepLearning.AI", year: "2024" }
+            ];
+
+            return (
+                <section id="certifications" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto overflow-hidden">
+                    <FadeInSection>
+                        <div className="text-center mb-12">
+                            <h2 className="font-heading font-bold text-3xl md:text-4xl text-purple mb-2">Certifications</h2>
+                            <p className="text-lavender">Validating knowledge with verifiable credentials</p>
+                        </div>
+                        
+                        <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto pb-8 hide-scrollbar snap-x touch-pan-x">
+                            {certs.map((cert, idx) => (
+                                <div key={idx} className="min-w-[280px] md:min-w-0 snap-center bg-dark border border-lavender/10 border-l-[3px] border-l-purple rounded-xl p-6 shadow-lg relative group">
+                                    <div className="absolute top-5 right-5 text-powder/20 group-hover:text-purple/50 transition-colors">
+                                        <IconAward size={48} />
+                                    </div>
+                                    <h3 className="font-heading font-bold text-mint text-lg md:text-xl pr-8 mb-2 z-10 relative">{cert.title}</h3>
+                                    <p className="text-powder mb-3 z-10 relative">{cert.issuer}</p>
+                                    <span className="inline-block text-xs font-semibold bg-lavender/10 text-lavender px-2 py-1 rounded z-10 relative">{cert.year}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </FadeInSection>
+                </section>
+            );
+        };
+
+        // --- SECTION CONTACT ---
+        const Contact = () => {
+            const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+            const [errors, setErrors] = useState({});
+            const [submitState, setSubmitState] = useState('idle'); // 'idle'|'loading'|'success'|'error'
+            const [inboxOpen, setInboxOpen] = useState(false);
+            const [messages, setMessages] = useState([]);
+            const [loadingMsgs, setLoadingMsgs] = useState(false);
+
+            useEffect(() => {
+                const handler = (e) => {
+                    if (e.ctrlKey && e.shiftKey && e.key === 'M') {
+                        setInboxOpen(prev => {
+                            const opening = !prev;
+                            if (opening) loadMessages();
+                            return opening;
+                        });
+                    }
+                };
+                window.addEventListener('keydown', handler);
+                return () => window.removeEventListener('keydown', handler);
+            }, []);
+
+            const loadMessages = async () => {
+                setLoadingMsgs(true);
+                try {
+                    const result = await window.storage.list('messages:');
+                    const msgs = [];
+                    for (const key of result) {
+                        try {
+                            const val = await window.storage.get(key);
+                            if (val) msgs.push(JSON.parse(val));
+                        } catch (e) { console.error("Parse err", e); }
+                    }
+                    msgs.sort((a, b) => b.id - a.id);
+                    setMessages(msgs);
+                } catch (e) {
+                    console.error("Failed to load messages:", e);
+                } finally {
+                    setLoadingMsgs(false);
+                }
+            };
+
+            const handleDelete = async (id) => {
+                try {
+                    await window.storage.delete('messages:' + id);
+                    setMessages(prev => prev.filter(m => m.id !== id));
+                } catch (e) {
+                    console.error("Failed to delete message:", e);
+                }
+            };
+
+            const validate = () => {
+                const newErrors = {};
+                if (!formData.name.trim()) newErrors.name = 'Name is required';
+                if (!formData.email.trim()) {
+                    newErrors.email = 'Email is required';
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+                    newErrors.email = 'Invalid email address';
+                }
+                if (!formData.message.trim()) newErrors.message = 'Message is required';
+                setErrors(newErrors);
+                return Object.keys(newErrors).length === 0;
+            };
+
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                if (!validate()) return;
+                
+                setSubmitState('loading');
+                const msg = {
+                    id: Date.now(),
+                    name: formData.name.trim(),
+                    email: formData.email.trim(),
+                    message: formData.message.trim(),
+                    sentAt: new Date().toISOString()
+                };
+                
+                try {
+                    await window.storage.set('messages:' + msg.id, JSON.stringify(msg));
+                    setSubmitState('success');
+                    setFormData({ name: '', email: '', message: '' });
+                } catch (err) {
+                    console.error("Storage error:", err);
+                    setSubmitState('error');
+                }
+            };
+
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({ ...prev, [name]: value }));
+                if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+            };
+
+            const inputClasses = "w-full bg-[#1E1014] border border-[#B4A0E5]/50 rounded-[10px] px-[14px] py-[10px] text-[#CAFFD0] placeholder-[#B4A0E5]/60 focus:outline-none focus:ring-[2px] focus:ring-[#CA3CFF] focus:border-transparent transition-all";
+
+            return (
+                <section id="contact" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
+                    <div className="absolute bottom-0 left-[20%] w-96 h-96 bg-purple/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+                    
+                    {/* Admin Inbox Overlay */}
+                    {inboxOpen && (
+                        <div className="fixed inset-0 z-[9999] bg-[#1E1014] overflow-y-auto">
+                            <div className="max-w-4xl mx-auto px-6 py-8">
+                                <div className="flex justify-between items-center mb-8 pb-4 border-b border-[#B4A0E5]/20">
+                                    <h2 className="font-heading font-bold text-2xl text-[#CA3CFF]">📬 Message Inbox</h2>
+                                    <button onClick={() => setInboxOpen(false)} className="border border-[#B4A0E5] text-[#CAFFD0] px-4 py-2 rounded-lg hover:bg-[#B4A0E5]/10 transition-colors">✕ Close</button>
+                                </div>
+                                
+                                {loadingMsgs ? (
+                                    <div className="flex justify-center py-20">
+                                        <div className="w-10 h-10 border-4 border-[#CA3CFF]/30 border-t-[#CA3CFF] rounded-full animate-spin"></div>
+                                    </div>
+                                ) : messages.length === 0 ? (
+                                    <div className="text-center py-20 text-[#B4A0E5]">No messages yet.</div>
+                                ) : (
+                                    <div className="space-y-4">
+                                        {messages.map(msg => (
+                                            <div key={msg.id} className="bg-[#2a1a20] border border-[#B4A0E5]/30 rounded-[12px] px-5 py-4 relative group">
+                                                <div className="flex justify-between items-start mb-1">
+                                                    <h4 className="font-bold text-[#CAFFD0]">{msg.name}</h4>
+                                                    <span className="text-xs text-[#B4A0E5]">{new Date(msg.sentAt).toLocaleString()}</span>
+                                                </div>
+                                                <p className="text-[13px] text-[#C9E4E7] mb-3">{msg.email}</p>
+                                                <div className="h-px bg-[#B4A0E5]/20 mb-3 w-full"></div>
+                                                <p className="text-[#C9E4E7] leading-[1.6] whitespace-pre-wrap">{msg.message}</p>
+                                                
+                                                <button 
+                                                    onClick={() => handleDelete(msg.id)}
+                                                    className="mt-4 text-sm text-[#FF6B6B] hover:bg-[#FF6B6B]/10 px-3 py-1.5 rounded-md transition-colors border border-transparent float-right"
+                                                >
+                                                    Delete
+                                                </button>
+                                                <div className="clear-both"></div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    <FadeInSection>
+                        <div className="text-center mb-16">
+                            <h2 className="font-heading font-bold text-3xl md:text-4xl text-purple mb-3">Let's Connect</h2>
+                            <p className="text-powder max-w-xl mx-auto">
+                                I'm open to opportunities, collaborations, or just a good tech conversation.
+                            </p>
+                        </div>
+
+                        <div className="grid lg:grid-cols-2 gap-12">
+                            {/* Left: Contact Info */}
+                            <div className="space-y-4">
+                                <a href="mailto:akshatha@example.com" className="flex items-center p-5 bg-dark border border-lavender/20 rounded-2xl hover:border-mint/50 transition-colors group">
+                                    <div className="bg-purple/10 p-3 rounded-full text-purple group-hover:bg-purple group-hover:text-dark transition-colors">
+                                        <IconMail size={24} />
+                                    </div>
+                                    <div className="ml-4">
+                                        <p className="text-sm text-lavender font-medium">Email</p>
+                                        <p className="text-powder group-hover:text-mint transition-colors">akshatha@example.com</p>
+                                    </div>
+                                </a>
+                                
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center p-5 bg-dark border border-lavender/20 rounded-2xl hover:border-mint/50 transition-colors group">
+                                    <div className="bg-purple/10 p-3 rounded-full text-purple group-hover:bg-purple group-hover:text-dark transition-colors">
+                                        <IconLinkedin size={24} />
+                                    </div>
+                                    <div className="ml-4">
+                                        <p className="text-sm text-lavender font-medium">LinkedIn</p>
+                                        <p className="text-powder group-hover:text-mint transition-colors">linkedin.com/in/akshatha</p>
+                                    </div>
+                                </a>
+                                
+                                <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center p-5 bg-dark border border-lavender/20 rounded-2xl hover:border-mint/50 transition-colors group">
+                                    <div className="bg-purple/10 p-3 rounded-full text-purple group-hover:bg-purple group-hover:text-dark transition-colors">
+                                        <IconGithub size={24} />
+                                    </div>
+                                    <div className="ml-4">
+                                        <p className="text-sm text-lavender font-medium">GitHub</p>
+                                        <p className="text-powder group-hover:text-mint transition-colors">github.com/akshatha</p>
+                                    </div>
+                                </a>
+
+                                <div className="flex items-center p-5 bg-dark border border-lavender/20 rounded-2xl group">
+                                    <div className="bg-purple/10 p-3 rounded-full text-purple">
+                                        <IconMapPin size={24} />
+                                    </div>
+                                    <div className="ml-4">
+                                        <p className="text-sm text-lavender font-medium">Location</p>
+                                        <p className="text-powder">India</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Right: Form Area */}
+                            <div>
+                                {submitState === 'success' ? (
+                                    <div className="bg-[#CAFFD0]/10 border border-[#CAFFD0]/40 rounded-2xl p-8 text-center">
+                                        <div className="w-16 h-16 bg-[#CAFFD0]/20 text-[#CAFFD0] flex items-center justify-center rounded-full mx-auto mb-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                                        </div>
+                                        <h3 className="font-heading font-bold text-2xl text-[#CAFFD0] mb-2">Message sent! I'll get back to you soon.</h3>
+                                        <p className="italic text-[#B4A0E5] mb-6">— Akshatha</p>
+                                        <button onClick={() => setSubmitState('idle')} className="text-sm border border-[#CAFFD0]/50 font-medium text-[#CAFFD0] hover:bg-[#CAFFD0]/10 px-4 py-2 rounded-lg transition-colors">
+                                            Send another
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="bg-[#1E1014] border border-[#B4A0E5]/40 p-8 rounded-[16px]">
+                                        <h3 className="font-heading font-bold text-2xl text-[#CA3CFF] mb-6">Send a Message</h3>
+                                        
+                                        {submitState === 'error' && (
+                                            <div className="bg-[#FF6B6B]/10 border border-[#FF6B6B]/40 rounded-[10px] p-4 text-center mb-6">
+                                                <p className="text-[#FF6B6B] font-medium text-sm">Oops, something went wrong. Please try again.</p>
+                                            </div>
+                                        )}
+
+                                        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                                            <div>
+                                                <input 
+                                                    type="text" 
+                                                    name="name" 
+                                                    value={formData.name}
+                                                    onChange={handleChange}
+                                                    className={inputClasses}
+                                                    placeholder="Your Name"
+                                                />
+                                                {errors.name && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1">{errors.name}</p>}
+                                            </div>
+                                            <div>
+                                                <input 
+                                                    type="email" 
+                                                    name="email" 
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                    className={inputClasses}
+                                                    placeholder="your@email.com"
+                                                />
+                                                {errors.email && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1">{errors.email}</p>}
+                                            </div>
+                                            <div>
+                                                <textarea 
+                                                    name="message" 
+                                                    value={formData.message}
+                                                    onChange={handleChange}
+                                                    className={`${inputClasses} resize-y min-h-[120px]`}
+                                                    placeholder="What's on your mind?"
+                                                ></textarea>
+                                                {errors.message && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1">{errors.message}</p>}
+                                            </div>
+                                            
+                                            <button 
+                                                type="submit" 
+                                                disabled={submitState === 'loading'}
+                                                className="w-full mt-2 bg-[#CA3CFF] text-[#1E1014] font-bold rounded-[10px] py-[10px] px-[24px] hover:brightness-110 hover:scale-[1.02] transition-all duration-200 disabled:opacity-70 disabled:hover:scale-100 flex items-center justify-center min-h-[44px]"
+                                            >
+                                                {submitState === 'loading' ? (
+                                                    <span className="w-5 h-5 border-[2px] border-[#1E1014]/30 border-t-[#1E1014] rounded-full animate-spin"></span>
+                                                ) : (
+                                                    "Send Message"
+                                                )}
+                                            </button>
+                                        </form>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </FadeInSection>
+                </section>
+            );
+        };
+
+        // --- SECTION FOOTER ---
+        const Footer = () => (
+            <footer className="border-t border-lavender/20 py-8 text-center mt-12 mb-4">
+                <p className="text-lavender text-sm">
+                    &copy; 2026 Akshatha Dungi — Built with React & Tailwind
+                </p>
+            </footer>
+        );
+
+        // --- APP ROOT ---
+        const App = () => {
+            const [activeSection, setActiveSection] = useState('hero');
+
+            // Optional: Advanced scroll spy for Navigation highlighting
+            useEffect(() => {
+                const handleScrollSpy = () => {
+                    const sections = ['hero', 'about', 'experience', 'projects', 'skills', 'certifications', 'contact'];
+                    const scrollPos = window.scrollY + 100;
+                    for (const section of sections) {
+                        const el = document.getElementById(section);
+                        if (el && el.offsetTop <= scrollPos && el.offsetTop + el.offsetHeight > scrollPos) {
+                            setActiveSection(section);
+                        }
+                    }
+                };
+                window.addEventListener('scroll', handleScrollSpy);
+                return () => window.removeEventListener('scroll', handleScrollSpy);
+            }, []);
+
+            return (
+                <div className="font-body text-powder min-h-screen relative selection:bg-purple/30 selection:text-mint">
+                    <Navbar activeSection={activeSection} setActiveSection={setActiveSection} />
+                    <main>
+                        <Hero />
+                        <About />
+                        <Experience />
+                        <Projects />
+                        <Skills />
+                        <Certifications />
+                        <Contact />
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
