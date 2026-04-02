@@ -1,68 +1,46 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akshatha Dungi | Software Developer</title>
-
-  <!-- Theme Storage Script -->
+  <title>Akshatha Dungi | Software Developer — Project Hail Mary</title>
+  <meta name="description" content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI Curious. Built aboard the Hail Mary.">
   <script>
     (function () {
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light') {
-        document.documentElement.setAttribute('data-theme', 'light');
-      }
+      if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
     })();
   </script>
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap"
-    rel="stylesheet">
-
-  <!-- React & ReactDOM (UMD via CDN) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <!-- Babel Standalone for JSX -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Tailwind Config -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            heading: ['"Space Grotesk"', 'sans-serif'],
-            body: ['Inter', 'sans-serif'],
+            heading: ['"Orbitron"', 'sans-serif'],
+            body: ['"Share Tech Mono"', 'monospace'],
           }
         }
       }
     }
   </script>
-
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <div id="root"></div>
 
-  <!-- Simple localStorage-based storage helper -->
   <script>
     window.storage = {
-      set: function(key, value) {
-        return Promise.resolve(localStorage.setItem(key, value));
-      },
-      get: function(key) {
-        return Promise.resolve(localStorage.getItem(key));
-      },
-      delete: function(key) {
-        return Promise.resolve(localStorage.removeItem(key));
-      },
+      set: function(key, value) { return Promise.resolve(localStorage.setItem(key, value)); },
+      get: function(key) { return Promise.resolve(localStorage.getItem(key)); },
+      delete: function(key) { return Promise.resolve(localStorage.removeItem(key)); },
       list: function(prefix) {
         var keys = [];
         for (var i = 0; i < localStorage.length; i++) {
@@ -73,63 +51,33 @@
       }
     };
   </script>
+  <script src="three-bg.js"></script>
 
   <script type="text/babel" data-type="module">
     const { useState, useEffect, useRef } = React;
 
-    // --- ICONS ---
-    const IconGithub = ({ size = 20, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>
-    );
-    const IconLinkedin = ({ size = 20, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
-    );
-    const IconMail = ({ size = 20, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
-    );
-    const IconMapPin = ({ size = 20, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
-    );
-    const IconExternalLink = ({ size = 20, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></svg>
-    );
-    const IconAward = ({ size = 20, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>
-    );
-    const IconBriefcase = ({ size = 20, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="14" x="2" y="7" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>
-    );
-    const IconMenu = ({ size = 24, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></svg>
-    );
-    const IconClose = ({ size = 24, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
-    );
-    const IconSun = ({ size = 16, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>
-    );
-    const IconMoon = ({ size = 16, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
-    );
-    const IconPlay = ({ size = 18, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}><polygon points="5,3 15,9 5,15" /></svg>
-    );
-    const IconPause = ({ size = 18, className = "" }) => (
-      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}><rect x="4" y="3" width="3.5" height="12" rx="1" /><rect x="10.5" y="3" width="3.5" height="12" rx="1" /></svg>
-    );
+    // ── ICONS ──
+    const IconGithub = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>);
+    const IconLinkedin = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>);
+    const IconMail = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>);
+    const IconMapPin = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>);
+    const IconExternalLink = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></svg>);
+    const IconAward = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>);
+    const IconBriefcase = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="14" x="2" y="7" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>);
+    const IconMenu = ({ size = 24, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></svg>);
+    const IconClose = ({ size = 24, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>);
+    const IconSun = ({ size = 16, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>);
+    const IconMoon = ({ size = 16, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>);
+    const IconPlay = ({ size = 18, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}><polygon points="5,3 15,9 5,15" /></svg>);
+    const IconPause = ({ size = 18, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}><rect x="4" y="3" width="3.5" height="12" rx="1" /><rect x="10.5" y="3" width="3.5" height="12" rx="1" /></svg>);
 
-    // --- HOOKS ---
+    // ── HOOKS ──
     const useFadeIn = () => {
       const domRef = useRef();
       const [isVisible, setVisible] = useState(false);
       useEffect(() => {
         const observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              setVisible(true);
-              observer.unobserve(entry.target);
-            }
-          });
+          entries.forEach(entry => { if (entry.isIntersecting) { setVisible(true); observer.unobserve(entry.target); } });
         }, { threshold: 0.15 });
         const { current } = domRef;
         if (current) observer.observe(current);
@@ -137,201 +85,152 @@
       }, []);
       return { ref: domRef, isVisible };
     };
-
     const FadeInSection = ({ children, className = "" }) => {
       const { ref, isVisible } = useFadeIn();
-      return (
-        <div ref={ref} className={`fade-in-section ${isVisible ? 'is-visible' : ''} ${className}`}>
-          {children}
-        </div>
-      );
+      return <div ref={ref} className={`fade-in-section ${isVisible ? 'is-visible' : ''} ${className}`}>{children}</div>;
     };
 
-    // --- COMPONENTS ---
+    // ── THEME TOGGLE ──
     const ThemeToggle = ({ isDark, toggleTheme }) => (
-      <button
-        onClick={toggleTheme}
-        aria-label="Toggle Theme"
-        style={{
-          width: '52px', height: '28px',
-          backgroundColor: isDark ? '#2a1a20' : '#EEC8E0',
-          border: `1px solid ${isDark ? '#B4A0E5' : '#A8C7BB'}`,
-          borderRadius: '9999px',
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 6px'
-        }}
-        className="hover:scale-105 transition-all duration-300"
-        title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
-      >
-        <div style={{
-          position: 'absolute',
-          left: isDark ? '2px' : '26px',
-          top: '2px',
-          width: '22px', height: '22px',
-          borderRadius: '50%',
-          backgroundColor: isDark ? '#CA3CFF' : '#392F5A',
-          transition: 'left 300ms ease, background-color 300ms ease',
-          zIndex: 1
-        }}></div>
-        <IconMoon size={12} className="relative z-0 text-[#392F5A]" style={{ opacity: isDark ? 0 : 1 }} />
-        <IconSun size={12} className="relative z-0 text-[#B4A0E5]" style={{ opacity: isDark ? 1 : 0 }} />
+      <button onClick={toggleTheme} aria-label="Toggle Theme" style={{ width:'52px',height:'28px',backgroundColor:isDark?'#080D1A':'#D6E8FF',border:`1px solid ${isDark?'#00FFB2':'#006B4F'}`,borderRadius:'9999px',position:'relative',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 6px'}} className="hover:scale-105 transition-all duration-300" title={`Switch to ${isDark?'Light':'Dark'} Mode`}>
+        <div style={{position:'absolute',left:isDark?'2px':'26px',top:'2px',width:'22px',height:'22px',borderRadius:'50%',backgroundColor:isDark?'#00FFB2':'#006B4F',transition:'left 300ms ease, background-color 300ms ease',zIndex:1}}></div>
+        <IconMoon size={12} className="relative z-0 text-[#006B4F]" />
+        <IconSun size={12} className="relative z-0 text-[#00FFB2]" />
       </button>
     );
 
-    // --- SECTION NAVBAR ---
+    // ── NAVBAR ──
     const Navbar = ({ activeSection, isDark, toggleTheme }) => {
       const [isScrolled, setIsScrolled] = useState(false);
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-      const navLinks = ['Hero', 'About', 'Experience', 'Projects', 'Skills', 'Certifications', 'Contact'];
-
+      const navLinks = ['Hero','About','Experience','Projects','Skills','Certifications','Contact'];
       useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
       }, []);
-
-      const scrollToTarget = (id) => {
-        const element = document.getElementById(id.toLowerCase());
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-          setMobileMenuOpen(false);
-        }
-      };
-
+      const scrollTo = (id) => { const el = document.getElementById(id.toLowerCase()); if(el){el.scrollIntoView({behavior:'smooth'});setMobileMenuOpen(false);} };
       return (
-        <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-[var(--nav-bg)] backdrop-blur-md py-4 shadow-lg' : 'bg-transparent py-6'}`}>
+        <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled?'bg-[var(--nav-bg)] backdrop-blur-md py-3 shadow-lg':'bg-transparent py-6'}`}>
           <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center">
-            <div className="font-heading font-bold text-2xl text-[var(--color-primary)] tracking-tighter" onClick={() => scrollToTarget('hero')} style={{ cursor: 'pointer' }}>
-              AD
-            </div>
-
-            {/* Desktop Nav */}
+            <div className="font-heading font-bold text-2xl text-[var(--color-primary)] tracking-tighter teal-glow cursor-pointer" onClick={()=>scrollTo('hero')}>AD</div>
             <div className="hidden md:flex space-x-8 items-center">
-              {navLinks.map((link) => {
+              {navLinks.map(link => {
                 const isActive = activeSection === link.toLowerCase();
-                return (
-                  <button
-                    key={link}
-                    onClick={() => scrollToTarget(link)}
-                    className={`text-sm font-medium transition-colors hover:text-[var(--color-primary)] ${isActive ? 'text-[var(--color-primary)] relative after:content-[""] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-[var(--color-highlight)] after:rounded' : 'text-[var(--color-text-muted)]'}`}
-                  >
-                    {link}
-                  </button>
-                );
+                return <button key={link} onClick={()=>scrollTo(link)} className={`text-sm font-body font-medium transition-colors hover:text-[var(--color-primary)] ${isActive?'text-[var(--color-primary)]':'text-[var(--color-text-muted)]'}`}>
+                  {isActive && <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mr-2 glow-pulse" style={{boxShadow:'0 0 6px #00FFB2'}}></span>}
+                  {link}
+                </button>;
               })}
-              <div className="ml-4 border-l border-[var(--color-subtle)] pl-4">
-                <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
-              </div>
+              <div className="ml-4 border-l border-[var(--color-border)] pl-4"><ThemeToggle isDark={isDark} toggleTheme={toggleTheme} /></div>
             </div>
-
-            {/* Mobile Controls */}
             <div className="flex items-center gap-4 md:hidden">
               <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
-              <button className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                {mobileMenuOpen ? <IconClose /> : <IconMenu />}
-              </button>
+              <button className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)]" onClick={()=>setMobileMenuOpen(!mobileMenuOpen)}>{mobileMenuOpen?<IconClose />:<IconMenu />}</button>
             </div>
           </div>
-
-          {/* Mobile Drawer */}
-          <div className={`md:hidden absolute top-full left-0 w-full bg-[var(--drawer-bg)] backdrop-blur-md transition-all duration-300 overflow-hidden ${mobileMenuOpen ? 'max-h-screen py-4 border-b border-[var(--color-border)]' : 'max-h-0 py-0'}`}>
-            <div className="flex flex-col space-y-4 px-6">
-              {navLinks.map((link) => (
-                <button
-                  key={link}
-                  onClick={() => scrollToTarget(link)}
-                  className={`text-left text-lg font-medium transition-colors ${activeSection === link.toLowerCase() ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'}`}
-                >
-                  {link}
-                </button>
-              ))}
-            </div>
+          <div className={`md:hidden absolute top-full left-0 w-full bg-[var(--drawer-bg)] backdrop-blur-md transition-all duration-300 overflow-hidden ${mobileMenuOpen?'max-h-screen py-4 border-b border-[var(--color-border)]':'max-h-0 py-0'}`}>
+            <div className="flex flex-col space-y-4 px-6">{navLinks.map(link => <button key={link} onClick={()=>scrollTo(link)} className={`text-left text-lg font-medium font-body ${activeSection===link.toLowerCase()?'text-[var(--color-primary)]':'text-[var(--color-text-muted)]'}`}>{link}</button>)}</div>
           </div>
         </nav>
       );
     };
 
-    // --- SECTION HERO ---
+    // ── HERO ──
     const Hero = () => {
-      const scrollToProjects = () => {
-        document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+      const canvasRef = useRef();
+      const [showRocky, setShowRocky] = useState(false);
+
+      useEffect(() => {
+        if (canvasRef.current && typeof createStarfield === 'function') {
+          const cleanup = createStarfield(canvasRef.current);
+          return cleanup;
+        }
+      }, []);
+
+      const playRockyBeep = () => {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          [0, 0.15].forEach(delay => {
+            const osc = ctx.createOscillator(); const gain = ctx.createGain();
+            osc.type = 'sine'; osc.frequency.value = 800;
+            gain.gain.setValueAtTime(0.3, ctx.currentTime + delay);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.12);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(ctx.currentTime + delay); osc.stop(ctx.currentTime + delay + 0.12);
+          });
+        } catch(e) {}
       };
+
+      const handleRocky = () => { setShowRocky(true); playRockyBeep(); setTimeout(()=>setShowRocky(false), 2200); };
 
       return (
         <section id="hero" className="relative min-h-screen flex items-center pt-20 overflow-hidden px-6 lg:px-12 max-w-7xl mx-auto">
-          {/* Abstract Shapes */}
-          <div className="absolute top-1/4 right-[10%] w-64 h-64 bg-[var(--color-primary)] opacity-10 rounded-full blur-3xl animate-float-shape-1 z-0"></div>
-          <div className="absolute bottom-1/4 right-[20%] w-48 h-48 bg-[var(--color-text)] opacity-10 rounded-full blur-2xl animate-float-shape-2 z-0"></div>
-          <div className="absolute top-1/3 left-[5%] w-72 h-72 bg-[var(--color-subtle)] opacity-10 rounded-full blur-3xl animate-float-shape-1 z-0" style={{ animationDelay: '2s' }}></div>
-
+          <canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:0,pointerEvents:'none'}} />
           <div className="relative z-10 max-w-3xl">
-            <p className="hero-text-1 text-[var(--color-text-muted)] font-medium text-lg mb-4">Hello, I'm</p>
-            <h1 className="hero-text-2 font-heading font-bold text-[var(--color-primary)] mb-4" style={{ fontSize: 'clamp(48px, 6vw, 80px)', lineHeight: '1.1' }}>
-              Akshatha Dungi
-            </h1>
-            <h2 className="hero-text-3 font-body font-medium text-[var(--color-text)] text-xl md:text-2xl lg:text-3xl mb-6 tracking-wide">
-              Software Developer &middot; Backend Specialist &middot; AI Curious
+            <p className="hero-text-1 mission-label mb-4">MISSION LOG #001 — CREW MANIFEST</p>
+            <h1 className="hero-text-2 font-heading font-bold text-[var(--color-primary)] mb-4 teal-glow" style={{fontSize:'clamp(42px,6vw,76px)',lineHeight:'1.1'}}>Akshatha Dungi</h1>
+            <h2 className="hero-text-3 font-body text-[var(--color-text)] text-lg md:text-xl lg:text-2xl mb-6 tracking-wide">
+              Software Developer · Backend Specialist · AI Curious<span className="cursor-blink text-[var(--color-primary)]">|</span>
             </h2>
             <p className="hero-text-4 text-[var(--color-text-muted)] md:text-lg max-w-2xl leading-relaxed mb-10 opacity-90">
-              I build scalable backends, experiment with LLMs, and thrive on adaptability.
-              Merging solid software engineering principles with dynamic new technologies.
+              I build scalable backends, experiment with LLMs, and thrive on adaptability. Merging solid software engineering principles with dynamic new technologies.
             </p>
-
             <div className="hero-buttons flex flex-wrap gap-4">
-              <button onClick={scrollToProjects} className="bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-semibold px-8 py-3 rounded-full hover:brightness-110 hover:scale-[1.02] transition-all duration-200 ease-out shadow-lg">
-                View Projects
-              </button>
-              <a href="#" className="border-2 border-[var(--btn-ghost-border)] text-[var(--btn-ghost-text)] font-medium px-8 py-3 rounded-full hover:opacity-80 hover:scale-[1.02] transition-all duration-200 ease-out">
-                Download Resume
-              </a>
+              <button onClick={()=>document.getElementById('projects').scrollIntoView({behavior:'smooth'})} className="bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-heading font-semibold px-8 py-3 rounded-full hover:brightness-110 hover:scale-[1.02] transition-all duration-200 shadow-lg glow-pulse">View Projects</button>
+              <a href="#" className="border-2 border-[var(--btn-ghost-border)] text-[var(--btn-ghost-text)] font-body font-medium px-8 py-3 rounded-full hover:opacity-80 hover:scale-[1.02] transition-all duration-200">Download Resume</a>
             </div>
           </div>
+          {/* Rocky Easter Egg */}
+          <div className="absolute bottom-8 right-8 z-20 cursor-pointer select-none" onClick={handleRocky} title="♪ strum strum ♪">
+            <span className="text-xs text-[var(--color-primary)]" style={{opacity:0.05}}>♪ strum strum ♪</span>
+          </div>
+          {showRocky && (
+            <div className="fixed bottom-20 right-12 z-[999] rocky-alien">
+              <div className="rocky-body"><div className="rocky-arm rocky-arm-l"></div><div className="rocky-arm rocky-arm-r"></div></div>
+              <p className="text-center text-[var(--color-highlight)] text-xs mt-2 font-heading">ROCKY!</p>
+            </div>
+          )}
         </section>
       );
     };
 
-    // --- SECTION ABOUT ---
+    // ── ABOUT ──
     const About = () => {
       const [isPlaying, setIsPlaying] = useState(false);
       const audioRef = useRef(null);
       const imgRef = useRef(null);
+      const planetCanvasRef = useRef(null);
 
       useEffect(() => {
         audioRef.current = new Audio('HUS(허밍어반스테레오) - BANANA SHAKE (SPED UP) [Visualizer].mp3');
         audioRef.current.loop = true;
-        return () => {
-          if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current = null;
-          }
-        };
+        return () => { if(audioRef.current){audioRef.current.pause();audioRef.current=null;} };
+      }, []);
+
+      useEffect(() => {
+        if (planetCanvasRef.current && typeof createPlanet === 'function') {
+          const cleanup = createPlanet(planetCanvasRef.current);
+          return cleanup;
+        }
       }, []);
 
       const togglePlay = () => {
         if (!audioRef.current || !imgRef.current) return;
-        
         if (isPlaying) {
           audioRef.current.pause();
-          // Freeze rotation at current angle
           const img = imgRef.current;
           const matrix = window.getComputedStyle(img).transform;
           if (matrix && matrix !== 'none') {
             const values = matrix.split('(')[1].split(')')[0].split(',');
-            const a = parseFloat(values[0]);
-            const b = parseFloat(values[1]);
-            const angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            const angle = Math.round(Math.atan2(parseFloat(values[1]), parseFloat(values[0])) * (180/Math.PI));
             img.style.transform = `rotate(${angle}deg)`;
           }
           img.classList.remove('spinning');
         } else {
           audioRef.current.play();
-          // Resume spinning from frozen angle
-          const img = imgRef.current;
-          img.style.transform = '';
-          img.classList.add('spinning');
+          imgRef.current.style.transform = '';
+          imgRef.current.classList.add('spinning');
         }
         setIsPlaying(!isPlaying);
       };
@@ -340,75 +239,39 @@
         <section id="about" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
           <FadeInSection>
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="flex flex-col items-center md:items-start order-2 md:order-1 justify-center md:justify-start">
+              <div className="flex flex-col items-center md:items-start order-2 md:order-1 justify-center">
                 <div className="flex flex-col items-center gap-4 relative">
-                  <div className="absolute -inset-4 bg-[var(--color-primary)] opacity-20 rounded-full blur-xl z-0"></div>
-                  
-                  {/* Profile image with spin */}
-                  <div className="relative z-10" style={{ transition: 'transform 0.1s' }}>
-                    <img
-                      ref={imgRef}
-                      src="mei.jpeg"
-                      alt="Profile"
-                      className={`w-[280px] h-[280px] rounded-full object-cover border-4 border-[var(--color-primary)] ${isPlaying ? 'spinning' : 'not-spinning'}`}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23CA3CFF' opacity='0.5'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
-                        e.target.className = `w-[280px] h-[280px] rounded-full object-cover border-4 border-[var(--color-primary)] bg-[var(--color-surface)] ${isPlaying ? 'spinning' : 'not-spinning'}`;
-                      }}
-                    />
-                    {!isPlaying && (
-                      <div className="absolute top-4 -right-2 bg-[var(--color-surface)] border border-[var(--color-subtle)] py-2 px-4 rounded-full text-[var(--color-text)] text-sm font-medium shadow-lg animate-float" style={{ animationDelay: '1s' }}>
-                        Adaptable &lt;/&gt;
-                      </div>
-                    )}
+                  {/* Planet canvas behind profile */}
+                  <canvas ref={planetCanvasRef} width="300" height="300" style={{position:'absolute',top:'-10px',left:'50%',transform:'translateX(-50%)',zIndex:0,pointerEvents:'none',opacity:0.6}} />
+                  <div className="relative z-10">
+                    <img ref={imgRef} src="mei.jpeg" alt="Profile" className={`w-[280px] h-[280px] rounded-full object-cover border-4 border-[var(--color-primary)] ${isPlaying?'spinning':'not-spinning'}`} style={{boxShadow:'0 0 24px rgba(0,255,178,0.4)'}}
+                      onError={(e)=>{e.target.onerror=null;e.target.src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300FFB2' opacity='0.5'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";}} />
+                    {!isPlaying && <div className="absolute top-4 -right-2 bg-[var(--color-surface)] border border-[var(--color-primary)] py-2 px-4 rounded-full text-[var(--color-primary)] text-xs font-heading shadow-lg animate-float teal-glow-box" style={{animationDelay:'1s'}}>MISSION READY &lt;/&gt;</div>}
                   </div>
-
-                  {/* Play / Pause button */}
-                  <button
-                    onClick={togglePlay}
-                    className="w-[52px] h-[52px] mt-4 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-[1.08] hover:brightness-110 active:scale-95 z-10 shadow-none border-none"
-                    style={{ background: 'var(--color-primary)', color: 'var(--color-bg)' }}
-                    aria-label={isPlaying ? 'Pause music' : 'Play music'}
-                  >
+                  <button onClick={togglePlay} className="w-[52px] h-[52px] mt-4 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-[1.08] active:scale-95 z-10 glow-pulse" style={{background:'var(--color-primary)',color:'var(--color-bg)'}} aria-label={isPlaying?'Pause':'Play'}>
                     {isPlaying ? <IconPause className="text-[var(--color-bg)]" /> : <IconPlay className="ml-1 text-[var(--color-bg)]" />}
                   </button>
-
-                  {/* Now playing label */}
-                  <div
-                    className="flex items-center gap-2 transition-opacity duration-400 z-10"
-                    style={{ opacity: isPlaying ? 1 : 0, height: '20px' }}
-                  >
-                    <span className="w-[6px] h-[6px] rounded-full pulse-dot" style={{ background: 'var(--color-primary)' }} />
-                    <span className="text-[12px] italic" style={{ color: 'var(--color-subtle)' }}>
-                      ♪ BANANA SHAKE
-                    </span>
+                  <div className="flex items-center gap-2 z-10" style={{opacity:isPlaying?1:0,height:'20px',transition:'opacity 400ms'}}>
+                    <span className="w-[6px] h-[6px] rounded-full pulse-dot" style={{background:'var(--color-primary)'}} />
+                    <span className="text-[12px] italic" style={{color:'var(--color-subtle)'}}>♪ BANANA SHAKE</span>
                   </div>
                 </div>
               </div>
-
               <div className="order-1 md:order-2">
-                <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-6">About Me</h2>
-                <div className="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
-                  <p>
-                    I'm the kind of developer who thrives on change. The tech landscape evolves rapidly, and I believe the best solutions come from being adaptable.
-                  </p>
-                  <p>
-                    One day I'm deep in <span className="text-[var(--color-text)] font-semibold">Java code</span> building robust architectures... The next, establishing <span className="text-[var(--color-text)] font-semibold">LLM pipelines</span> to solve complex logical problems.
-                  </p>
-
-                  <div className="mt-8 bg-[var(--about-card-bg)] border border-[var(--color-border)] rounded-xl p-6 shadow-lg relative z-20">
-                    <h3 className="text-[var(--color-text)] font-semibold mb-3">What makes me adaptable:</h3>
+                <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-6 teal-glow">Mission Profile</h2>
+                <div className="space-y-4 text-[var(--color-text-muted)] leading-relaxed font-body">
+                  <p>I'm the kind of developer who thrives on change. The tech landscape evolves rapidly, and I believe the best solutions come from being adaptable.</p>
+                  <p>One day I'm deep in <span className="text-[var(--color-text)] font-semibold">Java code</span> building robust architectures... The next, establishing <span className="text-[var(--color-text)] font-semibold">LLM pipelines</span> to solve complex logical problems.</p>
+                  <div className="mt-8 bg-[var(--about-card-bg)] border border-[var(--color-border)] rounded-xl p-6 shadow-lg relative z-20 scanlines">
+                    <h3 className="text-[var(--color-primary)] font-heading font-semibold mb-3 text-sm tracking-widest uppercase">Field Notes</h3>
                     <ul className="space-y-3">
-                      <li className="flex items-start"><span className="mr-3">☕</span> <span>Fast learner, fueled by curiosity (and coffee).</span></li>
-                      <li className="flex items-start"><span className="mr-3">🧩</span> <span>I treat every new technology like a puzzle to solve.</span></li>
-                      <li className="flex items-start"><span className="mr-3">🎯</span> <span>Focused on the end goal, flexible on the path to get there.</span></li>
-                      <li className="flex items-start"><span className="mr-3">🤖</span> <span>Continuously integrating AI to optimize my workflow.</span></li>
+                      <li className="flex items-start"><span className="mr-3">☕</span><span>Fast learner, fueled by curiosity (and coffee).</span></li>
+                      <li className="flex items-start"><span className="mr-3">🧩</span><span>I treat every new technology like a puzzle to solve.</span></li>
+                      <li className="flex items-start"><span className="mr-3">🎯</span><span>Focused on the end goal, flexible on the path to get there.</span></li>
+                      <li className="flex items-start"><span className="mr-3">🤖</span><span>Continuously integrating AI to optimize my workflow.</span></li>
                     </ul>
                   </div>
-                  <p className="italic text-[var(--color-subtle)] mt-6">
-                    💼 Open to roles where adaptability is valued as much as expertise.
-                  </p>
+                  <p className="italic text-[var(--color-subtle)] mt-6">💼 Open to roles where adaptability is valued as much as expertise.</p>
                 </div>
               </div>
             </div>
@@ -417,66 +280,36 @@
       );
     };
 
-    // --- SECTION EXPERIENCE ---
+    // ── EXPERIENCE ──
     const Experience = () => {
       const jobs = [
-        {
-          role: "Software Developer",
-          company: "Tech Solutions Inc.",
-          period: "2024 - Present",
-          description: "Scaling backend infrastructure using Spring Boot, PostgreSQL, and AWS. Integrating LLM pipelines via LangChain to automate internal tools, saving 20 hours per week."
-        },
-        {
-          role: "Junior Backend Engineer",
-          company: "Innovate AI",
-          period: "2023 - 2024",
-          description: "Built and maintained REST APIs in Python (FastAPI). Containerized applications with Docker to streamline the deployment process."
-        },
-        {
-          role: "Software Engineering Intern",
-          company: "Startup Co.",
-          period: "2022 - 2023",
-          description: "Contributed to front-end development using React and Tailwind CSS. Developed internal admin dashboards."
-        }
+        { role:"Software Developer", company:"Tech Solutions Inc.", period:"2024 - Present", description:"Scaling backend infrastructure using Spring Boot, PostgreSQL, and AWS. Integrating LLM pipelines via LangChain to automate internal tools, saving 20 hours per week." },
+        { role:"Junior Backend Engineer", company:"Innovate AI", period:"2023 - 2024", description:"Built and maintained REST APIs in Python (FastAPI). Containerized applications with Docker to streamline the deployment process." },
+        { role:"Software Engineering Intern", company:"Startup Co.", period:"2022 - 2023", description:"Contributed to front-end development using React and Tailwind CSS. Developed internal admin dashboards." }
       ];
-
       return (
         <section id="experience" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
           <FadeInSection>
             <div className="text-center mb-16">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2">Experience</h2>
-              <p className="text-[var(--color-subtle)]">My professional journey</p>
+              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2 teal-glow">Mission History</h2>
+              <p className="text-[var(--color-subtle)] font-body">My professional journey</p>
             </div>
-
             <div className="max-w-4xl mx-auto relative cursor-default">
-              {/* Vertical Line */}
-              <div className="absolute left-[15px] md:left-1/2 top-0 bottom-0 w-px bg-[var(--color-border)] -translate-x-1/2 hidden md:block"></div>
-
+              <div className="absolute left-[15px] md:left-1/2 top-0 bottom-0 w-px hidden md:block" style={{background:'linear-gradient(to bottom, #00FFB2, transparent)'}}></div>
               <div className="space-y-12 relative">
                 {jobs.map((job, idx) => (
-                  <div key={idx} className={`relative flex flex-col md:flex-row gap-8 items-start justify-between ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-
-                    {/* Timeline Dot */}
-                    <div className="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-[var(--color-surface)] border-[2px] border-[var(--color-primary)] text-[var(--color-primary)] flex items-center justify-center -translate-x-1/2 z-10 hidden md:flex">
-                      <IconBriefcase size={14} />
+                  <div key={idx} className={`relative flex flex-col md:flex-row gap-8 items-start justify-between ${idx%2===0?'md:flex-row-reverse':''}`}>
+                    <div className="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-[var(--color-surface)] border-2 border-[var(--color-primary)] flex items-center justify-center -translate-x-1/2 z-10 hidden md:flex timeline-dot-glow">
+                      <div className="w-3 h-3 rounded-full bg-[var(--color-primary)]"></div>
                     </div>
-
-                    {/* Content Card */}
-                    <div className="w-full md:w-[45%] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 hover:border-[var(--color-subtle)] transition-colors shadow-lg relative group">
-                      <div className="md:hidden inline-flex items-center gap-2 mb-3 text-[var(--color-primary)] bg-[var(--tech-tag-bg)] px-3 py-1.5 rounded-full text-xs font-bold">
-                        <IconBriefcase size={14} />
-                        <span>{job.period}</span>
-                      </div>
+                    <div className="w-full md:w-[45%] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 transition-colors shadow-lg relative group" style={{borderTop:'2px solid var(--color-primary)'}}>
+                      <div className="md:hidden inline-flex items-center gap-2 mb-3 text-[var(--color-primary)] bg-[var(--tech-tag-bg)] px-3 py-1.5 rounded-full text-xs font-heading"><IconBriefcase size={14} /><span>{job.period}</span></div>
                       <h3 className="font-heading font-bold text-xl text-[var(--color-text)]">{job.role}</h3>
                       <div className="flex justify-between items-center mb-4 mt-1">
-                        <p className="text-[var(--color-text-muted)] font-medium">{job.company}</p>
-                        <span className="text-sm font-semibold bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-3 py-1 rounded-full hidden md:inline-block">
-                          {job.period}
-                        </span>
+                        <p className="text-[var(--color-text-muted)] font-body">{job.company}</p>
+                        <span className="text-xs font-heading bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-3 py-1 rounded-full hidden md:inline-block">{job.period}</span>
                       </div>
-                      <p className="text-[var(--color-text-muted)] leading-relaxed text-sm lg:text-base opacity-90">
-                        {job.description}
-                      </p>
+                      <p className="text-[var(--color-text-muted)] leading-relaxed text-sm font-body opacity-90">{job.description}</p>
                     </div>
                   </div>
                 ))}
@@ -487,81 +320,36 @@
       );
     };
 
-    // --- SECTION PROJECTS ---
+    // ── PROJECTS ──
     const Projects = () => {
       const [filter, setFilter] = useState('All');
-      const filters = ['All', 'Backend', 'AI/ML', 'Web'];
-
+      const filters = ['All','Backend','AI/ML','Web'];
       const projects = [
-        {
-          title: "MicroCommerce",
-          desc: "A scalable Spring Boot microservice backend for a modern e-commerce platform.",
-          tags: ["Java", "Spring Boot", "PostgreSQL", "Kafka"],
-          category: "Backend",
-          github: "#",
-          live: "#"
-        },
-        {
-          title: "LLM Pipeline Toolkit",
-          desc: "A Python-based utility suite for chaining dynamic LLM prompts and managing context windows.",
-          tags: ["Python", "LangChain", "OpenAI API"],
-          category: "AI/ML",
-          github: "#",
-          live: "#"
-        },
-        {
-          title: "DevPortal API",
-          desc: "A comprehensive REST API with role-based auth, rate limiting, and automated Swagger docs.",
-          tags: ["FastAPI", "Python", "Redis", "Docker"],
-          category: "Backend",
-          github: "#",
-          live: "#"
-        }
+        { title:"MicroCommerce", desc:"A scalable Spring Boot microservice backend for a modern e-commerce platform.", tags:["Java","Spring Boot","PostgreSQL","Kafka"], category:"Backend", github:"#", live:"#" },
+        { title:"LLM Pipeline Toolkit", desc:"A Python-based utility suite for chaining dynamic LLM prompts and managing context windows.", tags:["Python","LangChain","OpenAI API"], category:"AI/ML", github:"#", live:"#" },
+        { title:"DevPortal API", desc:"A comprehensive REST API with role-based auth, rate limiting, and automated Swagger docs.", tags:["FastAPI","Python","Redis","Docker"], category:"Backend", github:"#", live:"#" }
       ];
-
-      const filteredProjects = filter === 'All' ? projects : projects.filter(p => p.category === filter);
-
+      const filtered = filter==='All'?projects:projects.filter(p=>p.category===filter);
       return (
         <section id="projects" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
           <FadeInSection>
             <div className="text-center mb-12">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2">Projects</h2>
-              <p className="text-[var(--color-subtle)]">Things I've built</p>
+              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2 teal-glow">Mission Dossiers</h2>
+              <p className="text-[var(--color-subtle)] font-body">Things I've built</p>
             </div>
-
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {filters.map(f => (
-                <button
-                  key={f}
-                  onClick={() => setFilter(f)}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${filter === f ? 'bg-[var(--color-primary)] text-[var(--color-bg)] shadow-md' : 'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-[var(--color-primary)]'}`}
-                >
-                  {f}
-                </button>
-              ))}
+              {filters.map(f => <button key={f} onClick={()=>setFilter(f)} className={`px-5 py-2 rounded-full text-sm font-heading transition-all ${filter===f?'bg-[var(--color-primary)] text-[var(--color-bg)] shadow-md teal-glow-box':'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-[var(--color-primary)]'}`}>{f}</button>)}
             </div>
-
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProjects.map((project, idx) => (
-                <div key={idx} className="group bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-[var(--color-primary)] hover:shadow-lg flex flex-col h-full">
-                  <h3 className="font-heading font-bold text-xl text-[var(--color-text)] mb-3">{project.title}</h3>
-                  <p className="text-[var(--color-text-muted)] mb-6 flex-grow">{project.desc}</p>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tags.map(tag => (
-                      <span key={tag} className="text-xs font-medium bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-3 py-1 rounded-full">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-4 mt-auto pt-4 border-t border-[var(--color-border)]">
-                    <a href={project.github} className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors" aria-label="Github Repo">
-                      <IconGithub size={20} />
-                    </a>
-                    <a href={project.live} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors" aria-label="Live Demo">
-                      <IconExternalLink size={20} />
-                    </a>
+              {filtered.map((project, idx) => (
+                <div key={idx} className="group bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-[var(--color-primary)] hover:shadow-lg flex flex-col h-full relative overflow-hidden" style={{hover_boxShadow:'0 0 20px rgba(0,255,178,0.2)'}}>
+                  <div className="classified-watermark">CLASSIFIED</div>
+                  <h3 className="font-heading font-bold text-xl text-[var(--color-text)] mb-3 relative z-10">{project.title}</h3>
+                  <p className="text-[var(--color-text-muted)] mb-6 flex-grow font-body relative z-10">{project.desc}</p>
+                  <div className="flex flex-wrap gap-2 mb-6 relative z-10">{project.tags.map(tag => <span key={tag} className="text-xs font-body bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-3 py-1 rounded-full">{tag}</span>)}</div>
+                  <div className="flex items-center gap-4 mt-auto pt-4 border-t border-[var(--color-border)] relative z-10">
+                    <a href={project.github} className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"><IconGithub size={20} /></a>
+                    <a href={project.live} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"><IconExternalLink size={20} /></a>
                   </div>
                 </div>
               ))}
@@ -571,47 +359,35 @@
       );
     };
 
-    // --- SECTION SKILLS ---
+    // ── SKILLS ──
     const Skills = () => {
+      const solarRef = useRef();
       const skillCategories = [
-        {
-          title: "Languages",
-          skills: ["Java", "Python", "JavaScript", "SQL", "HTML/CSS"]
-        },
-        {
-          title: "Frameworks & Tools",
-          skills: ["Spring Boot", "FastAPI", "React", "Docker", "Git", "Maven"]
-        },
-        {
-          title: "AI & ML",
-          skills: ["LangChain", "OpenAI API", "Prompt Engineering", "HuggingFace"]
-        },
-        {
-          title: "Cloud & DevOps",
-          skills: ["AWS (Basics)", "CI/CD Actions", "Linux", "REST APIs", "Postman"]
-        }
+        { title:"Languages", skills:["Java","Python","JavaScript","SQL","HTML/CSS"] },
+        { title:"Frameworks & Tools", skills:["Spring Boot","FastAPI","React","Docker","Git","Maven"] },
+        { title:"AI & ML", skills:["LangChain","OpenAI API","Prompt Engineering","HuggingFace"] },
+        { title:"Cloud & DevOps", skills:["AWS (Basics)","CI/CD Actions","Linux","REST APIs","Postman"] }
       ];
-
+      useEffect(() => {
+        if (solarRef.current && typeof createSolarSystem === 'function') {
+          const cleanup = createSolarSystem(solarRef.current);
+          return cleanup;
+        }
+      }, []);
       return (
         <section id="skills" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
-          <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--color-subtle)]/10 to-transparent -z-10 opacity-50"></div>
           <FadeInSection>
-            <div className="text-center mb-16">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2">Skills</h2>
-              <p className="text-[var(--color-subtle)]">What I bring to the table</p>
+            <div className="text-center mb-8">
+              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2 teal-glow">Crew Capabilities</h2>
+              <p className="text-[var(--color-subtle)] font-body">What I bring to the table</p>
             </div>
-
+            <div className="w-full mb-8" style={{height:'220px'}}><canvas ref={solarRef} style={{width:'100%',height:'100%',display:'block'}} /></div>
             <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-              {skillCategories.map((category, idx) => (
-                <div key={idx} className="bg-[var(--about-card-bg)] backdrop-blur-sm border border-[var(--color-border)] rounded-2xl p-6 transition-all hover:border-[var(--color-subtle)]">
-                  <h3 className="font-heading font-bold text-xl text-[var(--color-text)] mb-5">{category.title}</h3>
+              {skillCategories.map((cat, idx) => (
+                <div key={idx} className="bg-[var(--about-card-bg)] backdrop-blur-sm border border-[var(--color-border)] rounded-2xl p-6 transition-all hover:border-[var(--color-primary)]">
+                  <h3 className="font-heading font-bold text-lg text-[var(--color-primary)] mb-5">{cat.title}</h3>
                   <div className="flex flex-wrap gap-3">
-                    {category.skills.map(skill => (
-                      <div key={skill} className="flex items-center gap-2 bg-[var(--skill-pill-bg)] border border-[var(--skill-pill-border)] text-[var(--color-text)] px-4 py-2 rounded-full text-sm shadow-sm transition-transform hover:scale-105">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]"></span>
-                        {skill}
-                      </div>
-                    ))}
+                    {cat.skills.map(skill => <div key={skill} className="flex items-center gap-2 bg-[var(--skill-pill-bg)] border border-[var(--skill-pill-border)] text-[var(--color-text)] px-4 py-2 rounded-full text-sm font-body shadow-sm transition-transform hover:scale-105"><span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]" style={{boxShadow:'0 0 4px #00FFB2'}}></span>{skill}</div>)}
                   </div>
                 </div>
               ))}
@@ -621,31 +397,27 @@
       );
     };
 
-    // --- SECTION CERTIFICATIONS ---
+    // ── CERTIFICATIONS ──
     const Certifications = () => {
       const certs = [
-        { title: "Oracle Certified Professional: Java SE 11", issuer: "Oracle", year: "2023" },
-        { title: "AWS Cloud Practitioner", issuer: "Amazon Web Services", year: "2024" },
-        { title: "Deep Learning Specialization", issuer: "Coursera / DeepLearning.AI", year: "2024" }
+        { title:"Oracle Certified Professional: Java SE 11", issuer:"Oracle", year:"2023" },
+        { title:"AWS Cloud Practitioner", issuer:"Amazon Web Services", year:"2024" },
+        { title:"Deep Learning Specialization", issuer:"Coursera / DeepLearning.AI", year:"2024" }
       ];
-
       return (
         <section id="certifications" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto overflow-hidden">
           <FadeInSection>
             <div className="text-center mb-12">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2">Certifications</h2>
-              <p className="text-[var(--color-subtle)]">Validating knowledge with verifiable credentials</p>
+              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2 teal-glow">Mission Credentials</h2>
+              <p className="text-[var(--color-subtle)] font-body">Validating knowledge with verifiable credentials</p>
             </div>
-
             <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto pb-8 hide-scrollbar snap-x touch-pan-x">
               {certs.map((cert, idx) => (
-                <div key={idx} className="min-w-[280px] md:min-w-0 snap-center bg-[var(--color-surface)] border border-[var(--color-border)] border-l-[3px] border-l-[var(--color-primary)] rounded-xl p-6 shadow-lg relative group">
-                  <div className="absolute top-5 right-5 text-[var(--color-text-muted)] opacity-20 group-hover:text-[var(--color-primary)] transition-colors group-hover:opacity-50">
-                    <IconAward size={48} />
-                  </div>
-                  <h3 className="font-heading font-bold text-[var(--color-text)] text-lg md:text-xl pr-8 mb-2 z-10 relative">{cert.title}</h3>
-                  <p className="text-[var(--color-text-muted)] mb-3 z-10 relative">{cert.issuer}</p>
-                  <span className="inline-block text-xs font-semibold bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-2 py-1 rounded z-10 relative">{cert.year}</span>
+                <div key={idx} className="min-w-[280px] md:min-w-0 snap-center bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl p-6 shadow-lg relative group" style={{borderLeft:'3px solid var(--color-primary)'}}>
+                  <div className="absolute top-5 right-5 text-[var(--color-text-muted)] opacity-20 group-hover:text-[var(--color-primary)] transition-colors group-hover:opacity-50"><IconAward size={48} /></div>
+                  <h3 className="font-heading font-bold text-[var(--color-text)] text-base md:text-lg pr-8 mb-2 z-10 relative">{cert.title}</h3>
+                  <p className="text-[var(--color-text-muted)] mb-3 z-10 relative font-body">{cert.issuer}</p>
+                  <span className="inline-block text-xs font-heading bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-2 py-1 rounded z-10 relative">{cert.year}</span>
                 </div>
               ))}
             </div>
@@ -654,25 +426,17 @@
       );
     };
 
-    // --- SECTION CONTACT ---
+    // ── CONTACT ──
     const Contact = () => {
-      const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+      const [formData, setFormData] = useState({name:'',email:'',message:''});
       const [errors, setErrors] = useState({});
-      const [submitState, setSubmitState] = useState('idle'); // 'idle'|'loading'|'success'|'error'
+      const [submitState, setSubmitState] = useState('idle');
       const [inboxOpen, setInboxOpen] = useState(false);
       const [messages, setMessages] = useState([]);
       const [loadingMsgs, setLoadingMsgs] = useState(false);
 
       useEffect(() => {
-        const handler = (e) => {
-          if (e.ctrlKey && e.shiftKey && e.key === 'M') {
-            setInboxOpen(prev => {
-              const opening = !prev;
-              if (opening) loadMessages();
-              return opening;
-            });
-          }
-        };
+        const handler = (e) => { if(e.ctrlKey&&e.shiftKey&&e.key==='M'){setInboxOpen(prev=>{const o=!prev;if(o)loadMessages();return o;});} };
         window.addEventListener('keydown', handler);
         return () => window.removeEventListener('keydown', handler);
       }, []);
@@ -682,239 +446,102 @@
         try {
           const result = await window.storage.list('messages:');
           const msgs = [];
-          for (const key of result) {
-            try {
-              const val = await window.storage.get(key);
-              if (val) msgs.push(JSON.parse(val));
-            } catch (e) { console.error("Parse err", e); }
-          }
-          msgs.sort((a, b) => b.id - a.id);
+          for (const key of result) { try { const val = await window.storage.get(key); if(val) msgs.push(JSON.parse(val)); } catch(e){} }
+          msgs.sort((a,b)=>b.id-a.id);
           setMessages(msgs);
-        } catch (e) {
-          console.error("Failed to load messages:", e);
-        } finally {
-          setLoadingMsgs(false);
-        }
+        } catch(e){} finally { setLoadingMsgs(false); }
       };
 
-      const handleDelete = async (id) => {
-        try {
-          await window.storage.delete('messages:' + id);
-          setMessages(prev => prev.filter(m => m.id !== id));
-        } catch (e) {
-          console.error("Failed to delete message:", e);
-        }
-      };
+      const handleDelete = async (id) => { try { await window.storage.delete('messages:'+id); setMessages(prev=>prev.filter(m=>m.id!==id)); } catch(e){} };
 
       const validate = () => {
-        const newErrors = {};
-        if (!formData.name.trim()) newErrors.name = 'Name is required';
-        if (!formData.email.trim()) {
-          newErrors.email = 'Email is required';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-          newErrors.email = 'Invalid email address';
-        }
-        if (!formData.message.trim()) newErrors.message = 'Message is required';
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        const ne = {};
+        if(!formData.name.trim()) ne.name='Name is required';
+        if(!formData.email.trim()) ne.email='Email is required';
+        else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) ne.email='Invalid email';
+        if(!formData.message.trim()) ne.message='Message is required';
+        setErrors(ne); return Object.keys(ne).length===0;
       };
 
       const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!validate()) return;
-
+        e.preventDefault(); if(!validate()) return;
         setSubmitState('loading');
-        const msg = {
-          id: Date.now(),
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          message: formData.message.trim(),
-          sentAt: new Date().toISOString()
-        };
-
-        try {
-          await window.storage.set('messages:' + msg.id, JSON.stringify(msg));
-          setSubmitState('success');
-          setFormData({ name: '', email: '', message: '' });
-        } catch (err) {
-          console.error("Storage error:", err);
-          setSubmitState('error');
-        }
+        const msg = {id:Date.now(),name:formData.name.trim(),email:formData.email.trim(),message:formData.message.trim(),sentAt:new Date().toISOString()};
+        try { await window.storage.set('messages:'+msg.id, JSON.stringify(msg)); setSubmitState('success'); setFormData({name:'',email:'',message:''}); }
+        catch(err) { setSubmitState('error'); }
       };
 
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-        if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
-      };
-
-      const inputClasses = "w-full bg-[var(--input-bg)] border border-[var(--input-border)] rounded-[10px] px-[14px] py-[10px] text-[var(--color-text)] placeholder-[var(--color-text-muted)] opacity-80 focus:opacity-100 focus:outline-none focus:ring-[2px] focus:ring-[var(--color-primary)] focus:border-transparent transition-all";
+      const handleChange = (e) => { const {name,value}=e.target; setFormData(prev=>({...prev,[name]:value})); if(errors[name]) setErrors(prev=>({...prev,[name]:''})); };
+      const inputClasses = "w-full bg-[var(--input-bg)] border border-[var(--input-border)] rounded-[10px] px-[14px] py-[10px] text-[var(--color-text)] font-body placeholder-[var(--color-text-muted)] opacity-80 focus:opacity-100 focus:outline-none focus:ring-[2px] focus:ring-[var(--color-primary)] focus:border-transparent transition-all";
 
       return (
         <section id="contact" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
-          <div className="absolute bottom-0 left-[20%] w-96 h-96 bg-[var(--color-primary)] opacity-10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
-
-          {/* Admin Inbox Overlay */}
+          {/* Admin Inbox */}
           {inboxOpen && (
             <div className="fixed inset-0 z-[9999] bg-[var(--color-bg)] overflow-y-auto w-full h-full text-[var(--color-text)]">
               <div className="max-w-4xl mx-auto px-6 py-8">
                 <div className="flex justify-between items-center mb-8 pb-4 border-b border-[var(--color-border)]">
-                  <h2 className="font-heading font-bold text-2xl text-[var(--color-primary)]">📬 Message Inbox</h2>
-                  <button onClick={() => setInboxOpen(false)} className="border border-[var(--color-subtle)] text-[var(--color-text)] px-4 py-2 rounded-lg hover:bg-[var(--color-subtle)]/10 transition-colors">✕ Close</button>
+                  <h2 className="font-heading font-bold text-2xl text-[var(--color-primary)] teal-glow">📡 MISSION CONTROL — Inbox</h2>
+                  <button onClick={()=>setInboxOpen(false)} className="border border-[var(--color-subtle)] text-[var(--color-text)] px-4 py-2 rounded-lg hover:bg-[var(--color-subtle)]/10 transition-colors font-body">✕ Close</button>
                 </div>
-
-                {loadingMsgs ? (
-                  <div className="flex justify-center py-20">
-                    <div className="w-10 h-10 border-4 border-[var(--color-primary)] opacity-30 border-t-[var(--color-primary)] rounded-full animate-spin"></div>
-                  </div>
-                ) : messages.length === 0 ? (
-                  <div className="text-center py-20 text-[var(--color-subtle)]">No messages yet.</div>
-                ) : (
-                  <div className="space-y-4">
-                    {messages.map(msg => (
-                      <div key={msg.id} className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[12px] px-5 py-4 relative group">
-                        <div className="flex justify-between items-start mb-1">
-                          <h4 className="font-bold text-[var(--color-text)]">{msg.name}</h4>
-                          <span className="text-xs text-[var(--color-text-muted)] opacity-70">{new Date(msg.sentAt).toLocaleString()}</span>
-                        </div>
-                        <p className="text-[13px] text-[var(--color-text-muted)] mb-3">{msg.email}</p>
-                        <div className="h-px bg-[var(--color-border)] mb-3 w-full"></div>
-                        <p className="text-[var(--color-text-muted)] leading-[1.6] whitespace-pre-wrap">{msg.message}</p>
-
-                        <button
-                          onClick={() => handleDelete(msg.id)}
-                          className="mt-4 text-sm text-[#FF6B6B] hover:bg-[#FF6B6B]/10 px-3 py-1.5 rounded-md transition-colors border border-transparent float-right"
-                        >
-                          Delete
-                        </button>
-                        <div className="clear-both"></div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                {loadingMsgs ? <div className="flex justify-center py-20"><div className="w-10 h-10 border-4 border-[var(--color-primary)] opacity-30 border-t-[var(--color-primary)] rounded-full animate-spin"></div></div>
+                : messages.length===0 ? <div className="text-center py-20 text-[var(--color-subtle)] font-body">No transmissions received.</div>
+                : <div className="space-y-4">{messages.map(msg => (
+                    <div key={msg.id} className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[12px] px-5 py-4 relative">
+                      <div className="flex justify-between items-start mb-1"><h4 className="font-heading font-bold text-[var(--color-text)]">{msg.name}</h4><span className="text-xs text-[var(--color-text-muted)] opacity-70 font-body">{new Date(msg.sentAt).toLocaleString()}</span></div>
+                      <p className="text-[13px] text-[var(--color-text-muted)] mb-3 font-body">{msg.email}</p>
+                      <div className="h-px bg-[var(--color-border)] mb-3 w-full"></div>
+                      <p className="text-[var(--color-text-muted)] leading-[1.6] whitespace-pre-wrap font-body">{msg.message}</p>
+                      <button onClick={()=>handleDelete(msg.id)} className="mt-4 text-sm text-[#FF6B6B] hover:bg-[#FF6B6B]/10 px-3 py-1.5 rounded-md transition-colors float-right font-body">Delete</button>
+                      <div className="clear-both"></div>
+                    </div>
+                  ))}</div>}
               </div>
             </div>
           )}
 
           <FadeInSection>
             <div className="text-center mb-16">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-3">Let's Connect</h2>
-              <p className="text-[var(--color-text-muted)] max-w-xl mx-auto">
-                I'm open to opportunities, collaborations, or just a good tech conversation.
-              </p>
+              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-3 teal-glow">Open Transmission</h2>
+              <p className="text-[var(--color-text-muted)] max-w-xl mx-auto font-body">I'm open to opportunities, collaborations, or just a good tech conversation.</p>
             </div>
-
             <div className="grid lg:grid-cols-2 gap-12">
-              {/* Left: Contact Info */}
               <div className="space-y-4">
-                <a href="mailto:akshatha@example.com" className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-subtle)] transition-colors group">
-                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] transition-colors">
-                    <IconMail size={24} />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm text-[var(--color-subtle)] font-medium">Email</p>
-                    <p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors">akshatha@example.com</p>
-                  </div>
+                <a href="mailto:akshatha@example.com" className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-primary)] transition-colors group">
+                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] group-hover:shadow-[0_0_12px_rgba(0,255,178,0.4)] transition-all"><IconMail size={24} /></div>
+                  <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">Email</p><p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] font-body">akshatha@example.com</p></div>
                 </a>
-
-                <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-subtle)] transition-colors group">
-                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] transition-colors">
-                    <IconLinkedin size={24} />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm text-[var(--color-subtle)] font-medium">LinkedIn</p>
-                    <p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors">linkedin.com/in/akshatha</p>
-                  </div>
+                <a href="#" className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-primary)] transition-colors group">
+                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] group-hover:shadow-[0_0_12px_rgba(0,255,178,0.4)] transition-all"><IconLinkedin size={24} /></div>
+                  <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">LinkedIn</p><p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] font-body">linkedin.com/in/akshatha</p></div>
                 </a>
-
-                <a href="#" target="_blank" rel="noopener noreferrer" className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-subtle)] transition-colors group">
-                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] transition-colors">
-                    <IconGithub size={24} />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm text-[var(--color-subtle)] font-medium">GitHub</p>
-                    <p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors">github.com/akshatha</p>
-                  </div>
+                <a href="#" className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-primary)] transition-colors group">
+                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] group-hover:shadow-[0_0_12px_rgba(0,255,178,0.4)] transition-all"><IconGithub size={24} /></div>
+                  <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">GitHub</p><p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] font-body">github.com/akshatha</p></div>
                 </a>
-
-                <div className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl group transition-colors">
-                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)]">
-                    <IconMapPin size={24} />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm text-[var(--color-subtle)] font-medium">Location</p>
-                    <p className="text-[var(--color-text-muted)]">India</p>
-                  </div>
+                <div className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl">
+                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)]"><IconMapPin size={24} /></div>
+                  <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">Location</p><p className="text-[var(--color-text-muted)] font-body">India</p></div>
                 </div>
               </div>
-
-              {/* Right: Form Area */}
               <div>
-                {submitState === 'success' ? (
-                  <div className="bg-[#CAFFD0]/10 border border-[#CAFFD0]/40 rounded-2xl p-8 text-center">
-                    <div className="w-16 h-16 bg-[#CAFFD0]/20 text-[#CAFFD0] flex items-center justify-center rounded-full mx-auto mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
-                    </div>
-                    <h3 className="font-heading font-bold text-2xl text-[#CAFFD0] mb-2">Message sent! I'll get back to you soon.</h3>
-                    <p className="italic text-[var(--color-subtle)] mb-6">— Akshatha</p>
-                    <button onClick={() => setSubmitState('idle')} className="text-sm border border-[#CAFFD0]/50 font-medium text-[#CAFFD0] hover:bg-[#CAFFD0]/10 px-4 py-2 rounded-lg transition-colors">
-                      Send another
-                    </button>
+                {submitState==='success' ? (
+                  <div className="bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/40 rounded-2xl p-8 text-center">
+                    <div className="w-16 h-16 bg-[var(--color-primary)]/20 text-[var(--color-primary)] flex items-center justify-center rounded-full mx-auto mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg></div>
+                    <h3 className="font-heading font-bold text-2xl text-[var(--color-primary)] mb-2">Transmission received.</h3>
+                    <p className="italic text-[var(--color-subtle)] mb-6 font-body">Ryland Grace will respond shortly. — Rocky approves ♪</p>
+                    <button onClick={()=>setSubmitState('idle')} className="text-sm border border-[var(--color-primary)]/50 font-heading text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 px-4 py-2 rounded-lg">Send another</button>
                   </div>
                 ) : (
-                  <div className="bg-[var(--contact-form-bg)] border border-[var(--color-border)] p-8 rounded-[16px]">
+                  <div className="bg-[var(--contact-form-bg)] border border-[var(--color-border)] p-8 rounded-[16px] scanlines">
                     <h3 className="font-heading font-bold text-2xl text-[var(--color-primary)] mb-6">Send a Message</h3>
-
-                    {submitState === 'error' && (
-                      <div className="bg-[#FF6B6B]/10 border border-[#FF6B6B]/40 rounded-[10px] p-4 text-center mb-6">
-                        <p className="text-[#FF6B6B] font-medium text-sm">Oops, something went wrong. Please try again.</p>
-                      </div>
-                    )}
-
+                    {submitState==='error' && <div className="bg-[#FF6B6B]/10 border border-[#FF6B6B]/40 rounded-[10px] p-4 text-center mb-6"><p className="text-[#FF6B6B] font-body text-sm">Transmission failed. Please try again.</p></div>}
                     <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                      <div>
-                        <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          className={inputClasses}
-                          placeholder="Your Name"
-                        />
-                        {errors.name && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1">{errors.name}</p>}
-                      </div>
-                      <div>
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          className={inputClasses}
-                          placeholder="your@email.com"
-                        />
-                        {errors.email && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1">{errors.email}</p>}
-                      </div>
-                      <div>
-                        <textarea
-                          name="message"
-                          value={formData.message}
-                          onChange={handleChange}
-                          className={`${inputClasses} resize-y min-h-[120px]`}
-                          placeholder="What's on your mind?"
-                        ></textarea>
-                        {errors.message && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1">{errors.message}</p>}
-                      </div>
-
-                      <button
-                        type="submit"
-                        disabled={submitState === 'loading'}
-                        className="w-full mt-2 bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-bold rounded-[10px] py-[10px] px-[24px] hover:scale-[1.02] transition-all duration-200 disabled:opacity-70 disabled:hover:scale-100 flex items-center justify-center min-h-[44px] shadow-sm"
-                      >
-                        {submitState === 'loading' ? (
-                          <span className="w-5 h-5 border-[2px] border-[var(--btn-primary-text)] opacity-30 border-t-white rounded-full animate-spin"></span>
-                        ) : (
-                          "Send Message"
-                        )}
+                      <div><input type="text" name="name" value={formData.name} onChange={handleChange} className={inputClasses} placeholder="Your Name" />{errors.name && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1 font-body">{errors.name}</p>}</div>
+                      <div><input type="email" name="email" value={formData.email} onChange={handleChange} className={inputClasses} placeholder="your@email.com" />{errors.email && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1 font-body">{errors.email}</p>}</div>
+                      <div><textarea name="message" value={formData.message} onChange={handleChange} className={`${inputClasses} resize-y min-h-[120px]`} placeholder="What's on your mind?"></textarea>{errors.message && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1 font-body">{errors.message}</p>}</div>
+                      <button type="submit" disabled={submitState==='loading'} className="w-full mt-2 bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-heading font-bold rounded-[10px] py-[10px] px-[24px] hover:scale-[1.02] transition-all duration-200 disabled:opacity-70 flex items-center justify-center min-h-[44px] glow-pulse">
+                        {submitState==='loading' ? <span className="w-5 h-5 border-[2px] border-[var(--btn-primary-text)] opacity-30 border-t-white rounded-full animate-spin"></span> : "Transmit Message"}
                       </button>
                     </form>
                   </div>
@@ -926,44 +553,30 @@
       );
     };
 
-    // --- SECTION FOOTER ---
+    // ── FOOTER ──
     const Footer = () => (
-      <footer className="border-t border-[var(--color-border)] py-8 text-center mt-12 mb-4">
-        <p className="text-[var(--color-subtle)] text-sm">
-          &copy; 2026 Akshatha Dungi — Built with React & Tailwind
-        </p>
+      <footer className="border-t py-8 text-center mt-12 mb-4" style={{borderColor:'var(--color-primary)',borderTopWidth:'1px',boxShadow:'0 -1px 20px rgba(0,255,178,0.1)'}}>
+        <p className="text-[var(--color-subtle)] text-sm font-body">&copy; 2026 Akshatha Dungi — Built aboard the Hail Mary · React & Tailwind</p>
       </footer>
     );
 
-    // --- APP ROOT ---
+    // ── APP ROOT ──
     const App = () => {
       const [activeSection, setActiveSection] = useState('hero');
-      const [isDark, setIsDark] = useState(() => {
-        return localStorage.getItem('theme') !== 'light';
-      });
+      const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') !== 'light');
 
-      // Sync theme to document element and storage
       useEffect(() => {
-        if (isDark) {
-          document.documentElement.removeAttribute('data-theme');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          document.documentElement.setAttribute('data-theme', 'light');
-          localStorage.setItem('theme', 'light');
-        }
+        if (isDark) { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('theme','dark'); }
+        else { document.documentElement.setAttribute('data-theme','light'); localStorage.setItem('theme','light'); }
       }, [isDark]);
-
-      const toggleTheme = () => setIsDark(!isDark);
 
       useEffect(() => {
         const handleScrollSpy = () => {
-          const sections = ['hero', 'about', 'experience', 'projects', 'skills', 'certifications', 'contact'];
+          const sections = ['hero','about','experience','projects','skills','certifications','contact'];
           const scrollPos = window.scrollY + 100;
           for (const section of sections) {
             const el = document.getElementById(section);
-            if (el && el.offsetTop <= scrollPos && el.offsetTop + el.offsetHeight > scrollPos) {
-              setActiveSection(section);
-            }
+            if (el && el.offsetTop <= scrollPos && el.offsetTop + el.offsetHeight > scrollPos) setActiveSection(section);
           }
         };
         window.addEventListener('scroll', handleScrollSpy);
@@ -972,24 +585,14 @@
 
       return (
         <div className="font-body text-[var(--color-text-muted)] min-h-screen relative selection:bg-[var(--color-primary)] selection:opacity-30 selection:text-[var(--color-text)]">
-          <Navbar activeSection={activeSection} isDark={isDark} toggleTheme={toggleTheme} />
-          <main>
-            <Hero />
-            <About />
-            <Experience />
-            <Projects />
-            <Skills />
-            <Certifications />
-            <Contact />
-          </main>
+          <Navbar activeSection={activeSection} isDark={isDark} toggleTheme={()=>setIsDark(!isDark)} />
+          <main><Hero /><About /><Experience /><Projects /><Skills /><Certifications /><Contact /></main>
           <Footer />
         </div>
       );
     };
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
 </body>
-
 </html>
