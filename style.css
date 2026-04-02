@@ -1,55 +1,95 @@
-/* ===== PROJECT HAIL MARY — SPACE THEME ===== */
+/* ===== PROJECT HAIL MARY — NEBULA THEME ===== */
 
 :root {
-    --color-bg: #03060F;
-    --color-surface: #080D1A;
-    --color-primary: #00FFB2;
-    --color-highlight: #FFB347;
-    --color-text: #E8F4FF;
-    --color-text-muted: #8BAED4;
-    --color-subtle: #3A5068;
-    --color-border: #0E2030;
+    --color-bg: #04020E;
+    --color-surface: #0A0618;
+    --color-surface-2: #110825;
 
-    --nav-bg: rgba(3,6,15,0.85);
-    --tech-tag-bg: #0A1A2E;
-    --tech-tag-text: #00FFB2;
-    --skill-pill-bg: #080D1A;
-    --skill-pill-border: #0E2030;
-    --about-card-bg: rgba(8,13,26,0.8);
-    --btn-primary-bg: #00FFB2;
-    --btn-primary-text: #03060F;
-    --btn-ghost-border: #00FFB2;
-    --btn-ghost-text: #00FFB2;
-    --input-bg: #080D1A;
-    --input-border: #0E2030;
-    --contact-form-bg: rgba(8,13,26,0.9);
-    --drawer-bg: rgba(3,6,15,0.95);
+    /* Primary accent — Astrophage bioluminescent green */
+    --color-primary: #39FF8E;
+
+    /* Secondary accents — pulled from Webb nebula imagery */
+    --color-nebula-pink: #FF4D8C;
+    --color-nebula-gold: #FFD166;
+    --color-nebula-blue: #4FC3F7;
+    --color-nebula-violet: #C77DFF;
+    --color-nebula-crimson: #FF6B6B;
+
+    /* Text */
+    --color-text: #F0EEFF;
+    --color-text-muted: #9B8EC4;
+    --color-subtle: #3D2F6A;
+    --color-border: #1A1035;
+
+    /* Nav / Drawer */
+    --nav-bg: rgba(4, 2, 14, 0.88);
+    --drawer-bg: rgba(4, 2, 14, 0.96);
+
+    /* Tags & Pills */
+    --tech-tag-bg: #110825;
+    --tech-tag-text: #39FF8E;
+
+    /* Skill pills */
+    --skill-pill-bg: #0A0618;
+    --skill-pill-border: #1A1035;
+
+    /* About / Cards */
+    --about-card-bg: rgba(10, 6, 24, 0.85);
+
+    /* Buttons */
+    --btn-primary-bg: linear-gradient(135deg, #39FF8E 0%, #4FC3F7 100%);
+    --btn-primary-text: #04020E;
+    --btn-ghost-border: #C77DFF;
+    --btn-ghost-text: #C77DFF;
+
+    /* Inputs */
+    --input-bg: #0A0618;
+    --input-border: #1A1035;
+    --contact-form-bg: rgba(10, 6, 24, 0.92);
+
+    /* Gradient mesh for hero background (used in CSS) */
+    --hero-mesh-1: #39FF8E;
+    --hero-mesh-2: #C77DFF;
+    --hero-mesh-3: #FF4D8C;
+    --hero-mesh-4: #FFD166;
 }
 
 [data-theme="light"] {
-    --color-bg: #EAF3FF;
-    --color-surface: #D6E8FF;
-    --color-primary: #006B4F;
-    --color-highlight: #D98C2E;
-    --color-text: #0A1628;
-    --color-text-muted: #2A4A6A;
-    --color-subtle: #6A8FAF;
-    --color-border: rgba(0,107,79,0.2);
+    --color-bg: #FFF8EE;
+    --color-surface: #FFF0D6;
+    --color-surface-2: #FFE8C2;
 
-    --nav-bg: rgba(234,243,255,0.88);
-    --tech-tag-bg: rgba(0,107,79,0.1);
-    --tech-tag-text: #006B4F;
-    --skill-pill-bg: rgba(0,107,79,0.08);
-    --skill-pill-border: rgba(0,107,79,0.25);
-    --about-card-bg: rgba(214,232,255,0.7);
-    --btn-primary-bg: #006B4F;
-    --btn-primary-text: #E8F4FF;
-    --btn-ghost-border: #006B4F;
-    --btn-ghost-text: #006B4F;
-    --input-bg: rgba(255,255,255,0.6);
-    --input-border: rgba(0,107,79,0.3);
-    --contact-form-bg: rgba(214,232,255,0.6);
-    --drawer-bg: rgba(234,243,255,0.95);
+    --color-primary: #008C5A;
+    --color-nebula-pink: #D6006A;
+    --color-nebula-gold: #C97A00;
+    --color-nebula-blue: #0077B6;
+    --color-nebula-violet: #6A00C9;
+    --color-nebula-crimson: #C0392B;
+
+    --color-text: #12041E;
+    --color-text-muted: #4A3570;
+    --color-subtle: #B08FD0;
+    --color-border: #E8D5B7;
+
+    --nav-bg: rgba(255, 248, 238, 0.88);
+    --drawer-bg: rgba(255, 248, 238, 0.96);
+
+    --tech-tag-bg: #FFE8C2;
+    --tech-tag-text: #008C5A;
+
+    --skill-pill-bg: #FFF0D6;
+    --skill-pill-border: #E8D5B7;
+
+    --about-card-bg: rgba(255, 240, 214, 0.9);
+
+    --btn-primary-bg: linear-gradient(135deg, #008C5A 0%, #0077B6 100%);
+    --btn-primary-text: #FFF8EE;
+    --btn-ghost-border: #6A00C9;
+    --btn-ghost-text: #6A00C9;
+
+    --input-bg: #FFF0D6;
+    --input-border: #E8D5B7;
+    --contact-form-bg: rgba(255, 240, 214, 0.95);
 }
 
 html {
@@ -73,13 +113,40 @@ body {
 ::-webkit-scrollbar-track { background: var(--color-bg); }
 ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 3px; }
 
-/* ===== GLOW EFFECTS ===== */
-.teal-glow {
-    text-shadow: 0 0 10px #00FFB2, 0 0 30px rgba(0,255,178,0.3);
+/* ===== GRADIENT TEXT UTILS ===== */
+.logo-gradient {
+    background: linear-gradient(135deg, #39FF8E, #4FC3F7);
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
-.teal-glow-box {
-    box-shadow: 0 0 15px rgba(0,255,178,0.3), 0 0 30px rgba(0,255,178,0.1);
+.name-gradient {
+    background: linear-gradient(135deg, #F0EEFF 0%, #C77DFF 50%, #4FC3F7 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* Section-specific heading gradients */
+.heading-hero { background: linear-gradient(135deg, #F0EEFF, #C77DFF); -webkit-background-clip: text; color: transparent; }
+.heading-about { background: linear-gradient(135deg, #39FF8E, #4FC3F7); -webkit-background-clip: text; color: transparent; }
+.heading-experience { background: linear-gradient(135deg, #FFD166, #FF6B6B); -webkit-background-clip: text; color: transparent; }
+.heading-projects { background: linear-gradient(135deg, #FF4D8C, #C77DFF); -webkit-background-clip: text; color: transparent; }
+.heading-skills { background: linear-gradient(135deg, #4FC3F7, #39FF8E); -webkit-background-clip: text; color: transparent; }
+.heading-certs { background: linear-gradient(135deg, #C77DFF, #FFD166); -webkit-background-clip: text; color: transparent; }
+.heading-contact { background: linear-gradient(135deg, #39FF8E, #FF4D8C); -webkit-background-clip: text; color: transparent; }
+
+
+/* ===== GLOW EFFECTS ===== */
+.teal-glow {
+    text-shadow: 0 0 10px var(--color-primary), 0 0 25px rgba(57,255,142,0.35);
+}
+
+.glow-pulse {
+    animation: glow-pulse 2.5s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 8px var(--color-primary); }
+    50% { box-shadow: 0 0 20px var(--color-primary), 0 0 35px rgba(57,255,142,0.25); }
 }
 
 /* ===== FLOATING ANIMATIONS ===== */
@@ -92,22 +159,22 @@ body {
 }
 
 @keyframes floatShape1 {
-    0%, 100% { transform: translate(0px, 0px) scale(1); }
-    50% { transform: translate(30px, -50px) scale(1.1); }
+    0%, 100% { transform: translate(0px, 0px) scale(1.05); opacity: 0.2; }
+    50% { transform: translate(30px, -40px) scale(1.15); opacity: 0.35; }
 }
 .animate-float-shape-1 {
-    animation: floatShape1 8s ease-in-out infinite;
+    animation: floatShape1 9s ease-in-out infinite;
 }
 
 @keyframes floatShape2 {
-    0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
-    50% { transform: translate(-40px, 40px) rotate(45deg); }
+    0%, 100% { transform: translate(0px, 0px) rotate(0deg); opacity: 0.15; }
+    50% { transform: translate(-50px, 30px) rotate(35deg); opacity: 0.25; }
 }
 .animate-float-shape-2 {
-    animation: floatShape2 12s ease-in-out infinite;
+    animation: floatShape2 11s ease-in-out infinite;
 }
 
-/* ===== FADE IN / SCROLL REVEAL ===== */
+/* ===== FADE IN SECTION ===== */
 .fade-in-section {
     opacity: 0;
     transform: translateY(30px);
@@ -140,38 +207,8 @@ body {
     animation: terminal-blink 1s step-end infinite;
 }
 
-/* ===== GLOW PULSE ===== */
-@keyframes glow-pulse {
-    0%, 100% { box-shadow: 0 0 8px #00FFB2; }
-    50% { box-shadow: 0 0 22px #00FFB2, 0 0 40px rgba(0,255,178,0.2); }
-}
-.glow-pulse {
-    animation: glow-pulse 2.5s ease-in-out infinite;
-}
 
-/* ===== TIMELINE PULSE DOT ===== */
-@keyframes timeline-pulse {
-    0%, 100% { box-shadow: 0 0 6px #00FFB2, 0 0 12px rgba(0,255,178,0.3); }
-    50% { box-shadow: 0 0 14px #00FFB2, 0 0 28px rgba(0,255,178,0.5); }
-}
-.timeline-dot-glow {
-    animation: timeline-pulse 2s ease-in-out infinite;
-}
-
-/* ===== SHOOTING STAR ===== */
-@keyframes shooting-star {
-    0% { transform: translateX(0) translateY(0); opacity: 1; width: 80px; }
-    100% { transform: translateX(250px) translateY(100px); opacity: 0; width: 0; }
-}
-
-/* ===== ASTROPHAGE DRIFT (CSS fallback) ===== */
-@keyframes astrophage-drift {
-    0% { transform: translateY(0) scale(1); opacity: 0.6; }
-    50% { opacity: 1; }
-    100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
-}
-
-/* ===== SCANLINES OVERLAY ===== */
+/* ===== SCANLILNES OVERLAY ===== */
 .scanlines {
     position: relative;
 }
@@ -183,15 +220,15 @@ body {
         0deg,
         transparent,
         transparent 2px,
-        rgba(0,255,178,0.03) 2px,
-        rgba(0,255,178,0.03) 4px
+        rgba(57,255,142,0.03) 2px,
+        rgba(57,255,142,0.03) 4px
     );
     pointer-events: none;
     z-index: 1;
     border-radius: inherit;
 }
 
-/* ===== RECORD SPINNING (profile image) ===== */
+/* ===== RECORD SPINNING ===== */
 @keyframes spin-record {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
@@ -201,15 +238,6 @@ body {
 }
 .not-spinning {
     animation: none;
-}
-
-/* ===== PULSE DOT (now playing) ===== */
-@keyframes pulse-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-}
-.pulse-dot {
-    animation: pulse-dot 1.2s ease-in-out infinite;
 }
 
 /* ===== HIDE SCROLLBAR ===== */
@@ -249,17 +277,16 @@ body {
 .rocky-body {
     width: 40px;
     height: 50px;
-    background: #FFB347;
+    background: var(--color-nebula-gold);
     border-radius: 50% 50% 40% 40%;
     position: relative;
 }
-.rocky-body::before,
-.rocky-body::after {
+.rocky-body::before, .rocky-body::after {
     content: '';
     position: absolute;
     width: 12px;
     height: 12px;
-    background: #03060F;
+    background: #04020E;
     border-radius: 50%;
     top: 12px;
 }
@@ -268,7 +295,7 @@ body {
 .rocky-arm {
     width: 8px;
     height: 28px;
-    background: #FFB347;
+    background: var(--color-nebula-gold);
     border-radius: 4px;
     position: absolute;
     top: 20px;
@@ -276,7 +303,6 @@ body {
 .rocky-arm-l { left: -10px; transform: rotate(15deg); }
 .rocky-arm-r { right: -10px; transform: rotate(-15deg); }
 
-/* ===== MISSION LABEL STYLE ===== */
 .mission-label {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.75rem;

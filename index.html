@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akshatha Dungi | Software Developer — Project Hail Mary</title>
-  <meta name="description" content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI Curious. Built aboard the Hail Mary.">
+  <title>Akshatha Dungi | Software Developer — Nebula Edition</title>
+  <meta name="description" content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI Curious. Inspired by NASA Nebula imagery.">
   <script>
     (function () {
       const savedTheme = localStorage.getItem('theme');
@@ -92,10 +92,10 @@
 
     // ── THEME TOGGLE ──
     const ThemeToggle = ({ isDark, toggleTheme }) => (
-      <button onClick={toggleTheme} aria-label="Toggle Theme" style={{ width:'52px',height:'28px',backgroundColor:isDark?'#080D1A':'#D6E8FF',border:`1px solid ${isDark?'#00FFB2':'#006B4F'}`,borderRadius:'9999px',position:'relative',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 6px'}} className="hover:scale-105 transition-all duration-300" title={`Switch to ${isDark?'Light':'Dark'} Mode`}>
-        <div style={{position:'absolute',left:isDark?'2px':'26px',top:'2px',width:'22px',height:'22px',borderRadius:'50%',backgroundColor:isDark?'#00FFB2':'#006B4F',transition:'left 300ms ease, background-color 300ms ease',zIndex:1}}></div>
-        <IconMoon size={12} className="relative z-0 text-[#006B4F]" />
-        <IconSun size={12} className="relative z-0 text-[#00FFB2]" />
+      <button onClick={toggleTheme} aria-label="Toggle Theme" style={{ width:'52px',height:'28px',backgroundColor:isDark?'#0A0618':'#FFF0D6',border:`1px solid ${isDark?'#39FF8E':'#008C5A'}`,borderRadius:'9999px',position:'relative',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 6px'}} className="hover:scale-105 transition-all duration-300">
+        <div style={{position:'absolute',left:isDark?'2px':'26px',top:'2px',width:'22px',height:'22px',borderRadius:'50%',backgroundColor:isDark?'#39FF8E':'#008C5A',transition:'left 300ms ease, background-color 300ms ease',zIndex:1}}></div>
+        <IconMoon size={12} className="relative z-0 text-[#008C5A]" />
+        <IconSun size={12} className="relative z-0 text-[#39FF8E]" />
       </button>
     );
 
@@ -113,12 +113,12 @@
       return (
         <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled?'bg-[var(--nav-bg)] backdrop-blur-md py-3 shadow-lg':'bg-transparent py-6'}`}>
           <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center">
-            <div className="font-heading font-bold text-2xl text-[var(--color-primary)] tracking-tighter teal-glow cursor-pointer" onClick={()=>scrollTo('hero')}>AD</div>
+            <div className="font-heading font-bold text-2xl tracking-tighter logo-gradient cursor-pointer" onClick={()=>scrollTo('hero')}>AD</div>
             <div className="hidden md:flex space-x-8 items-center">
               {navLinks.map(link => {
                 const isActive = activeSection === link.toLowerCase();
                 return <button key={link} onClick={()=>scrollTo(link)} className={`text-sm font-body font-medium transition-colors hover:text-[var(--color-primary)] ${isActive?'text-[var(--color-primary)]':'text-[var(--color-text-muted)]'}`}>
-                  {isActive && <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mr-2 glow-pulse" style={{boxShadow:'0 0 6px #00FFB2'}}></span>}
+                  {isActive && <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mr-2 glow-pulse"></span>}
                   {link}
                 </button>;
               })}
@@ -140,57 +140,42 @@
     const Hero = () => {
       const canvasRef = useRef();
       const [showRocky, setShowRocky] = useState(false);
-
-      useEffect(() => {
-        if (canvasRef.current && typeof createStarfield === 'function') {
-          const cleanup = createStarfield(canvasRef.current);
-          return cleanup;
-        }
-      }, []);
-
+      useEffect(() => { if (canvasRef.current) { const cleanup = createStarfield(canvasRef.current); return cleanup; } }, []);
       const playRockyBeep = () => {
         try {
           const ctx = new (window.AudioContext || window.webkitAudioContext)();
           [0, 0.15].forEach(delay => {
             const osc = ctx.createOscillator(); const gain = ctx.createGain();
-            osc.type = 'sine'; osc.frequency.value = 800;
-            gain.gain.setValueAtTime(0.3, ctx.currentTime + delay);
+            osc.type = 'sine'; osc.frequency.value = 800; gain.gain.setValueAtTime(0.3, ctx.currentTime + delay);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.12);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(ctx.currentTime + delay); osc.stop(ctx.currentTime + delay + 0.12);
+            osc.connect(gain); gain.connect(ctx.destination); osc.start(ctx.currentTime + delay); osc.stop(ctx.currentTime + delay + 0.12);
           });
-        } catch(e) {}
+        } catch(e){}
       };
-
       const handleRocky = () => { setShowRocky(true); playRockyBeep(); setTimeout(()=>setShowRocky(false), 2200); };
-
       return (
         <section id="hero" className="relative min-h-screen flex items-center pt-20 overflow-hidden px-6 lg:px-12 max-w-7xl mx-auto">
           <canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:0,pointerEvents:'none'}} />
+          {/* Nebula Blobs */}
+          <div className="absolute top-[15%] right-[10%] w-[400px] h-[400px] bg-[var(--color-nebula-violet)] opacity-20 filter blur-[100px] rounded-full animate-float-shape-1"></div>
+          <div className="absolute bottom-[10%] right-[15%] w-[350px] h-[350px] bg-[var(--color-nebula-pink)] opacity-15 filter blur-[90px] rounded-full animate-float-shape-2"></div>
+          <div className="absolute top-[20%] left-[5%] w-[300px] h-[300px] bg-[var(--color-primary)] opacity-10 filter blur-[100px] rounded-full animate-float-shape-1" style={{animationDelay:'-2s'}}></div>
+          <div className="absolute bottom-[15%] left-[10%] w-[320px] h-[320px] bg-[var(--color-nebula-gold)] opacity-10 filter blur-[95px] rounded-full animate-float-shape-2" style={{animationDelay:'-4s'}}></div>
+
           <div className="relative z-10 max-w-3xl">
             <p className="hero-text-1 mission-label mb-4">MISSION LOG #001 — CREW MANIFEST</p>
-            <h1 className="hero-text-2 font-heading font-bold text-[var(--color-primary)] mb-4 teal-glow" style={{fontSize:'clamp(42px,6vw,76px)',lineHeight:'1.1'}}>Akshatha Dungi</h1>
+            <h1 className="hero-text-2 font-heading font-bold mb-4 name-gradient" style={{fontSize:'clamp(42px,6vw,76px)',lineHeight:'1.1'}}>Akshatha Dungi</h1>
             <h2 className="hero-text-3 font-body text-[var(--color-text)] text-lg md:text-xl lg:text-2xl mb-6 tracking-wide">
               Software Developer · Backend Specialist · AI Curious<span className="cursor-blink text-[var(--color-primary)]">|</span>
             </h2>
-            <p className="hero-text-4 text-[var(--color-text-muted)] md:text-lg max-w-2xl leading-relaxed mb-10 opacity-90">
-              I build scalable backends, experiment with LLMs, and thrive on adaptability. Merging solid software engineering principles with dynamic new technologies.
-            </p>
+            <p className="hero-text-4 text-[var(--color-text-muted)] md:text-lg max-w-2xl leading-relaxed mb-10">I build scalable backends, experiment with LLMs, and thrive on adaptability. Merging solid software engineering principles with dynamic new technologies.</p>
             <div className="hero-buttons flex flex-wrap gap-4">
               <button onClick={()=>document.getElementById('projects').scrollIntoView({behavior:'smooth'})} className="bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-heading font-semibold px-8 py-3 rounded-full hover:brightness-110 hover:scale-[1.02] transition-all duration-200 shadow-lg glow-pulse">View Projects</button>
-              <a href="#" className="border-2 border-[var(--btn-ghost-border)] text-[var(--btn-ghost-text)] font-body font-medium px-8 py-3 rounded-full hover:opacity-80 hover:scale-[1.02] transition-all duration-200">Download Resume</a>
+              <a href="#" className="border-2 border-[var(--btn-ghost-border)] text-[var(--btn-ghost-text)] font-body font-medium px-8 py-3 rounded-full hover:opacity-80 transition-all duration-200">Download Resume</a>
             </div>
           </div>
-          {/* Rocky Easter Egg */}
-          <div className="absolute bottom-8 right-8 z-20 cursor-pointer select-none" onClick={handleRocky} title="♪ strum strum ♪">
-            <span className="text-xs text-[var(--color-primary)]" style={{opacity:0.05}}>♪ strum strum ♪</span>
-          </div>
-          {showRocky && (
-            <div className="fixed bottom-20 right-12 z-[999] rocky-alien">
-              <div className="rocky-body"><div className="rocky-arm rocky-arm-l"></div><div className="rocky-arm rocky-arm-r"></div></div>
-              <p className="text-center text-[var(--color-highlight)] text-xs mt-2 font-heading">ROCKY!</p>
-            </div>
-          )}
+          <div className="absolute bottom-8 right-8 z-20 cursor-pointer select-none" onClick={handleRocky}><span className="text-xs text-[var(--color-primary)] opacity-5">♪ strum strum ♪</span></div>
+          {showRocky && <div className="fixed bottom-20 right-12 z-[999] rocky-alien"><div className="rocky-body"><div className="rocky-arm rocky-arm-l"></div><div className="rocky-arm rocky-arm-r"></div></div><p className="text-center text-[var(--color-nebula-gold)] text-xs mt-2 font-heading">ROCKY!</p></div>}
         </section>
       );
     };
@@ -198,74 +183,36 @@
     // ── ABOUT ──
     const About = () => {
       const [isPlaying, setIsPlaying] = useState(false);
-      const audioRef = useRef(null);
-      const imgRef = useRef(null);
-      const planetCanvasRef = useRef(null);
-
-      useEffect(() => {
-        audioRef.current = new Audio('HUS(허밍어반스테레오) - BANANA SHAKE (SPED UP) [Visualizer].mp3');
-        audioRef.current.loop = true;
-        return () => { if(audioRef.current){audioRef.current.pause();audioRef.current=null;} };
-      }, []);
-
-      useEffect(() => {
-        if (planetCanvasRef.current && typeof createPlanet === 'function') {
-          const cleanup = createPlanet(planetCanvasRef.current);
-          return cleanup;
-        }
-      }, []);
-
+      const audioRef = useRef(null); const imgRef = useRef(null); const planetCanvasRef = useRef(null);
+      useEffect(() => { audioRef.current = new Audio('HUS(허밍어반스테레오) - BANANA SHAKE (SPED UP) [Visualizer].mp3'); audioRef.current.loop = true; return () => { if(audioRef.current){audioRef.current.pause();audioRef.current=null;} }; }, []);
+      useEffect(() => { if (planetCanvasRef.current) { const cleanup = createPlanet(planetCanvasRef.current); return cleanup; } }, []);
       const togglePlay = () => {
         if (!audioRef.current || !imgRef.current) return;
-        if (isPlaying) {
-          audioRef.current.pause();
-          const img = imgRef.current;
-          const matrix = window.getComputedStyle(img).transform;
-          if (matrix && matrix !== 'none') {
-            const values = matrix.split('(')[1].split(')')[0].split(',');
-            const angle = Math.round(Math.atan2(parseFloat(values[1]), parseFloat(values[0])) * (180/Math.PI));
-            img.style.transform = `rotate(${angle}deg)`;
-          }
-          img.classList.remove('spinning');
-        } else {
-          audioRef.current.play();
-          imgRef.current.style.transform = '';
-          imgRef.current.classList.add('spinning');
-        }
+        if (isPlaying) { audioRef.current.pause(); imgRef.current.classList.remove('spinning'); }
+        else { audioRef.current.play(); imgRef.current.classList.add('spinning'); }
         setIsPlaying(!isPlaying);
       };
-
       return (
         <section id="about" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
           <FadeInSection>
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="flex flex-col items-center md:items-start order-2 md:order-1 justify-center">
                 <div className="flex flex-col items-center gap-4 relative">
-                  {/* Planet canvas behind profile */}
-                  <canvas ref={planetCanvasRef} width="300" height="300" style={{position:'absolute',top:'-10px',left:'50%',transform:'translateX(-50%)',zIndex:0,pointerEvents:'none',opacity:0.6}} />
-                  <div className="relative z-10">
-                    <img ref={imgRef} src="mei.jpeg" alt="Profile" className={`w-[280px] h-[280px] rounded-full object-cover border-4 border-[var(--color-primary)] ${isPlaying?'spinning':'not-spinning'}`} style={{boxShadow:'0 0 24px rgba(0,255,178,0.4)'}}
-                      onError={(e)=>{e.target.onerror=null;e.target.src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300FFB2' opacity='0.5'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";}} />
-                    {!isPlaying && <div className="absolute top-4 -right-2 bg-[var(--color-surface)] border border-[var(--color-primary)] py-2 px-4 rounded-full text-[var(--color-primary)] text-xs font-heading shadow-lg animate-float teal-glow-box" style={{animationDelay:'1s'}}>MISSION READY &lt;/&gt;</div>}
-                  </div>
-                  <button onClick={togglePlay} className="w-[52px] h-[52px] mt-4 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-[1.08] active:scale-95 z-10 glow-pulse" style={{background:'var(--color-primary)',color:'var(--color-bg)'}} aria-label={isPlaying?'Pause':'Play'}>
-                    {isPlaying ? <IconPause className="text-[var(--color-bg)]" /> : <IconPlay className="ml-1 text-[var(--color-bg)]" />}
-                  </button>
-                  <div className="flex items-center gap-2 z-10" style={{opacity:isPlaying?1:0,height:'20px',transition:'opacity 400ms'}}>
-                    <span className="w-[6px] h-[6px] rounded-full pulse-dot" style={{background:'var(--color-primary)'}} />
-                    <span className="text-[12px] italic" style={{color:'var(--color-subtle)'}}>♪ BANANA SHAKE</span>
-                  </div>
+                  <canvas ref={planetCanvasRef} width="300" height="300" style={{position:'absolute',top:'-10px',left:'50%',transform:'translateX(-50%)',zIndex:0,pointerEvents:'none',opacity:0.75}} />
+                  <div className="relative z-10"><img ref={imgRef} src="mei.jpeg" alt="Profile" className={`w-[280px] h-[280px] rounded-full object-cover border-4 border-[var(--color-primary)] ${isPlaying?'spinning':'not-spinning'}`} style={{boxShadow:'0 0 24px var(--color-primary)'}} /></div>
+                  <button onClick={togglePlay} className="w-[52px] h-[52px] mt-4 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-[1.08] z-10 glow-pulse" style={{background:'var(--color-primary)',color:'var(--color-bg)'}}>{isPlaying ? <IconPause /> : <IconPlay className="ml-1" />}</button>
+                  <div className="flex items-center gap-2 z-10" style={{opacity:isPlaying?1:0,height:'20px',transition:'opacity 400ms'}}><span className="w-[6px] h-[6px] rounded-full bg-[var(--color-primary)] animate-pulse" /><span className="text-[12px] italic text-[var(--color-text-muted)] font-body">♪ BANANA SHAKE</span></div>
                 </div>
               </div>
               <div className="order-1 md:order-2">
-                <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-6 teal-glow">Mission Profile</h2>
+                <h2 className="font-heading font-bold text-3xl md:text-4xl mb-6 heading-about">Mission Profile</h2>
                 <div className="space-y-4 text-[var(--color-text-muted)] leading-relaxed font-body">
                   <p>I'm the kind of developer who thrives on change. The tech landscape evolves rapidly, and I believe the best solutions come from being adaptable.</p>
                   <p>One day I'm deep in <span className="text-[var(--color-text)] font-semibold">Java code</span> building robust architectures... The next, establishing <span className="text-[var(--color-text)] font-semibold">LLM pipelines</span> to solve complex logical problems.</p>
                   <div className="mt-8 bg-[var(--about-card-bg)] border border-[var(--color-border)] rounded-xl p-6 shadow-lg relative z-20 scanlines">
                     <h3 className="text-[var(--color-primary)] font-heading font-semibold mb-3 text-sm tracking-widest uppercase">Field Notes</h3>
                     <ul className="space-y-3">
-                      <li className="flex items-start"><span className="mr-3">☕</span><span>Fast learner, fueled by curiosity (and coffee).</span></li>
+                      <li className="flex items-start"><span className="mr-3">⭐</span><span>Fast learner, fueled by curiosity (and nebula cosmic events).</span></li>
                       <li className="flex items-start"><span className="mr-3">🧩</span><span>I treat every new technology like a puzzle to solve.</span></li>
                       <li className="flex items-start"><span className="mr-3">🎯</span><span>Focused on the end goal, flexible on the path to get there.</span></li>
                       <li className="flex items-start"><span className="mr-3">🤖</span><span>Continuously integrating AI to optimize my workflow.</span></li>
@@ -283,31 +230,30 @@
     // ── EXPERIENCE ──
     const Experience = () => {
       const jobs = [
-        { role:"Software Developer", company:"Tech Solutions Inc.", period:"2024 - Present", description:"Scaling backend infrastructure using Spring Boot, PostgreSQL, and AWS. Integrating LLM pipelines via LangChain to automate internal tools, saving 20 hours per week." },
-        { role:"Junior Backend Engineer", company:"Innovate AI", period:"2023 - 2024", description:"Built and maintained REST APIs in Python (FastAPI). Containerized applications with Docker to streamline the deployment process." },
-        { role:"Software Engineering Intern", company:"Startup Co.", period:"2022 - 2023", description:"Contributed to front-end development using React and Tailwind CSS. Developed internal admin dashboards." }
+        { role:"Software Developer", company:"Tech Solutions Inc.", period:"2024 - Present", description:"Scaling backend infrastructure using Spring Boot, PostgreSQL, and AWS. Integrating LLM pipelines via LangChain to automate internal tools.", color:"#39FF8E" },
+        { role:"Junior Backend Engineer", company:"Innovate AI", period:"2023 - 2024", description:"Built and maintained REST APIs in Python (FastAPI). Containerized applications with Docker to streamline deployment.", color:"#FF4D8C" },
+        { role:"Software Engineering Intern", company:"Startup Co.", period:"2022 - 2023", description:"Contributed to front-end development using React and Tailwind CSS. Developed internal admin dashboards.", color:"#FFD166" }
       ];
       return (
         <section id="experience" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
           <FadeInSection>
             <div className="text-center mb-16">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2 teal-glow">Mission History</h2>
+              <h2 className="font-heading font-bold text-3xl md:text-4xl mb-2 heading-experience">Mission History</h2>
               <p className="text-[var(--color-subtle)] font-body">My professional journey</p>
             </div>
             <div className="max-w-4xl mx-auto relative cursor-default">
-              <div className="absolute left-[15px] md:left-1/2 top-0 bottom-0 w-px hidden md:block" style={{background:'linear-gradient(to bottom, #00FFB2, transparent)'}}></div>
+              <div className="absolute left-[15px] md:left-1/2 top-0 bottom-0 w-px hidden md:block" style={{background:'linear-gradient(to bottom, var(--color-nebula-gold), transparent)'}}></div>
               <div className="space-y-12 relative">
                 {jobs.map((job, idx) => (
                   <div key={idx} className={`relative flex flex-col md:flex-row gap-8 items-start justify-between ${idx%2===0?'md:flex-row-reverse':''}`}>
-                    <div className="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-[var(--color-surface)] border-2 border-[var(--color-primary)] flex items-center justify-center -translate-x-1/2 z-10 hidden md:flex timeline-dot-glow">
-                      <div className="w-3 h-3 rounded-full bg-[var(--color-primary)]"></div>
+                    <div className="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-[var(--color-surface)] border-2 flex items-center justify-center -translate-x-1/2 z-10 hidden md:flex" style={{borderColor:job.color,boxShadow:`0 0 12px ${job.color}`}}>
+                      <div className="w-3 h-3 rounded-full" style={{backgroundColor:job.color}}></div>
                     </div>
-                    <div className="w-full md:w-[45%] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 transition-colors shadow-lg relative group" style={{borderTop:'2px solid var(--color-primary)'}}>
-                      <div className="md:hidden inline-flex items-center gap-2 mb-3 text-[var(--color-primary)] bg-[var(--tech-tag-bg)] px-3 py-1.5 rounded-full text-xs font-heading"><IconBriefcase size={14} /><span>{job.period}</span></div>
+                    <div className="w-full md:w-[45%] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 transition-colors shadow-lg relative group" style={{borderTop:`2px solid ${job.color}`}}>
                       <h3 className="font-heading font-bold text-xl text-[var(--color-text)]">{job.role}</h3>
                       <div className="flex justify-between items-center mb-4 mt-1">
                         <p className="text-[var(--color-text-muted)] font-body">{job.company}</p>
-                        <span className="text-xs font-heading bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-3 py-1 rounded-full hidden md:inline-block">{job.period}</span>
+                        <span className="text-xs font-heading px-3 py-1 rounded-full hidden md:inline-block" style={{backgroundColor:`${job.color}15`, color:job.color}}>{job.period}</span>
                       </div>
                       <p className="text-[var(--color-text-muted)] leading-relaxed text-sm font-body opacity-90">{job.description}</p>
                     </div>
@@ -323,34 +269,31 @@
     // ── PROJECTS ──
     const Projects = () => {
       const [filter, setFilter] = useState('All');
-      const filters = ['All','Backend','AI/ML','Web'];
       const projects = [
-        { title:"MicroCommerce", desc:"A scalable Spring Boot microservice backend for a modern e-commerce platform.", tags:["Java","Spring Boot","PostgreSQL","Kafka"], category:"Backend", github:"#", live:"#" },
-        { title:"LLM Pipeline Toolkit", desc:"A Python-based utility suite for chaining dynamic LLM prompts and managing context windows.", tags:["Python","LangChain","OpenAI API"], category:"AI/ML", github:"#", live:"#" },
-        { title:"DevPortal API", desc:"A comprehensive REST API with role-based auth, rate limiting, and automated Swagger docs.", tags:["FastAPI","Python","Redis","Docker"], category:"Backend", github:"#", live:"#" }
+        { title:"MicroCommerce", desc:"Scalable Spring Boot microservice backend for a modern e-commerce platform.", tags:["Java","Spring Boot"], category:"Backend", color:"#4FC3F7" },
+        { title:"LLM Pipeline Toolkit", desc:"Utility suite for chaining dynamic LLM prompts and managing context windows.", tags:["Python","LangChain"], category:"AI/ML", color:"#39FF8E" },
+        { title:"DevPortal API", desc:"Comprehensive REST API with role-based auth and automated Swagger docs.", tags:["FastAPI","Redis"], category:"Frontend", color:"#C77DFF" }
       ];
       const filtered = filter==='All'?projects:projects.filter(p=>p.category===filter);
       return (
         <section id="projects" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
           <FadeInSection>
             <div className="text-center mb-12">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2 teal-glow">Mission Dossiers</h2>
+              <h2 className="font-heading font-bold text-3xl md:text-4xl mb-2 heading-projects">Mission Dossiers</h2>
               <p className="text-[var(--color-subtle)] font-body">Things I've built</p>
             </div>
             <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {filters.map(f => <button key={f} onClick={()=>setFilter(f)} className={`px-5 py-2 rounded-full text-sm font-heading transition-all ${filter===f?'bg-[var(--color-primary)] text-[var(--color-bg)] shadow-md teal-glow-box':'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-[var(--color-primary)]'}`}>{f}</button>)}
+              {['All','Backend','AI/ML','Frontend'].map(f => <button key={f} onClick={()=>setFilter(f)} className={`px-5 py-2 rounded-full text-sm font-heading transition-all ${filter===f?'bg-[var(--color-primary)] text-[var(--color-bg)]':'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)]'}`}>{f}</button>)}
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((project, idx) => (
-                <div key={idx} className="group bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 hover:border-[var(--color-primary)] hover:shadow-lg flex flex-col h-full relative overflow-hidden" style={{hover_boxShadow:'0 0 20px rgba(0,255,178,0.2)'}}>
+                <div key={idx} className="group bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full relative overflow-hidden" 
+                  style={{'--hover-color':project.color}} onMouseEnter={(e)=>e.currentTarget.style.boxShadow=`0 0 20px ${project.color}33`} onMouseLeave={(e)=>e.currentTarget.style.boxShadow=''}>
                   <div className="classified-watermark">CLASSIFIED</div>
                   <h3 className="font-heading font-bold text-xl text-[var(--color-text)] mb-3 relative z-10">{project.title}</h3>
                   <p className="text-[var(--color-text-muted)] mb-6 flex-grow font-body relative z-10">{project.desc}</p>
                   <div className="flex flex-wrap gap-2 mb-6 relative z-10">{project.tags.map(tag => <span key={tag} className="text-xs font-body bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-3 py-1 rounded-full">{tag}</span>)}</div>
-                  <div className="flex items-center gap-4 mt-auto pt-4 border-t border-[var(--color-border)] relative z-10">
-                    <a href={project.github} className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"><IconGithub size={20} /></a>
-                    <a href={project.live} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"><IconExternalLink size={20} /></a>
-                  </div>
+                  <div className="flex items-center gap-4 mt-auto pt-4 border-t border-[var(--color-border)] relative z-10"><IconGithub size={18} /><IconExternalLink size={18} /></div>
                 </div>
               ))}
             </div>
@@ -362,33 +305,23 @@
     // ── SKILLS ──
     const Skills = () => {
       const solarRef = useRef();
-      const skillCategories = [
-        { title:"Languages", skills:["Java","Python","JavaScript","SQL","HTML/CSS"] },
-        { title:"Frameworks & Tools", skills:["Spring Boot","FastAPI","React","Docker","Git","Maven"] },
-        { title:"AI & ML", skills:["LangChain","OpenAI API","Prompt Engineering","HuggingFace"] },
-        { title:"Cloud & DevOps", skills:["AWS (Basics)","CI/CD Actions","Linux","REST APIs","Postman"] }
+      const categories = [
+        { title:"Languages", color:"#4FC3F7", skills:["Java","Python","JavaScript","SQL"] },
+        { title:"Frameworks", color:"#39FF8E", skills:["Spring Boot","FastAPI","React","Docker"] },
+        { title:"AI & ML", color:"#C77DFF", skills:["LangChain","Prompting","HuggingFace"] },
+        { title:"Cloud", color:"#FFD166", skills:["AWS","CI/CD","REST APIs","Postman"] }
       ];
-      useEffect(() => {
-        if (solarRef.current && typeof createSolarSystem === 'function') {
-          const cleanup = createSolarSystem(solarRef.current);
-          return cleanup;
-        }
-      }, []);
+      useEffect(() => { if (solarRef.current) { const cleanup = createSolarSystem(solarRef.current); return cleanup; } }, []);
       return (
         <section id="skills" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
           <FadeInSection>
-            <div className="text-center mb-8">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2 teal-glow">Crew Capabilities</h2>
-              <p className="text-[var(--color-subtle)] font-body">What I bring to the table</p>
-            </div>
-            <div className="w-full mb-8" style={{height:'220px'}}><canvas ref={solarRef} style={{width:'100%',height:'100%',display:'block'}} /></div>
+            <div className="text-center mb-8"><h2 className="font-heading font-bold text-3xl md:text-4xl mb-2 heading-skills">Crew Capabilities</h2><p className="text-[var(--color-subtle)] font-body">What I bring to the table</p></div>
+            <div className="w-full mb-8 h-[220px]"><canvas ref={solarRef} className="w-full h-full" /></div>
             <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-              {skillCategories.map((cat, idx) => (
-                <div key={idx} className="bg-[var(--about-card-bg)] backdrop-blur-sm border border-[var(--color-border)] rounded-2xl p-6 transition-all hover:border-[var(--color-primary)]">
-                  <h3 className="font-heading font-bold text-lg text-[var(--color-primary)] mb-5">{cat.title}</h3>
-                  <div className="flex flex-wrap gap-3">
-                    {cat.skills.map(skill => <div key={skill} className="flex items-center gap-2 bg-[var(--skill-pill-bg)] border border-[var(--skill-pill-border)] text-[var(--color-text)] px-4 py-2 rounded-full text-sm font-body shadow-sm transition-transform hover:scale-105"><span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)]" style={{boxShadow:'0 0 4px #00FFB2'}}></span>{skill}</div>)}
-                  </div>
+              {categories.map((cat, idx) => (
+                <div key={idx} className="bg-[var(--about-card-bg)] border border-[var(--color-border)] rounded-2xl p-6 transition-all hover:border-[--cat-color]" style={{'--cat-color':cat.color, borderLeft:`4px solid ${cat.color}`}}>
+                  <h3 className="font-heading font-bold text-lg mb-5" style={{color:cat.color}}>{cat.title}</h3>
+                  <div className="flex flex-wrap gap-3">{cat.skills.map(s => <div key={s} className="flex items-center gap-2 bg-[var(--skill-pill-bg)] border border-[var(--skill-pill-border)] text-[var(--color-text)] px-4 py-2 rounded-full text-sm font-body transition-transform hover:scale-105"><span className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:cat.color, boxShadow:`0 0 6px ${cat.color}`}} />{s}</div>)}</div>
                 </div>
               ))}
             </div>
@@ -399,25 +332,19 @@
 
     // ── CERTIFICATIONS ──
     const Certifications = () => {
+      const certCols = ["#39FF8E", "#4FC3F7", "#C77DFF"];
       const certs = [
-        { title:"Oracle Certified Professional: Java SE 11", issuer:"Oracle", year:"2023" },
-        { title:"AWS Cloud Practitioner", issuer:"Amazon Web Services", year:"2024" },
-        { title:"Deep Learning Specialization", issuer:"Coursera / DeepLearning.AI", year:"2024" }
+        { title:"OCP: Java SE 11", issuer:"Oracle" }, { title:"AWS Cloud Practitioner", issuer:"Amazon" }, { title:"Deep Learning Spec.", issuer:"Coursera" }
       ];
       return (
         <section id="certifications" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto overflow-hidden">
           <FadeInSection>
-            <div className="text-center mb-12">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-2 teal-glow">Mission Credentials</h2>
-              <p className="text-[var(--color-subtle)] font-body">Validating knowledge with verifiable credentials</p>
-            </div>
+            <div className="text-center mb-12"><h2 className="font-heading font-bold text-3xl md:text-4xl mb-2 heading-certs">Mission Credentials</h2><p className="text-[var(--color-subtle)] font-body">Verifiable credentials</p></div>
             <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto pb-8 hide-scrollbar snap-x touch-pan-x">
-              {certs.map((cert, idx) => (
-                <div key={idx} className="min-w-[280px] md:min-w-0 snap-center bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl p-6 shadow-lg relative group" style={{borderLeft:'3px solid var(--color-primary)'}}>
-                  <div className="absolute top-5 right-5 text-[var(--color-text-muted)] opacity-20 group-hover:text-[var(--color-primary)] transition-colors group-hover:opacity-50"><IconAward size={48} /></div>
-                  <h3 className="font-heading font-bold text-[var(--color-text)] text-base md:text-lg pr-8 mb-2 z-10 relative">{cert.title}</h3>
-                  <p className="text-[var(--color-text-muted)] mb-3 z-10 relative font-body">{cert.issuer}</p>
-                  <span className="inline-block text-xs font-heading bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-2 py-1 rounded z-10 relative">{cert.year}</span>
+              {certs.map((c, i) => (
+                <div key={i} className="min-w-[280px] md:min-w-0 snap-center bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl p-6 shadow-lg" style={{borderLeft:`4px solid ${certCols[i]}`}}>
+                  <h3 className="font-heading font-bold text-[var(--color-text)] text-base md:text-lg mb-2">{c.title}</h3>
+                  <p className="text-[var(--color-text-muted)] font-body text-sm">{c.issuer}</p>
                 </div>
               ))}
             </div>
@@ -429,123 +356,34 @@
     // ── CONTACT ──
     const Contact = () => {
       const [formData, setFormData] = useState({name:'',email:'',message:''});
-      const [errors, setErrors] = useState({});
-      const [submitState, setSubmitState] = useState('idle');
-      const [inboxOpen, setInboxOpen] = useState(false);
-      const [messages, setMessages] = useState([]);
-      const [loadingMsgs, setLoadingMsgs] = useState(false);
-
-      useEffect(() => {
-        const handler = (e) => { if(e.ctrlKey&&e.shiftKey&&e.key==='M'){setInboxOpen(prev=>{const o=!prev;if(o)loadMessages();return o;});} };
-        window.addEventListener('keydown', handler);
-        return () => window.removeEventListener('keydown', handler);
-      }, []);
-
-      const loadMessages = async () => {
-        setLoadingMsgs(true);
-        try {
-          const result = await window.storage.list('messages:');
-          const msgs = [];
-          for (const key of result) { try { const val = await window.storage.get(key); if(val) msgs.push(JSON.parse(val)); } catch(e){} }
-          msgs.sort((a,b)=>b.id-a.id);
-          setMessages(msgs);
-        } catch(e){} finally { setLoadingMsgs(false); }
-      };
-
-      const handleDelete = async (id) => { try { await window.storage.delete('messages:'+id); setMessages(prev=>prev.filter(m=>m.id!==id)); } catch(e){} };
-
-      const validate = () => {
-        const ne = {};
-        if(!formData.name.trim()) ne.name='Name is required';
-        if(!formData.email.trim()) ne.email='Email is required';
-        else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) ne.email='Invalid email';
-        if(!formData.message.trim()) ne.message='Message is required';
-        setErrors(ne); return Object.keys(ne).length===0;
-      };
-
+      const [state, setState] = useState('idle');
       const handleSubmit = async (e) => {
-        e.preventDefault(); if(!validate()) return;
-        setSubmitState('loading');
-        const msg = {id:Date.now(),name:formData.name.trim(),email:formData.email.trim(),message:formData.message.trim(),sentAt:new Date().toISOString()};
-        try { await window.storage.set('messages:'+msg.id, JSON.stringify(msg)); setSubmitState('success'); setFormData({name:'',email:'',message:''}); }
-        catch(err) { setSubmitState('error'); }
+        e.preventDefault(); setState('loading');
+        try { await window.storage.set('messages:'+Date.now(), JSON.stringify({...formData, sentAt:new Date().toISOString()})); setState('success'); setFormData({name:'',email:'',message:''}); }
+        catch(e) { setState('error'); }
       };
-
-      const handleChange = (e) => { const {name,value}=e.target; setFormData(prev=>({...prev,[name]:value})); if(errors[name]) setErrors(prev=>({...prev,[name]:''})); };
-      const inputClasses = "w-full bg-[var(--input-bg)] border border-[var(--input-border)] rounded-[10px] px-[14px] py-[10px] text-[var(--color-text)] font-body placeholder-[var(--color-text-muted)] opacity-80 focus:opacity-100 focus:outline-none focus:ring-[2px] focus:ring-[var(--color-primary)] focus:border-transparent transition-all";
-
+      const inputCls = "w-full bg-[var(--input-bg)] border border-[var(--input-border)] rounded-[10px] px-[14px] py-[10px] text-[var(--color-text)] font-body focus:ring-1 focus:ring-[var(--color-primary)] focus:outline-none transition-all";
       return (
         <section id="contact" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
-          {/* Admin Inbox */}
-          {inboxOpen && (
-            <div className="fixed inset-0 z-[9999] bg-[var(--color-bg)] overflow-y-auto w-full h-full text-[var(--color-text)]">
-              <div className="max-w-4xl mx-auto px-6 py-8">
-                <div className="flex justify-between items-center mb-8 pb-4 border-b border-[var(--color-border)]">
-                  <h2 className="font-heading font-bold text-2xl text-[var(--color-primary)] teal-glow">📡 MISSION CONTROL — Inbox</h2>
-                  <button onClick={()=>setInboxOpen(false)} className="border border-[var(--color-subtle)] text-[var(--color-text)] px-4 py-2 rounded-lg hover:bg-[var(--color-subtle)]/10 transition-colors font-body">✕ Close</button>
-                </div>
-                {loadingMsgs ? <div className="flex justify-center py-20"><div className="w-10 h-10 border-4 border-[var(--color-primary)] opacity-30 border-t-[var(--color-primary)] rounded-full animate-spin"></div></div>
-                : messages.length===0 ? <div className="text-center py-20 text-[var(--color-subtle)] font-body">No transmissions received.</div>
-                : <div className="space-y-4">{messages.map(msg => (
-                    <div key={msg.id} className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[12px] px-5 py-4 relative">
-                      <div className="flex justify-between items-start mb-1"><h4 className="font-heading font-bold text-[var(--color-text)]">{msg.name}</h4><span className="text-xs text-[var(--color-text-muted)] opacity-70 font-body">{new Date(msg.sentAt).toLocaleString()}</span></div>
-                      <p className="text-[13px] text-[var(--color-text-muted)] mb-3 font-body">{msg.email}</p>
-                      <div className="h-px bg-[var(--color-border)] mb-3 w-full"></div>
-                      <p className="text-[var(--color-text-muted)] leading-[1.6] whitespace-pre-wrap font-body">{msg.message}</p>
-                      <button onClick={()=>handleDelete(msg.id)} className="mt-4 text-sm text-[#FF6B6B] hover:bg-[#FF6B6B]/10 px-3 py-1.5 rounded-md transition-colors float-right font-body">Delete</button>
-                      <div className="clear-both"></div>
-                    </div>
-                  ))}</div>}
-              </div>
-            </div>
-          )}
-
           <FadeInSection>
-            <div className="text-center mb-16">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-3 teal-glow">Open Transmission</h2>
-              <p className="text-[var(--color-text-muted)] max-w-xl mx-auto font-body">I'm open to opportunities, collaborations, or just a good tech conversation.</p>
-            </div>
+            <div className="text-center mb-16"><h2 className="font-heading font-bold text-3xl md:text-4xl mb-3 heading-contact">Open Transmission</h2><p className="text-[var(--color-text-muted)] font-body">Ready for cosmic collaboration.</p></div>
             <div className="grid lg:grid-cols-2 gap-12">
               <div className="space-y-4">
-                <a href="mailto:akshatha@example.com" className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-primary)] transition-colors group">
-                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] group-hover:shadow-[0_0_12px_rgba(0,255,178,0.4)] transition-all"><IconMail size={24} /></div>
-                  <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">Email</p><p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] font-body">akshatha@example.com</p></div>
-                </a>
-                <a href="#" className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-primary)] transition-colors group">
-                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] group-hover:shadow-[0_0_12px_rgba(0,255,178,0.4)] transition-all"><IconLinkedin size={24} /></div>
-                  <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">LinkedIn</p><p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] font-body">linkedin.com/in/akshatha</p></div>
-                </a>
-                <a href="#" className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-primary)] transition-colors group">
-                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] group-hover:shadow-[0_0_12px_rgba(0,255,178,0.4)] transition-all"><IconGithub size={24} /></div>
-                  <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">GitHub</p><p className="text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] font-body">github.com/akshatha</p></div>
-                </a>
-                <div className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl">
-                  <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)]"><IconMapPin size={24} /></div>
-                  <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">Location</p><p className="text-[var(--color-text-muted)] font-body">India</p></div>
-                </div>
+                {[{ic:<IconMail />,l:"Email",v:"akshatha@example.com"}, {ic:<IconLinkedin />,l:"LinkedIn",v:"linkedin.com/in/akshatha"}, {ic:<IconGithub />,l:"GitHub",v:"github.com/akshatha"}].map((it,i)=>(
+                  <div key={i} className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-primary)] transition-all group">
+                    <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] group-hover:shadow-[0_0_12px_var(--color-primary)]">{it.ic}</div>
+                    <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">{it.l}</p><p className="text-[var(--color-text-muted)] font-body">{it.v}</p></div>
+                  </div>
+                ))}
               </div>
-              <div>
-                {submitState==='success' ? (
-                  <div className="bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/40 rounded-2xl p-8 text-center">
-                    <div className="w-16 h-16 bg-[var(--color-primary)]/20 text-[var(--color-primary)] flex items-center justify-center rounded-full mx-auto mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg></div>
-                    <h3 className="font-heading font-bold text-2xl text-[var(--color-primary)] mb-2">Transmission received.</h3>
-                    <p className="italic text-[var(--color-subtle)] mb-6 font-body">Ryland Grace will respond shortly. — Rocky approves ♪</p>
-                    <button onClick={()=>setSubmitState('idle')} className="text-sm border border-[var(--color-primary)]/50 font-heading text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 px-4 py-2 rounded-lg">Send another</button>
-                  </div>
-                ) : (
-                  <div className="bg-[var(--contact-form-bg)] border border-[var(--color-border)] p-8 rounded-[16px] scanlines">
-                    <h3 className="font-heading font-bold text-2xl text-[var(--color-primary)] mb-6">Send a Message</h3>
-                    {submitState==='error' && <div className="bg-[#FF6B6B]/10 border border-[#FF6B6B]/40 rounded-[10px] p-4 text-center mb-6"><p className="text-[#FF6B6B] font-body text-sm">Transmission failed. Please try again.</p></div>}
-                    <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                      <div><input type="text" name="name" value={formData.name} onChange={handleChange} className={inputClasses} placeholder="Your Name" />{errors.name && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1 font-body">{errors.name}</p>}</div>
-                      <div><input type="email" name="email" value={formData.email} onChange={handleChange} className={inputClasses} placeholder="your@email.com" />{errors.email && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1 font-body">{errors.email}</p>}</div>
-                      <div><textarea name="message" value={formData.message} onChange={handleChange} className={`${inputClasses} resize-y min-h-[120px]`} placeholder="What's on your mind?"></textarea>{errors.message && <p className="text-[#FF6B6B] text-[13px] mt-1 ml-1 font-body">{errors.message}</p>}</div>
-                      <button type="submit" disabled={submitState==='loading'} className="w-full mt-2 bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-heading font-bold rounded-[10px] py-[10px] px-[24px] hover:scale-[1.02] transition-all duration-200 disabled:opacity-70 flex items-center justify-center min-h-[44px] glow-pulse">
-                        {submitState==='loading' ? <span className="w-5 h-5 border-[2px] border-[var(--btn-primary-text)] opacity-30 border-t-white rounded-full animate-spin"></span> : "Transmit Message"}
-                      </button>
-                    </form>
-                  </div>
-                )}
+              <div className="bg-[var(--contact-form-bg)] border border-[var(--color-border)] p-8 rounded-[16px] scanlines">
+                {state==='success' ? <div className="text-center py-4"><h3 className="font-heading text-[var(--color-primary)] text-xl">Transmission Received.</h3><button onClick={()=>setState('idle')} className="mt-4 text-sm text-[var(--color-primary)] underline">Send another</button></div> :
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <input type="text" name="name" value={formData.name} onChange={(e)=>setFormData({...formData,name:e.target.value})} className={inputCls} placeholder="Name" required />
+                  <input type="email" name="email" value={formData.email} onChange={(e)=>setFormData({...formData,email:e.target.value})} className={inputCls} placeholder="Email" required />
+                  <textarea name="message" value={formData.message} onChange={(e)=>setFormData({...formData,message:e.target.value})} className={`${inputCls} h-32`} placeholder="Transmission detail..." required></textarea>
+                  <button type="submit" disabled={state==='loading'} className="w-full bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-heading font-bold rounded-[10px] py-3 hover:brightness-110 active:scale-95 transition-all glow-pulse">{state==='loading'?'Transmitting...':'Transmit Message'}</button>
+                </form>}
               </div>
             </div>
           </FadeInSection>
@@ -553,45 +391,25 @@
       );
     };
 
-    // ── FOOTER ──
-    const Footer = () => (
-      <footer className="border-t py-8 text-center mt-12 mb-4" style={{borderColor:'var(--color-primary)',borderTopWidth:'1px',boxShadow:'0 -1px 20px rgba(0,255,178,0.1)'}}>
-        <p className="text-[var(--color-subtle)] text-sm font-body">&copy; 2026 Akshatha Dungi — Built aboard the Hail Mary · React & Tailwind</p>
-      </footer>
-    );
+    const Footer = () => <footer className="py-8 text-center mt-12 border-t border-[var(--color-subtle)] opacity-50"><p className="text-sm font-body">&copy; 2026 Akshatha Dungi — Built aboard the Hail Mary</p></footer>;
 
-    // ── APP ROOT ──
     const App = () => {
-      const [activeSection, setActiveSection] = useState('hero');
+      const [active, setActive] = useState('hero');
       const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') !== 'light');
-
+      useEffect(() => { document.documentElement.setAttribute('data-theme', isDark?'dark':'light'); localStorage.setItem('theme', isDark?'dark':'light'); }, [isDark]);
       useEffect(() => {
-        if (isDark) { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('theme','dark'); }
-        else { document.documentElement.setAttribute('data-theme','light'); localStorage.setItem('theme','light'); }
-      }, [isDark]);
-
-      useEffect(() => {
-        const handleScrollSpy = () => {
-          const sections = ['hero','about','experience','projects','skills','certifications','contact'];
-          const scrollPos = window.scrollY + 100;
-          for (const section of sections) {
-            const el = document.getElementById(section);
-            if (el && el.offsetTop <= scrollPos && el.offsetTop + el.offsetHeight > scrollPos) setActiveSection(section);
-          }
+        const spy = () => {
+          const s = ['hero','about','experience','projects','skills','certifications','contact'];
+          const p = window.scrollY + 120;
+          for(const n of s){ const e=document.getElementById(n); if(e && e.offsetTop <= p && e.offsetTop + e.offsetHeight > p) setActive(n); }
         };
-        window.addEventListener('scroll', handleScrollSpy);
-        return () => window.removeEventListener('scroll', handleScrollSpy);
+        window.addEventListener('scroll', spy); return () => window.removeEventListener('scroll', spy);
       }, []);
-
-      return (
-        <div className="font-body text-[var(--color-text-muted)] min-h-screen relative selection:bg-[var(--color-primary)] selection:opacity-30 selection:text-[var(--color-text)]">
-          <Navbar activeSection={activeSection} isDark={isDark} toggleTheme={()=>setIsDark(!isDark)} />
-          <main><Hero /><About /><Experience /><Projects /><Skills /><Certifications /><Contact /></main>
-          <Footer />
-        </div>
-      );
+      return (<div className="font-body text-[var(--color-text-muted)] min-h-screen relative selection:bg-[var(--color-primary)] selection:bg-opacity-20">
+        <Navbar activeSection={active} isDark={isDark} toggleTheme={()=>setIsDark(!isDark)} />
+        <main><Hero /><About /><Experience /><Projects /><Skills /><Certifications /><Contact /></main><Footer />
+      </div>);
     };
-
     ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
 </body>
