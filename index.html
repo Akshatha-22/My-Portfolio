@@ -51,6 +51,29 @@
 <body>
   <div id="root"></div>
 
+  <!-- Simple localStorage-based storage helper -->
+  <script>
+    window.storage = {
+      set: function(key, value) {
+        return Promise.resolve(localStorage.setItem(key, value));
+      },
+      get: function(key) {
+        return Promise.resolve(localStorage.getItem(key));
+      },
+      delete: function(key) {
+        return Promise.resolve(localStorage.removeItem(key));
+      },
+      list: function(prefix) {
+        var keys = [];
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (k.startsWith(prefix)) keys.push(k);
+        }
+        return Promise.resolve(keys);
+      }
+    };
+  </script>
+
   <script type="text/babel" data-type="module">
     const { useState, useEffect, useRef } = React;
 
@@ -87,6 +110,12 @@
     );
     const IconMoon = ({ size = 16, className = "" }) => (
       <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
+    );
+    const IconPlay = ({ size = 18, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}><polygon points="5,3 15,9 5,15" /></svg>
+    );
+    const IconPause = ({ size = 18, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}><rect x="4" y="3" width="3.5" height="12" rx="1" /><rect x="10.5" y="3" width="3.5" height="12" rx="1" /></svg>
     );
 
     // --- HOOKS ---
@@ -266,28 +295,98 @@
 
     // --- SECTION ABOUT ---
     const About = () => {
+      const [isPlaying, setIsPlaying] = useState(false);
+      const audioRef = useRef(null);
+      const imgRef = useRef(null);
+
+      useEffect(() => {
+        audioRef.current = new Audio('HUS(허밍어반스테레오) - BANANA SHAKE (SPED UP) [Visualizer].mp3');
+        audioRef.current.loop = true;
+        return () => {
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current = null;
+          }
+        };
+      }, []);
+
+      const togglePlay = () => {
+        if (!audioRef.current || !imgRef.current) return;
+        
+        if (isPlaying) {
+          audioRef.current.pause();
+          // Freeze rotation at current angle
+          const img = imgRef.current;
+          const matrix = window.getComputedStyle(img).transform;
+          if (matrix && matrix !== 'none') {
+            const values = matrix.split('(')[1].split(')')[0].split(',');
+            const a = parseFloat(values[0]);
+            const b = parseFloat(values[1]);
+            const angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+            img.style.transform = `rotate(${angle}deg)`;
+          }
+          img.classList.remove('spinning');
+        } else {
+          audioRef.current.play();
+          // Resume spinning from frozen angle
+          const img = imgRef.current;
+          img.style.transform = '';
+          img.classList.add('spinning');
+        }
+        setIsPlaying(!isPlaying);
+      };
+
       return (
         <section id="about" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
           <FadeInSection>
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="flex justify-center md:justify-start order-2 md:order-1">
-                <div className="relative">
-                  <div className="absolute -inset-4 bg-[var(--color-primary)] opacity-20 rounded-full blur-xl"></div>
-                  <img
-                    src="mei.jpeg"
-                    alt="Akshatha Dungi"
-                    className="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-[3px] border-[var(--color-primary)] animate-float shadow-2xl z-10"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23CA3CFF' opacity='0.5'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
-                      e.target.className = "relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-[3px] border-[var(--color-primary)] animate-float shadow-2xl z-10 bg-[var(--color-surface)]";
-                    }}
-                  />
-                  <div className="absolute top-8 -right-4 bg-[var(--color-surface)] border border-[var(--color-subtle)] py-2 px-4 rounded-full text-[var(--color-text)] text-sm font-medium shadow-lg animate-float" style={{ animationDelay: '1s' }}>
-                    Adaptable &lt;/&gt;
+              <div className="flex flex-col items-center md:items-start order-2 md:order-1 justify-center md:justify-start">
+                <div className="flex flex-col items-center gap-4 relative">
+                  <div className="absolute -inset-4 bg-[var(--color-primary)] opacity-20 rounded-full blur-xl z-0"></div>
+                  
+                  {/* Profile image with spin */}
+                  <div className="relative z-10" style={{ transition: 'transform 0.1s' }}>
+                    <img
+                      ref={imgRef}
+                      src="mei.jpeg"
+                      alt="Profile"
+                      className={`w-[280px] h-[280px] rounded-full object-cover border-4 border-[var(--color-primary)] ${isPlaying ? 'spinning' : 'not-spinning'}`}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23CA3CFF' opacity='0.5'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+                        e.target.className = `w-[280px] h-[280px] rounded-full object-cover border-4 border-[var(--color-primary)] bg-[var(--color-surface)] ${isPlaying ? 'spinning' : 'not-spinning'}`;
+                      }}
+                    />
+                    {!isPlaying && (
+                      <div className="absolute top-4 -right-2 bg-[var(--color-surface)] border border-[var(--color-subtle)] py-2 px-4 rounded-full text-[var(--color-text)] text-sm font-medium shadow-lg animate-float" style={{ animationDelay: '1s' }}>
+                        Adaptable &lt;/&gt;
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Play / Pause button */}
+                  <button
+                    onClick={togglePlay}
+                    className="w-[52px] h-[52px] mt-4 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-[1.08] hover:brightness-110 active:scale-95 z-10 shadow-none border-none"
+                    style={{ background: 'var(--color-primary)', color: 'var(--color-bg)' }}
+                    aria-label={isPlaying ? 'Pause music' : 'Play music'}
+                  >
+                    {isPlaying ? <IconPause className="text-[var(--color-bg)]" /> : <IconPlay className="ml-1 text-[var(--color-bg)]" />}
+                  </button>
+
+                  {/* Now playing label */}
+                  <div
+                    className="flex items-center gap-2 transition-opacity duration-400 z-10"
+                    style={{ opacity: isPlaying ? 1 : 0, height: '20px' }}
+                  >
+                    <span className="w-[6px] h-[6px] rounded-full pulse-dot" style={{ background: 'var(--color-primary)' }} />
+                    <span className="text-[12px] italic" style={{ color: 'var(--color-subtle)' }}>
+                      ♪ BANANA SHAKE
+                    </span>
                   </div>
                 </div>
               </div>
+
               <div className="order-1 md:order-2">
                 <h2 className="font-heading font-bold text-3xl md:text-4xl text-[var(--color-primary)] mb-6">About Me</h2>
                 <div className="space-y-4 text-[var(--color-text-muted)] leading-relaxed">
