@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akshatha Dungi | Software Developer — Nebula Edition</title>
-  <meta name="description" content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI Curious. Inspired by NASA Nebula imagery.">
+  <meta
+    name="description"
+    content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI Curious. Inspired by NASA Nebula imagery."
+  />
   <script>
     (function () {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
     })();
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -24,28 +32,290 @@
       theme: {
         extend: {
           fontFamily: {
-            heading: ['"Orbitron"', 'sans-serif'],
-            body: ['"Share Tech Mono"', 'monospace'],
-          }
-        }
-      }
-    }
+            heading: ["Orbitron", "sans-serif"],
+            body: ['"Share Tech Mono"', "monospace"],
+          },
+        },
+      },
+    };
   </script>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --color-bg: #04020e;
+      --color-surface: #0a0618;
+      --color-surface-2: #110825;
+      --color-primary: #39ff8e;
+      --color-nebula-pink: #ff4d8c;
+      --color-nebula-gold: #ffd166;
+      --color-nebula-blue: #4fc3f7;
+      --color-nebula-violet: #c77dff;
+      --color-nebula-crimson: #ff6b6b;
+      --color-text: #f0eeff;
+      --color-text-muted: #9b8ec4;
+      --color-subtle: #3d2f6a;
+      --color-border: #1a1035;
+      --nav-bg: rgba(4, 2, 14, 0.88);
+      --drawer-bg: rgba(4, 2, 14, 0.96);
+      --tech-tag-bg: #110825;
+      --tech-tag-text: #39ff8e;
+      --skill-pill-bg: #0a0618;
+      --skill-pill-border: #1a1035;
+      --about-card-bg: rgba(10, 6, 24, 0.85);
+      --btn-primary-text: #04020e;
+      --btn-ghost-border: #c77dff;
+      --btn-ghost-text: #c77dff;
+      --input-bg: #0a0618;
+      --input-border: #1a1035;
+      --contact-form-bg: rgba(10, 6, 24, 0.92);
+    }
+
+    [data-theme="light"] {
+      --color-bg: #fff8ee;
+      --color-surface: #fff0d6;
+      --color-surface-2: #ffe8c2;
+      --color-primary: #008c5a;
+      --color-nebula-pink: #d6006a;
+      --color-nebula-gold: #c97a00;
+      --color-nebula-blue: #0077b6;
+      --color-nebula-violet: #6a00c9;
+      --color-nebula-crimson: #c0392b;
+      --color-text: #12041e;
+      --color-text-muted: #4a3570;
+      --color-subtle: #b08fd0;
+      --color-border: #e8d5b7;
+      --nav-bg: rgba(255, 248, 238, 0.88);
+      --drawer-bg: rgba(255, 248, 238, 0.96);
+      --tech-tag-bg: #ffe8c2;
+      --tech-tag-text: #008c5a;
+      --skill-pill-bg: #fff0d6;
+      --skill-pill-border: #e8d5b7;
+      --about-card-bg: rgba(255, 240, 214, 0.9);
+      --btn-primary-text: #fff8ee;
+      --btn-ghost-border: #6a00c9;
+      --btn-ghost-text: #6a00c9;
+      --input-bg: #fff0d6;
+      --input-border: #e8d5b7;
+      --contact-form-bg: rgba(255, 240, 214, 0.95);
+    }
+
+    body {
+      margin: 0;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: "Share Tech Mono", monospace;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.35;
+    }
+
+    .cosmic-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 15% 20%, rgba(199, 125, 255, 0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 15%, rgba(79, 195, 247, 0.15) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 40% at 50% 80%, rgba(255, 77, 140, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 60% at 90% 70%, rgba(255, 209, 102, 0.1) 0%, transparent 45%),
+        radial-gradient(ellipse 90% 80% at 50% 50%, rgba(57, 255, 142, 0.05) 0%, transparent 70%),
+        var(--color-bg);
+    }
+
+    [data-theme="light"] .cosmic-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 15% 20%, rgba(106, 0, 201, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 85% 15%, rgba(0, 119, 182, 0.1) 0%, transparent 55%),
+        radial-gradient(ellipse 70% 40% at 50% 80%, rgba(214, 0, 106, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 60% at 90% 70%, rgba(201, 122, 0, 0.08) 0%, transparent 45%),
+        var(--color-bg);
+    }
+
+    .gradient-text-green-blue {
+      background: linear-gradient(135deg, #39ff8e 0%, #4fc3f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-violet-pink {
+      background: linear-gradient(135deg, #c77dff 0%, #ff4d8c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-gold-crimson {
+      background: linear-gradient(135deg, #ffd166 0%, #ff6b6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-blue-violet {
+      background: linear-gradient(135deg, #4fc3f7 0%, #c77dff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-text-hero {
+      background: linear-gradient(135deg, #f0eeff 0%, #c77dff 40%, #4fc3f7 80%, #39ff8e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    [data-theme="light"] .gradient-text-hero {
+      background: linear-gradient(135deg, #12041e 0%, #6a00c9 50%, #0077b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glow-green { box-shadow: 0 0 20px rgba(57, 255, 142, 0.4), 0 0 40px rgba(57, 255, 142, 0.15); }
+    .glow-violet { box-shadow: 0 0 20px rgba(199, 125, 255, 0.4), 0 0 40px rgba(199, 125, 255, 0.15); }
+    .glow-blue { box-shadow: 0 0 20px rgba(79, 195, 247, 0.4), 0 0 40px rgba(79, 195, 247, 0.15); }
+    .glow-pink { box-shadow: 0 0 20px rgba(255, 77, 140, 0.4), 0 0 40px rgba(255, 77, 140, 0.15); }
+    .text-glow-green { text-shadow: 0 0 12px rgba(57, 255, 142, 0.8), 0 0 24px rgba(57, 255, 142, 0.4); }
+
+    .nebula-card {
+      background: rgba(10, 6, 24, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .nebula-card:hover { transform: translateY(-4px); }
+
+    [data-theme="light"] .nebula-card {
+      background: rgba(255, 240, 214, 0.75);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .scanlines { position: relative; }
+    .scanlines::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(57, 255, 142, 0.025) 2px, rgba(57, 255, 142, 0.025) 4px);
+    }
+
+    .cosmic-banner {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 16px;
+      filter: saturate(1.3) contrast(1.1);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+    }
+
+    @keyframes float-shape-1 { 0%,100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-30px) scale(1.05); } }
+    @keyframes float-shape-2 { 0%,100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(20px) scale(0.95); } }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes glow-pulse { 0%,100% { box-shadow: 0 0 10px rgba(57, 255, 142, 0.5); } 50% { box-shadow: 0 0 28px rgba(57, 255, 142, 0.9), 0 0 50px rgba(57, 255, 142, 0.3); } }
+    @keyframes terminal-blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+    @keyframes fade-in-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
+    @keyframes bounce-down { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+    .spinning { animation: spin 4s linear infinite; }
+    .not-spinning { }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-float-shape-1 { animation: float-shape-1 8s ease-in-out infinite; }
+    .animate-float-shape-2 { animation: float-shape-2 6s ease-in-out infinite; }
+    .animate-glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
+    .cursor-blink { animation: terminal-blink 1s step-end infinite; }
+    .pulse-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
+    .bounce-down { animation: bounce-down 1.8s ease-in-out infinite; }
+
+    .fade-in-section { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .timeline-line { background: linear-gradient(to bottom, #39ff8e, #c77dff, #ff4d8c); }
+    .section-divider { width: 100%; height: 2px; border: none; background: linear-gradient(90deg, transparent, #c77dff, #39ff8e, #4fc3f7, #ff4d8c, transparent); margin: 0; opacity: 0.4; }
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -10px;
+      width: 100%;
+      height: 2px;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #39ff8e, #4fc3f7);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link-active::after { transform: scaleX(1); }
+
+    .hero-deep-field {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.08;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .hero-fade-up { opacity: 0; animation: fade-in-up 0.8s ease forwards; }
+    .mobile-drawer-panel { background: var(--drawer-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+    .nav-shell { transition: background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease; }
+    .classified-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-25deg);
+      font-family: "Orbitron", sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .cosmic-banner { height: 140px; }
+      .nebula-card { border-radius: 12px; }
+    }
+  </style>
 </head>
 <body>
   <div id="root"></div>
 
   <script>
     window.storage = {
-      set: function(key, value) { return Promise.resolve(localStorage.setItem(key, value)); },
-      get: function(key) { return Promise.resolve(localStorage.getItem(key)); },
-      delete: function(key) { return Promise.resolve(localStorage.removeItem(key)); },
-      list: function(prefix) {
+      set: function (key, value) { return Promise.resolve(localStorage.setItem(key, value)); },
+      get: function (key) { return Promise.resolve(localStorage.getItem(key)); },
+      delete: function (key) { return Promise.resolve(localStorage.removeItem(key)); },
+      list: function (prefix) {
         var keys = [];
         for (var i = 0; i < localStorage.length; i++) {
           var k = localStorage.key(i);
-          if (k.startsWith(prefix)) keys.push(k);
+          if (k.startsWith(prefix)) {
+            keys.push(k);
+          }
         }
         return Promise.resolve(keys);
       }
@@ -53,172 +323,548 @@
   </script>
   <script src="three-bg.js"></script>
 
-  <script type="text/babel" data-type="module">
-    const { useState, useEffect, useRef } = React;
+  <script type="text/babel">
+    const { useEffect, useMemo, useRef, useState } = React;
 
-    // ── ICONS ──
-    const IconGithub = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /><path d="M9 18c-4.51 2-5-2-7-2" /></svg>);
-    const IconLinkedin = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>);
-    const IconMail = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>);
-    const IconMapPin = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>);
-    const IconExternalLink = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></svg>);
-    const IconAward = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="m9 12 2 2 4-4" /></svg>);
-    const IconBriefcase = ({ size = 20, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="14" x="2" y="7" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>);
-    const IconMenu = ({ size = 24, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></svg>);
-    const IconClose = ({ size = 24, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>);
-    const IconSun = ({ size = 16, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="4" /><path d="M12 2v2" /><path d="M12 20v2" /><path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" /><path d="M2 12h2" /><path d="M20 12h2" /><path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" /></svg>);
-    const IconMoon = ({ size = 16, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>);
-    const IconPlay = ({ size = 18, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}><polygon points="5,3 15,9 5,15" /></svg>);
-    const IconPause = ({ size = 18, className = "" }) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}><rect x="4" y="3" width="3.5" height="12" rx="1" /><rect x="10.5" y="3" width="3.5" height="12" rx="1" /></svg>);
+    const PILLARS_WEBB = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/800px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg";
+    const CARINA_WEBB = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Webb%27s_first_deep_field.jpg/800px-Webb%27s_first_deep_field.jpg";
+    const DEEP_FIELD = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Webb%27s_First_Deep_Field_%28adjusted%29.jpg/800px-Webb%27s_First_Deep_Field_%28adjusted%29.jpg";
+    const STEPHANS = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Stephan%27s_Quintet_%28NIRCam_%2B_MIRI_Composite_Image%29.jpg/800px-Stephan%27s_Quintet_%28NIRCam_%2B_MIRI_Composite_Image%29.jpg";
+    const SOUTHERN_RING = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Southern_Ring_Nebula_-_Webb_Space_Telescope%2C_2022-07-12_%28NIRCam%29.png/800px-Southern_Ring_Nebula_-_Webb_Space_Telescope%2C_2022-07-12_%28NIRCam%29.png";
 
-    // ── HOOKS ──
+    const IconGithub = ({ size = 20, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+        <path d="M9 18c-4.51 2-5-2-7-2" />
+      </svg>
+    );
+    const IconLinkedin = ({ size = 20, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect width="4" height="12" x="2" y="9" />
+        <circle cx="4" cy="4" r="2" />
+      </svg>
+    );
+    const IconMail = ({ size = 20, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <rect width="20" height="16" x="2" y="4" rx="2" />
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+      </svg>
+    );
+    const IconExternalLink = ({ size = 20, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M15 3h6v6" />
+        <path d="M10 14 21 3" />
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      </svg>
+    );
+    const IconMenu = ({ size = 24, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <line x1="4" x2="20" y1="12" y2="12" />
+        <line x1="4" x2="20" y1="6" y2="6" />
+        <line x1="4" x2="20" y1="18" y2="18" />
+      </svg>
+    );
+    const IconClose = ({ size = 24, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    );
+    const IconSun = ({ size = 16, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2" />
+        <path d="M12 20v2" />
+        <path d="m4.93 4.93 1.41 1.41" />
+        <path d="m17.66 17.66 1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="m6.34 17.66-1.41 1.41" />
+        <path d="m19.07 4.93-1.41 1.41" />
+      </svg>
+    );
+    const IconMoon = ({ size = 16, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </svg>
+    );
+    const IconPlay = ({ size = 18, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}>
+        <polygon points="5,3 15,9 5,15" />
+      </svg>
+    );
+    const IconPause = ({ size = 18, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 18 18" fill="currentColor" className={className}>
+        <rect x="4" y="3" width="3.5" height="12" rx="1" />
+        <rect x="10.5" y="3" width="3.5" height="12" rx="1" />
+      </svg>
+    );
+    const IconChevronDown = ({ size = 24, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    );
+
     const useFadeIn = () => {
-      const domRef = useRef();
+      const domRef = useRef(null);
       const [isVisible, setVisible] = useState(false);
+
       useEffect(() => {
-        const observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => { if (entry.isIntersecting) { setVisible(true); observer.unobserve(entry.target); } });
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setVisible(true);
+              observer.unobserve(entry.target);
+            }
+          });
         }, { threshold: 0.15 });
-        const { current } = domRef;
-        if (current) observer.observe(current);
-        return () => { if (current) observer.unobserve(current); };
+        const current = domRef.current;
+        if (current) {
+          observer.observe(current);
+        }
+        return () => {
+          if (current) {
+            observer.unobserve(current);
+          }
+        };
       }, []);
+
       return { ref: domRef, isVisible };
     };
-    const FadeInSection = ({ children, className = "" }) => {
-      const { ref, isVisible } = useFadeIn();
-      return <div ref={ref} className={`fade-in-section ${isVisible ? 'is-visible' : ''} ${className}`}>{children}</div>;
+
+    const useIsMobile = (breakpoint = 768) => {
+      const [isMobile, setIsMobile] = useState(() => window.innerWidth < breakpoint);
+      useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth < breakpoint);
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+      }, [breakpoint]);
+      return isMobile;
     };
 
-    // ── THEME TOGGLE ──
+    const FadeInSection = ({ children, className = "" }) => {
+      const { ref, isVisible } = useFadeIn();
+      return <div ref={ref} className={`fade-in-section ${isVisible ? "is-visible" : ""} ${className}`}>{children}</div>;
+    };
+
     const ThemeToggle = ({ isDark, toggleTheme }) => (
-      <button onClick={toggleTheme} aria-label="Toggle Theme" style={{ width:'52px',height:'28px',backgroundColor:isDark?'#0A0618':'#FFF0D6',border:`1px solid ${isDark?'#39FF8E':'#008C5A'}`,borderRadius:'9999px',position:'relative',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 6px'}} className="hover:scale-105 transition-all duration-300">
-        <div style={{position:'absolute',left:isDark?'2px':'26px',top:'2px',width:'22px',height:'22px',borderRadius:'50%',backgroundColor:isDark?'#39FF8E':'#008C5A',transition:'left 300ms ease, background-color 300ms ease',zIndex:1}}></div>
-        <IconMoon size={12} className="relative z-0 text-[#008C5A]" />
-        <IconSun size={12} className="relative z-0 text-[#39FF8E]" />
+      <button
+        onClick={toggleTheme}
+        aria-label="Toggle Theme"
+        className="relative flex h-8 w-[58px] items-center rounded-full border transition-all duration-300 hover:scale-105"
+        style={{
+          background: isDark ? "linear-gradient(135deg, rgba(199,125,255,0.3), rgba(79,195,247,0.2))" : "linear-gradient(135deg, rgba(255,209,102,0.45), rgba(201,122,0,0.2))",
+          borderColor: isDark ? "rgba(199,125,255,0.55)" : "rgba(201,122,0,0.45)"
+        }}
+      >
+        <span className="absolute left-2 text-[var(--color-nebula-violet)]"><IconMoon size={12} /></span>
+        <span className="absolute right-2 text-[var(--color-nebula-gold)]"><IconSun size={12} /></span>
+        <span
+          className="absolute top-[3px] flex h-[24px] w-[24px] items-center justify-center rounded-full shadow-lg transition-all duration-300"
+          style={{
+            left: isDark ? "3px" : "31px",
+            background: isDark ? "linear-gradient(135deg, #c77dff 0%, #4fc3f7 100%)" : "linear-gradient(135deg, #ffd166 0%, #c97a00 100%)",
+            color: isDark ? "#04020e" : "#fff8ee"
+          }}
+        >
+          {isDark ? <IconMoon size={12} /> : <IconSun size={12} />}
+        </span>
       </button>
     );
 
-    // ── NAVBAR ──
     const Navbar = ({ activeSection, isDark, toggleTheme }) => {
       const [isScrolled, setIsScrolled] = useState(false);
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-      const navLinks = ['Hero','About','Experience','Projects','Skills','Certifications','Contact'];
+      const navLinks = ["Hero", "About", "Experience", "Projects", "Skills", "Certifications", "Contact"];
+
       useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 20);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        handleScroll();
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
       }, []);
-      const scrollTo = (id) => { const el = document.getElementById(id.toLowerCase()); if(el){el.scrollIntoView({behavior:'smooth'});setMobileMenuOpen(false);} };
+
+      useEffect(() => {
+        setMobileMenuOpen(false);
+      }, [activeSection]);
+
+      const scrollTo = (id) => {
+        const element = document.getElementById(id.toLowerCase());
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          setMobileMenuOpen(false);
+        }
+      };
+
       return (
-        <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled?'bg-[var(--nav-bg)] backdrop-blur-md py-3 shadow-lg':'bg-transparent py-6'}`}>
-          <div className="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center">
-            <div className="font-heading font-bold text-2xl tracking-tighter logo-gradient cursor-pointer" onClick={()=>scrollTo('hero')}>AD</div>
-            <div className="hidden md:flex space-x-8 items-center">
-              {navLinks.map(link => {
-                const isActive = activeSection === link.toLowerCase();
-                return <button key={link} onClick={()=>scrollTo(link)} className={`text-sm font-body font-medium transition-colors hover:text-[var(--color-primary)] ${isActive?'text-[var(--color-primary)]':'text-[var(--color-text-muted)]'}`}>
-                  {isActive && <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mr-2 glow-pulse"></span>}
-                  {link}
-                </button>;
+        <nav
+          className={`nav-shell fixed left-0 top-0 z-50 w-full ${isScrolled ? "py-3" : "py-5"}`}
+          style={{
+            background: isScrolled ? "var(--nav-bg)" : "transparent",
+            backdropFilter: isScrolled ? "blur(24px)" : "none",
+            WebkitBackdropFilter: isScrolled ? "blur(24px)" : "none",
+            boxShadow: isScrolled ? "0 16px 40px rgba(0,0,0,0.18)" : "none"
+          }}
+        >
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-16">
+            <button onClick={() => scrollTo("Hero")} className="gradient-text-green-blue font-heading text-2xl font-black tracking-[0.2em] text-glow-green" aria-label="Go to Hero">
+              AD
+            </button>
+
+            <div className="hidden items-center gap-8 md:flex">
+              {navLinks.map((link) => {
+                const sectionId = link.toLowerCase();
+                const isActive = activeSection === sectionId;
+                return (
+                  <button
+                    key={link}
+                    onClick={() => scrollTo(link)}
+                    className={`nav-link ${isActive ? "nav-link-active text-[var(--color-text)]" : "text-[var(--color-text-muted)]"} font-body text-sm uppercase tracking-[0.18em] transition-colors duration-300 hover:text-[var(--color-text)]`}
+                  >
+                    {link}
+                  </button>
+                );
               })}
-              <div className="ml-4 border-l border-[var(--color-border)] pl-4"><ThemeToggle isDark={isDark} toggleTheme={toggleTheme} /></div>
+              <div className="ml-2 border-l border-[var(--color-border)] pl-5">
+                <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+              </div>
             </div>
+
             <div className="flex items-center gap-4 md:hidden">
               <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
-              <button className="text-[var(--color-text-muted)] hover:text-[var(--color-primary)]" onClick={()=>setMobileMenuOpen(!mobileMenuOpen)}>{mobileMenuOpen?<IconClose />:<IconMenu />}</button>
+              <button onClick={() => setMobileMenuOpen((prev) => !prev)} className="text-[var(--color-text)] transition-colors hover:text-[var(--color-primary)]" aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}>
+                {mobileMenuOpen ? <IconClose /> : <IconMenu />}
+              </button>
             </div>
           </div>
-          <div className={`md:hidden absolute top-full left-0 w-full bg-[var(--drawer-bg)] backdrop-blur-md transition-all duration-300 overflow-hidden ${mobileMenuOpen?'max-h-screen py-4 border-b border-[var(--color-border)]':'max-h-0 py-0'}`}>
-            <div className="flex flex-col space-y-4 px-6">{navLinks.map(link => <button key={link} onClick={()=>scrollTo(link)} className={`text-left text-lg font-medium font-body ${activeSection===link.toLowerCase()?'text-[var(--color-primary)]':'text-[var(--color-text-muted)]'}`}>{link}</button>)}</div>
+
+          <div className={`mobile-drawer-panel overflow-hidden border-b border-[var(--color-border)] transition-all duration-300 md:hidden ${mobileMenuOpen ? "max-h-[420px] py-5" : "max-h-0 py-0"}`}>
+            <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 sm:px-10">
+              {navLinks.map((link) => {
+                const sectionId = link.toLowerCase();
+                const isActive = activeSection === sectionId;
+                return (
+                  <button key={link} onClick={() => scrollTo(link)} className={`text-left font-body text-base uppercase tracking-[0.18em] ${isActive ? "text-[var(--color-primary)]" : "text-[var(--color-text-muted)]"}`}>
+                    {link}
+                  </button>
+                );
+              })}
+            </div>
           </div>
+
+          {isScrolled ? <hr className="section-divider absolute bottom-0 left-0" /> : null}
         </nav>
       );
     };
 
-    // ── HERO ──
     const Hero = () => {
-      const canvasRef = useRef();
-      const [showRocky, setShowRocky] = useState(false);
-      useEffect(() => { if (canvasRef.current) { const cleanup = createStarfield(canvasRef.current); return cleanup; } }, []);
-      const playRockyBeep = () => {
-        try {
-          const ctx = new (window.AudioContext || window.webkitAudioContext)();
-          [0, 0.15].forEach(delay => {
-            const osc = ctx.createOscillator(); const gain = ctx.createGain();
-            osc.type = 'sine'; osc.frequency.value = 800; gain.gain.setValueAtTime(0.3, ctx.currentTime + delay);
-            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.12);
-            osc.connect(gain); gain.connect(ctx.destination); osc.start(ctx.currentTime + delay); osc.stop(ctx.currentTime + delay + 0.12);
-          });
-        } catch(e){}
-      };
-      const handleRocky = () => { setShowRocky(true); playRockyBeep(); setTimeout(()=>setShowRocky(false), 2200); };
-      return (
-        <section id="hero" className="relative min-h-screen flex items-center pt-20 overflow-hidden px-6 lg:px-12 max-w-7xl mx-auto">
-          <canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:0,pointerEvents:'none'}} />
-          {/* Nebula Blobs */}
-          <div className="absolute top-[15%] right-[10%] w-[400px] h-[400px] bg-[var(--color-nebula-violet)] opacity-20 filter blur-[100px] rounded-full animate-float-shape-1"></div>
-          <div className="absolute bottom-[10%] right-[15%] w-[350px] h-[350px] bg-[var(--color-nebula-pink)] opacity-15 filter blur-[90px] rounded-full animate-float-shape-2"></div>
-          <div className="absolute top-[20%] left-[5%] w-[300px] h-[300px] bg-[var(--color-primary)] opacity-10 filter blur-[100px] rounded-full animate-float-shape-1" style={{animationDelay:'-2s'}}></div>
-          <div className="absolute bottom-[15%] left-[10%] w-[320px] h-[320px] bg-[var(--color-nebula-gold)] opacity-10 filter blur-[95px] rounded-full animate-float-shape-2" style={{animationDelay:'-4s'}}></div>
+      const canvasRef = useRef(null);
+      const roles = useMemo(() => ["Software Developer", "Backend Specialist", "AI Curious", "Software Developer · Backend Specialist · AI Curious"], []);
+      const [roleIndex, setRoleIndex] = useState(3);
 
-          <div className="relative z-10 max-w-3xl">
-            <p className="hero-text-1 mission-label mb-4">MISSION LOG #001 — CREW MANIFEST</p>
-            <h1 className="hero-text-2 font-heading font-bold mb-4 name-gradient" style={{fontSize:'clamp(42px,6vw,76px)',lineHeight:'1.1'}}>Akshatha Dungi</h1>
-            <h2 className="hero-text-3 font-body text-[var(--color-text)] text-lg md:text-xl lg:text-2xl mb-6 tracking-wide">
-              Software Developer · Backend Specialist · AI Curious<span className="cursor-blink text-[var(--color-primary)]">|</span>
+      useEffect(() => {
+        const interval = window.setInterval(() => {
+          setRoleIndex((prev) => (prev + 1) % roles.length);
+        }, 2400);
+        return () => window.clearInterval(interval);
+      }, [roles]);
+
+      useEffect(() => {
+        const W = window.innerWidth;
+        const H = window.innerHeight;
+        const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, alpha: true, antialias: true });
+        renderer.setSize(W, H);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
+        camera.position.z = 1;
+
+        const starCount = 3500;
+        const positions = new Float32Array(starCount * 3);
+        const colors = new Float32Array(starCount * 3);
+        const starPalette = [[0.94, 0.93, 1.0], [0.78, 0.49, 1.0], [0.31, 0.76, 0.97], [1.0, 0.82, 0.4], [0.22, 1.0, 0.56], [1.0, 0.3, 0.55]];
+
+        for (let i = 0; i < starCount; i++) {
+          positions[i * 3] = (Math.random() - 0.5) * 800;
+          positions[i * 3 + 1] = (Math.random() - 0.5) * 800;
+          positions[i * 3 + 2] = (Math.random() - 0.5) * 800;
+          const c = starPalette[Math.floor(Math.random() * starPalette.length)];
+          colors[i * 3] = c[0];
+          colors[i * 3 + 1] = c[1];
+          colors[i * 3 + 2] = c[2];
+        }
+
+        const starGeo = new THREE.BufferGeometry();
+        starGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+        starGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+        const starMat = new THREE.PointsMaterial({ size: 1.4, vertexColors: true, transparent: true, opacity: 0.9 });
+        scene.add(new THREE.Points(starGeo, starMat));
+
+        const aphCount = 150;
+        const aphPos = new Float32Array(aphCount * 3);
+        const aphColors = new Float32Array(aphCount * 3);
+        for (let i = 0; i < aphCount; i++) {
+          aphPos[i * 3] = (Math.random() - 0.5) * 600;
+          aphPos[i * 3 + 1] = (Math.random() - 0.5) * 600;
+          aphPos[i * 3 + 2] = (Math.random() - 0.5) * 200;
+          const isGreen = Math.random() > 0.4;
+          aphColors[i * 3] = isGreen ? 0.22 : 1.0;
+          aphColors[i * 3 + 1] = isGreen ? 1.0 : 0.82;
+          aphColors[i * 3 + 2] = isGreen ? 0.56 : 0.4;
+        }
+        const aphGeo = new THREE.BufferGeometry();
+        aphGeo.setAttribute("position", new THREE.BufferAttribute(aphPos, 3));
+        aphGeo.setAttribute("color", new THREE.BufferAttribute(aphColors, 3));
+        const aphMat = new THREE.PointsMaterial({ size: 3.5, vertexColors: true, transparent: true, opacity: 0.85 });
+        scene.add(new THREE.Points(aphGeo, aphMat));
+
+        const blobData = [
+          { color: 0xc77dff, pos: [-200, 100, -400], size: 120 },
+          { color: 0xff4d8c, pos: [250, -80, -500], size: 90 },
+          { color: 0x4fc3f7, pos: [0, -200, -450], size: 100 }
+        ];
+        const blobMeshes = [];
+        blobData.forEach((blob) => {
+          const geo = new THREE.SphereGeometry(blob.size, 16, 16);
+          const mat = new THREE.MeshBasicMaterial({ color: blob.color, transparent: true, opacity: 0.06 });
+          const mesh = new THREE.Mesh(geo, mat);
+          mesh.position.set(...blob.pos);
+          scene.add(mesh);
+          blobMeshes.push({ geo, mat });
+        });
+
+        let mouseX = 0;
+        let mouseY = 0;
+        const onMouse = (e) => {
+          mouseX = (e.clientX / window.innerWidth - 0.5) * 0.4;
+          mouseY = (e.clientY / window.innerHeight - 0.5) * 0.3;
+        };
+        const onResize = () => {
+          const w = window.innerWidth;
+          const h = window.innerHeight;
+          renderer.setSize(w, h);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        };
+        window.addEventListener("mousemove", onMouse);
+        window.addEventListener("resize", onResize);
+
+        let frame;
+        const animate = () => {
+          frame = requestAnimationFrame(animate);
+          scene.rotation.y += 0.00008;
+          scene.rotation.x += 0.00004;
+          const pos = aphGeo.attributes.position.array;
+          for (let i = 0; i < aphCount; i++) {
+            pos[i * 3 + 1] += 0.12;
+            if (pos[i * 3 + 1] > 300) {
+              pos[i * 3 + 1] = -300;
+            }
+          }
+          aphGeo.attributes.position.needsUpdate = true;
+          camera.position.x += (mouseX - camera.position.x) * 0.02;
+          camera.position.y += (-mouseY - camera.position.y) * 0.02;
+          renderer.render(scene, camera);
+        };
+        animate();
+
+        return () => {
+          cancelAnimationFrame(frame);
+          window.removeEventListener("mousemove", onMouse);
+          window.removeEventListener("resize", onResize);
+          renderer.dispose();
+          starGeo.dispose();
+          starMat.dispose();
+          aphGeo.dispose();
+          aphMat.dispose();
+          blobMeshes.forEach(({ geo, mat }) => {
+            geo.dispose();
+            mat.dispose();
+          });
+        };
+      }, []);
+
+      return (
+        <section id="hero" className="relative flex min-h-screen items-center overflow-hidden">
+          <canvas ref={canvasRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "none" }} />
+          <img src={DEEP_FIELD} alt="" aria-hidden="true" className="hero-deep-field" />
+
+          <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
+            <div className="absolute right-[8%] top-1/4 h-96 w-96 rounded-full blur-3xl animate-float-shape-1" style={{ background: "#C77DFF", opacity: 0.12 }} />
+            <div className="absolute bottom-1/4 right-[20%] h-64 w-64 rounded-full blur-3xl animate-float-shape-2" style={{ background: "#FF4D8C", opacity: 0.1 }} />
+            <div className="absolute left-[3%] top-1/3 h-80 w-80 rounded-full blur-3xl animate-float-shape-1" style={{ background: "#4FC3F7", opacity: 0.08, animationDelay: "2s" }} />
+            <div className="absolute bottom-1/3 left-[25%] h-48 w-48 rounded-full blur-3xl animate-float-shape-2" style={{ background: "#FFD166", opacity: 0.08, animationDelay: "1s" }} />
+          </div>
+
+          <div className="relative z-10 mx-auto w-full max-w-5xl px-6 sm:px-10 lg:px-16">
+            <p className="hero-fade-up font-body text-xs uppercase tracking-[0.3em]" style={{ color: "var(--color-nebula-violet)", opacity: 0.8, animationDelay: "0s" }}>MISSION LOG #001 · CREW MANIFEST</p>
+            <h1 className="hero-fade-up gradient-text-hero mt-5 font-heading font-black" style={{ fontSize: "clamp(44px,6vw,84px)", lineHeight: "1.02", animationDelay: "0.2s" }}>Akshatha Dungi</h1>
+            <h2 className="hero-fade-up mt-6 font-body text-lg md:text-2xl" style={{ color: "var(--color-text)", animationDelay: "0.4s" }}>
+              <span style={{ color: "var(--color-primary)" }}>$</span> {roles[roleIndex]}<span className="cursor-blink" style={{ color: "var(--color-primary)" }}>|</span>
             </h2>
-            <p className="hero-text-4 text-[var(--color-text-muted)] md:text-lg max-w-2xl leading-relaxed mb-10">I build scalable backends, experiment with LLMs, and thrive on adaptability. Merging solid software engineering principles with dynamic new technologies.</p>
-            <div className="hero-buttons flex flex-wrap gap-4">
-              <button onClick={()=>document.getElementById('projects').scrollIntoView({behavior:'smooth'})} className="bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-heading font-semibold px-8 py-3 rounded-full hover:brightness-110 hover:scale-[1.02] transition-all duration-200 shadow-lg glow-pulse">View Projects</button>
-              <a href="#" className="border-2 border-[var(--btn-ghost-border)] text-[var(--btn-ghost-text)] font-body font-medium px-8 py-3 rounded-full hover:opacity-80 transition-all duration-200">Download Resume</a>
+            <p className="hero-fade-up mt-6 max-w-2xl leading-relaxed" style={{ color: "var(--color-text-muted)", animationDelay: "0.6s" }}>
+              I build scalable backends, experiment with LLMs, and thrive on adaptability. Merging solid software engineering principles with dynamic new technologies.
+            </p>
+            <div className="hero-fade-up mt-10 flex flex-col gap-4 sm:flex-row" style={{ animationDelay: "0.8s" }}>
+              <button onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })} className="rounded-full px-8 py-3 font-heading font-bold transition-all duration-300 hover:scale-105 glow-green" style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }}>
+                View Projects
+              </button>
+              <a href="#" className="rounded-full border-2 px-8 py-3 font-heading transition-all duration-300 hover:scale-105 glow-violet" style={{ borderColor: "var(--color-nebula-violet)", color: "var(--color-nebula-violet)" }}>
+                Download Resume
+              </a>
             </div>
           </div>
-          <div className="absolute bottom-8 right-8 z-20 cursor-pointer select-none" onClick={handleRocky}><span className="text-xs text-[var(--color-primary)] opacity-5">♪ strum strum ♪</span></div>
-          {showRocky && <div className="fixed bottom-20 right-12 z-[999] rocky-alien"><div className="rocky-body"><div className="rocky-arm rocky-arm-l"></div><div className="rocky-arm rocky-arm-r"></div></div><p className="text-center text-[var(--color-nebula-gold)] text-xs mt-2 font-heading">ROCKY!</p></div>}
+
+          <button onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })} className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[var(--color-primary)] opacity-60" aria-label="Scroll to About section">
+            <IconChevronDown className="bounce-down" />
+          </button>
         </section>
       );
     };
 
-    // ── ABOUT ──
     const About = () => {
       const [isPlaying, setIsPlaying] = useState(false);
-      const audioRef = useRef(null); const imgRef = useRef(null); const planetCanvasRef = useRef(null);
-      useEffect(() => { audioRef.current = new Audio('HUS(허밍어반스테레오) - BANANA SHAKE (SPED UP) [Visualizer].mp3'); audioRef.current.loop = true; return () => { if(audioRef.current){audioRef.current.pause();audioRef.current=null;} }; }, []);
-      useEffect(() => { if (planetCanvasRef.current) { const cleanup = createPlanet(planetCanvasRef.current); return cleanup; } }, []);
-      const togglePlay = () => {
-        if (!audioRef.current || !imgRef.current) return;
-        if (isPlaying) { audioRef.current.pause(); imgRef.current.classList.remove('spinning'); }
-        else { audioRef.current.play(); imgRef.current.classList.add('spinning'); }
-        setIsPlaying(!isPlaying);
+      const audioRef = useRef(null);
+      const imgRef = useRef(null);
+      const planetCanvasRef = useRef(null);
+      const isMobile = useIsMobile();
+
+      useEffect(() => {
+        audioRef.current = new Audio("HUS(허밍어반스테레오) - BANANA SHAKE (SPED UP) [Visualizer].mp3");
+        audioRef.current.loop = true;
+        return () => {
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current = null;
+          }
+        };
+      }, []);
+
+      useEffect(() => {
+        const canvas = planetCanvasRef.current;
+        if (!canvas) {
+          return;
+        }
+        const size = isMobile ? 240 : 300;
+        canvas.width = size;
+        canvas.height = size;
+
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(size, size, false);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+        camera.position.z = 7;
+        scene.add(new THREE.AmbientLight(0x223344, 0.5));
+        const greenLight = new THREE.PointLight(0x39ff8e, 1.5, 20);
+        greenLight.position.set(3, 3, 5);
+        scene.add(greenLight);
+        const pinkLight = new THREE.PointLight(0xff4d8c, 0.8, 15);
+        pinkLight.position.set(-3, -2, 3);
+        scene.add(pinkLight);
+
+        const sphereGeo = new THREE.SphereGeometry(2, 64, 64);
+        const sphereMat = new THREE.MeshPhongMaterial({ color: "#1A0A3A", emissive: "#39FF8E", emissiveIntensity: 0.12, specular: new THREE.Color("#C77DFF") });
+        const planet = new THREE.Mesh(sphereGeo, sphereMat);
+        scene.add(planet);
+
+        const ringGeo1 = new THREE.TorusGeometry(2.6, 0.08, 16, 100);
+        const ringMat1 = new THREE.MeshBasicMaterial({ color: "#C77DFF", transparent: true, opacity: 0.3 });
+        const ring1 = new THREE.Mesh(ringGeo1, ringMat1);
+        ring1.rotation.x = 1.1;
+        ring1.rotation.y = 0.3;
+        scene.add(ring1);
+
+        const ringGeo2 = new THREE.TorusGeometry(3.0, 0.04, 16, 100);
+        const ringMat2 = new THREE.MeshBasicMaterial({ color: "#4FC3F7", transparent: true, opacity: 0.2 });
+        const ring2 = new THREE.Mesh(ringGeo2, ringMat2);
+        ring2.rotation.x = 1.15;
+        ring2.rotation.y = -0.2;
+        scene.add(ring2);
+
+        let frame;
+        const animate = () => {
+          frame = requestAnimationFrame(animate);
+          planet.rotation.y += 0.005;
+          ring1.rotation.z += 0.002;
+          ring2.rotation.z -= 0.0014;
+          renderer.render(scene, camera);
+        };
+        animate();
+
+        return () => {
+          cancelAnimationFrame(frame);
+          renderer.dispose();
+          sphereGeo.dispose();
+          sphereMat.dispose();
+          ringGeo1.dispose();
+          ringMat1.dispose();
+          ringGeo2.dispose();
+          ringMat2.dispose();
+        };
+      }, [isMobile]);
+
+      const togglePlay = async () => {
+        if (!audioRef.current || !imgRef.current) {
+          return;
+        }
+        if (isPlaying) {
+          audioRef.current.pause();
+          imgRef.current.classList.remove("spinning");
+        } else {
+          try {
+            await audioRef.current.play();
+            imgRef.current.classList.add("spinning");
+          } catch (error) {
+          }
+        }
+        setIsPlaying((prev) => !prev);
       };
+
+      const portraitSize = isMobile ? 240 : 300;
+
       return (
-        <section id="about" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
+        <section id="about" className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
           <FadeInSection>
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="flex flex-col items-center md:items-start order-2 md:order-1 justify-center">
-                <div className="flex flex-col items-center gap-4 relative">
-                  <canvas ref={planetCanvasRef} width="300" height="300" style={{position:'absolute',top:'-10px',left:'50%',transform:'translateX(-50%)',zIndex:0,pointerEvents:'none',opacity:0.75}} />
-                  <div className="relative z-10"><img ref={imgRef} src="mei.jpeg" alt="Profile" className={`w-[280px] h-[280px] rounded-full object-cover border-4 border-[var(--color-primary)] ${isPlaying?'spinning':'not-spinning'}`} style={{boxShadow:'0 0 24px var(--color-primary)'}} /></div>
-                  <button onClick={togglePlay} className="w-[52px] h-[52px] mt-4 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-[1.08] z-10 glow-pulse" style={{background:'var(--color-primary)',color:'var(--color-bg)'}}>{isPlaying ? <IconPause /> : <IconPlay className="ml-1" />}</button>
-                  <div className="flex items-center gap-2 z-10" style={{opacity:isPlaying?1:0,height:'20px',transition:'opacity 400ms'}}><span className="w-[6px] h-[6px] rounded-full bg-[var(--color-primary)] animate-pulse" /><span className="text-[12px] italic text-[var(--color-text-muted)] font-body">♪ BANANA SHAKE</span></div>
+            <h2 className="gradient-text-green-blue mb-2 font-heading text-3xl font-bold md:text-4xl">Mission Profile</h2>
+            <img src={PILLARS_WEBB} className="cosmic-banner mb-12" alt="Pillars of Creation" style={{ height: "160px" }} />
+            <div className="grid items-center gap-12 md:grid-cols-2">
+              <div className="flex justify-center md:justify-start">
+                <div className="relative inline-flex items-center justify-center" style={{ width: `${portraitSize}px`, height: `${portraitSize}px` }}>
+                  <canvas ref={planetCanvasRef} style={{ position: "absolute", inset: 0, zIndex: 0, borderRadius: "50%", width: `${portraitSize}px`, height: `${portraitSize}px` }} />
+                  <img ref={imgRef} src="mei.jpeg" alt="Akshatha Dungi" className="relative z-10 rounded-full object-cover" style={{ width: `${portraitSize}px`, height: `${portraitSize}px`, boxShadow: "0 0 0 3px #39FF8E, 0 0 20px rgba(57,255,142,0.5), 0 0 40px rgba(199,125,255,0.2)" }} />
+                  <div className="absolute -bottom-20 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-3">
+                    <button onClick={togglePlay} className={`flex h-14 w-14 items-center justify-center rounded-full text-[18px] transition-all duration-300 hover:scale-105 ${isPlaying ? "animate-glow-pulse" : ""}`} style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }} aria-label={isPlaying ? "Pause music" : "Play music"}>
+                      {isPlaying ? <IconPause /> : <IconPlay className="ml-[2px]" />}
+                    </button>
+                    <div className="flex items-center gap-2 italic" style={{ color: "var(--color-text-muted)", fontFamily: '"Share Tech Mono", monospace', opacity: isPlaying ? 1 : 0.78 }}>
+                      <span className="h-2 w-2 rounded-full bg-[var(--color-primary)] pulse-dot"></span>
+                      <span>Now playing ♪ BANANA SHAKE</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="order-1 md:order-2">
-                <h2 className="font-heading font-bold text-3xl md:text-4xl mb-6 heading-about">Mission Profile</h2>
-                <div className="space-y-4 text-[var(--color-text-muted)] leading-relaxed font-body">
+
+              <div className="pt-20 md:pt-0">
+                <h3 className="gradient-text-green-blue font-heading text-2xl font-bold">About Me</h3>
+                <div className="mt-6 space-y-5 font-body leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
                   <p>I'm the kind of developer who thrives on change. The tech landscape evolves rapidly, and I believe the best solutions come from being adaptable.</p>
-                  <p>One day I'm deep in <span className="text-[var(--color-text)] font-semibold">Java code</span> building robust architectures... The next, establishing <span className="text-[var(--color-text)] font-semibold">LLM pipelines</span> to solve complex logical problems.</p>
-                  <div className="mt-8 bg-[var(--about-card-bg)] border border-[var(--color-border)] rounded-xl p-6 shadow-lg relative z-20 scanlines">
-                    <h3 className="text-[var(--color-primary)] font-heading font-semibold mb-3 text-sm tracking-widest uppercase">Field Notes</h3>
-                    <ul className="space-y-3">
-                      <li className="flex items-start"><span className="mr-3">⭐</span><span>Fast learner, fueled by curiosity (and nebula cosmic events).</span></li>
-                      <li className="flex items-start"><span className="mr-3">🧩</span><span>I treat every new technology like a puzzle to solve.</span></li>
-                      <li className="flex items-start"><span className="mr-3">🎯</span><span>Focused on the end goal, flexible on the path to get there.</span></li>
-                      <li className="flex items-start"><span className="mr-3">🤖</span><span>Continuously integrating AI to optimize my workflow.</span></li>
-                    </ul>
+                  <p>One day I'm deep in <span style={{ color: "var(--color-primary)", fontWeight: 600 }}>Java code</span> building robust architectures... The next, establishing <span style={{ color: "var(--color-primary)", fontWeight: 600 }}>LLM pipelines</span> to solve complex logical problems.</p>
+                  <div className="nebula-card scanlines mt-8 p-6">
+                    <div className="relative z-10">
+                      <h4 className="mb-4 font-heading text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-primary)]">What makes me adaptable</h4>
+                      <ul className="space-y-3" style={{ color: "var(--color-text-muted)" }}>
+                        <li className="flex items-start gap-3"><span>⭐</span><span>Fast learner, fueled by curiosity (and nebula cosmic events).</span></li>
+                        <li className="flex items-start gap-3"><span>🧩</span><span>I treat every new technology like a puzzle to solve.</span></li>
+                        <li className="flex items-start gap-3"><span>🎯</span><span>Focused on the end goal, flexible on the path to get there.</span></li>
+                        <li className="flex items-start gap-3"><span>🤖</span><span>Continuously integrating AI to optimize my workflow.</span></li>
+                      </ul>
+                    </div>
                   </div>
-                  <p className="italic text-[var(--color-subtle)] mt-6">💼 Open to roles where adaptability is valued as much as expertise.</p>
+                  <p className="italic" style={{ color: "var(--color-nebula-gold)" }}>💼 Open to roles where adaptability is valued as much as expertise.</p>
                 </div>
               </div>
             </div>
@@ -227,38 +873,42 @@
       );
     };
 
-    // ── EXPERIENCE ──
     const Experience = () => {
       const jobs = [
-        { role:"Software Developer", company:"Tech Solutions Inc.", period:"2024 - Present", description:"Scaling backend infrastructure using Spring Boot, PostgreSQL, and AWS. Integrating LLM pipelines via LangChain to automate internal tools.", color:"#39FF8E" },
-        { role:"Junior Backend Engineer", company:"Innovate AI", period:"2023 - 2024", description:"Built and maintained REST APIs in Python (FastAPI). Containerized applications with Docker to streamline deployment.", color:"#FF4D8C" },
-        { role:"Software Engineering Intern", company:"Startup Co.", period:"2022 - 2023", description:"Contributed to front-end development using React and Tailwind CSS. Developed internal admin dashboards.", color:"#FFD166" }
+        { role: "Software Developer", company: "Tech Solutions Inc.", period: "2024 - Present", description: "Scaling backend infrastructure using Spring Boot, PostgreSQL, and AWS. Integrating LLM pipelines via LangChain to automate internal tools.", color: "#39FF8E" },
+        { role: "Junior Backend Engineer", company: "Innovate AI", period: "2023 - 2024", description: "Built and maintained REST APIs in Python (FastAPI). Containerized applications with Docker to streamline deployment.", color: "#C77DFF" },
+        { role: "Software Engineering Intern", company: "Startup Co.", period: "2022 - 2023", description: "Contributed to front-end development using React and Tailwind CSS. Developed internal admin dashboards.", color: "#FFD166" }
       ];
+
       return (
-        <section id="experience" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
+        <section id="experience" className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
           <FadeInSection>
-            <div className="text-center mb-16">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl mb-2 heading-experience">Mission History</h2>
-              <p className="text-[var(--color-subtle)] font-body">My professional journey</p>
+            <img src={STEPHANS} alt="Stephan's Quintet" className="cosmic-banner mb-10 opacity-80" style={{ height: "180px" }} />
+            <div className="mb-16 text-center">
+              <h2 className="gradient-text-gold-crimson mb-2 font-heading text-3xl font-bold md:text-4xl">Mission History</h2>
             </div>
-            <div className="max-w-4xl mx-auto relative cursor-default">
-              <div className="absolute left-[15px] md:left-1/2 top-0 bottom-0 w-px hidden md:block" style={{background:'linear-gradient(to bottom, var(--color-nebula-gold), transparent)'}}></div>
-              <div className="space-y-12 relative">
-                {jobs.map((job, idx) => (
-                  <div key={idx} className={`relative flex flex-col md:flex-row gap-8 items-start justify-between ${idx%2===0?'md:flex-row-reverse':''}`}>
-                    <div className="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-[var(--color-surface)] border-2 flex items-center justify-center -translate-x-1/2 z-10 hidden md:flex" style={{borderColor:job.color,boxShadow:`0 0 12px ${job.color}`}}>
-                      <div className="w-3 h-3 rounded-full" style={{backgroundColor:job.color}}></div>
-                    </div>
-                    <div className="w-full md:w-[45%] bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 transition-colors shadow-lg relative group" style={{borderTop:`2px solid ${job.color}`}}>
-                      <h3 className="font-heading font-bold text-xl text-[var(--color-text)]">{job.role}</h3>
-                      <div className="flex justify-between items-center mb-4 mt-1">
-                        <p className="text-[var(--color-text-muted)] font-body">{job.company}</p>
-                        <span className="text-xs font-heading px-3 py-1 rounded-full hidden md:inline-block" style={{backgroundColor:`${job.color}15`, color:job.color}}>{job.period}</span>
+            <div className="relative mx-auto max-w-4xl">
+              <div className="timeline-line absolute bottom-0 left-3 top-0 w-[2px] md:left-1/2 md:-translate-x-1/2"></div>
+              <div className="space-y-12">
+                {jobs.map((job, index) => {
+                  const accentBorder = index === 0 ? "#39FF8E" : index === 1 ? "#C77DFF" : "#FFD166";
+                  const dotGradient = index === 0 ? "radial-gradient(circle, #39FF8E, #4FC3F7)" : index === 1 ? "radial-gradient(circle, #C77DFF, #4FC3F7)" : "radial-gradient(circle, #FFD166, #FF6B6B)";
+                  return (
+                    <div key={`${job.role}-${job.company}`} className="relative md:grid md:grid-cols-2 md:gap-12">
+                      <div className={`mb-6 pl-12 md:mb-0 md:pl-0 ${index % 2 === 0 ? "md:col-start-1 md:pr-10" : "md:col-start-2 md:pl-10"}`}>
+                        <div className="nebula-card border-t-2 p-6" style={{ borderTopColor: accentBorder }}>
+                          <div className="mb-4 flex flex-wrap items-center gap-3">
+                            <h3 className="font-heading text-lg font-bold" style={{ color: "var(--color-text)" }}>{job.role}</h3>
+                            <span className="rounded-full border px-3 py-1 font-body text-xs" style={{ background: "#110825", color: "var(--color-nebula-gold)", borderColor: "rgba(255, 209, 102, 0.3)" }}>{job.period}</span>
+                          </div>
+                          <p className="mb-3 font-body font-semibold" style={{ color: "var(--color-nebula-blue)" }}>{job.company}</p>
+                          <p className="font-body text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{job.description}</p>
+                        </div>
                       </div>
-                      <p className="text-[var(--color-text-muted)] leading-relaxed text-sm font-body opacity-90">{job.description}</p>
+                      <div className="absolute left-3 top-8 h-5 w-5 -translate-x-1/2 rounded-full md:left-1/2 md:top-10" style={{ background: dotGradient, boxShadow: `0 0 12px ${accentBorder}`, animation: "glow-pulse 2s ease-in-out infinite" }}></div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </FadeInSection>
@@ -266,62 +916,163 @@
       );
     };
 
-    // ── PROJECTS ──
+    const IconMapPin = ({ size = 20, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+        <circle cx="12" cy="10" r="3" />
+      </svg>
+    );
+
+    const IconAward = ({ size = 20, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M12 15.5 8.5 21l.9-6.3L4 10.2l6-.9L12 3.5l2 5.8 6 .9-5.4 4.5.9 6.3z" />
+      </svg>
+    );
+
     const Projects = () => {
-      const [filter, setFilter] = useState('All');
+      const [filter, setFilter] = useState("All");
+      const filters = ["All", "Backend", "AI", "Frontend"];
       const projects = [
-        { title:"MicroCommerce", desc:"Scalable Spring Boot microservice backend for a modern e-commerce platform.", tags:["Java","Spring Boot"], category:"Backend", color:"#4FC3F7" },
-        { title:"LLM Pipeline Toolkit", desc:"Utility suite for chaining dynamic LLM prompts and managing context windows.", tags:["Python","LangChain"], category:"AI/ML", color:"#39FF8E" },
-        { title:"DevPortal API", desc:"Comprehensive REST API with role-based auth and automated Swagger docs.", tags:["FastAPI","Redis"], category:"Frontend", color:"#C77DFF" }
+        { title: "MicroCommerce", desc: "Scalable Spring Boot microservice backend for a modern e-commerce platform.", tags: ["Java", "Spring Boot"], github: "#", live: "#", filter: "Backend" },
+        { title: "LLM Pipeline Toolkit", desc: "Utility suite for chaining dynamic LLM prompts and managing context windows.", tags: ["Python", "LangChain"], github: "#", live: "#", filter: "AI" },
+        { title: "DevPortal API", desc: "Comprehensive REST API with role-based auth and automated Swagger docs.", tags: ["FastAPI", "Redis"], github: "#", live: "#", filter: "Frontend" }
       ];
-      const filtered = filter==='All'?projects:projects.filter(p=>p.category===filter);
+      const accentFor = (projectFilter) => {
+        if (projectFilter === "Backend") return "#4FC3F7";
+        if (projectFilter === "AI") return "#39FF8E";
+        if (projectFilter === "Frontend") return "#C77DFF";
+        return "#FFD166";
+      };
+      const filteredProjects = filter === "All" ? projects : projects.filter((project) => project.filter === filter);
+
       return (
-        <section id="projects" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
-          <FadeInSection>
-            <div className="text-center mb-12">
-              <h2 className="font-heading font-bold text-3xl md:text-4xl mb-2 heading-projects">Mission Dossiers</h2>
-              <p className="text-[var(--color-subtle)] font-body">Things I've built</p>
+        <section id="projects" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto relative">
+          <img src={CARINA_WEBB} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover pointer-events-none z-0" style={{ opacity: 0.07, mixBlendMode: "screen" }} />
+          <FadeInSection className="relative z-10">
+            <div className="text-center mb-10">
+              <h2 className="gradient-text-violet-pink font-heading font-bold text-3xl md:text-4xl mb-2">Mission Dossiers</h2>
             </div>
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {['All','Backend','AI/ML','Frontend'].map(f => <button key={f} onClick={()=>setFilter(f)} className={`px-5 py-2 rounded-full text-sm font-heading transition-all ${filter===f?'bg-[var(--color-primary)] text-[var(--color-bg)]':'bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text-muted)]'}`}>{f}</button>)}
+            <div className="flex flex-wrap gap-3 justify-center mb-10">
+              {filters.map((tab) => {
+                const active = tab === filter;
+                return (
+                  <button
+                    key={tab}
+                    onClick={() => setFilter(tab)}
+                    className={`rounded-full px-5 py-2 transition-all ${active ? "font-heading font-bold" : "font-body border"}`}
+                    style={active ? { background: "linear-gradient(135deg, #C77DFF, #FF4D8C)", color: "#04020E", boxShadow: "0 0 14px rgba(199,125,255,0.5)" } : { borderColor: "var(--color-border)", color: "var(--color-text-muted)" }}
+                  >
+                    {tab}
+                  </button>
+                );
+              })}
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((project, idx) => (
-                <div key={idx} className="group bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 transition-all duration-300 hover:-translate-y-2 flex flex-col h-full relative overflow-hidden" 
-                  style={{'--hover-color':project.color}} onMouseEnter={(e)=>e.currentTarget.style.boxShadow=`0 0 20px ${project.color}33`} onMouseLeave={(e)=>e.currentTarget.style.boxShadow=''}>
-                  <div className="classified-watermark">CLASSIFIED</div>
-                  <h3 className="font-heading font-bold text-xl text-[var(--color-text)] mb-3 relative z-10">{project.title}</h3>
-                  <p className="text-[var(--color-text-muted)] mb-6 flex-grow font-body relative z-10">{project.desc}</p>
-                  <div className="flex flex-wrap gap-2 mb-6 relative z-10">{project.tags.map(tag => <span key={tag} className="text-xs font-body bg-[var(--tech-tag-bg)] text-[var(--tech-tag-text)] px-3 py-1 rounded-full">{tag}</span>)}</div>
-                  <div className="flex items-center gap-4 mt-auto pt-4 border-t border-[var(--color-border)] relative z-10"><IconGithub size={18} /><IconExternalLink size={18} /></div>
-                </div>
-              ))}
+              {filteredProjects.map((project) => {
+                const accent = accentFor(project.filter);
+                return (
+                  <div
+                    key={project.title}
+                    className="nebula-card p-6 flex flex-col h-full relative overflow-hidden"
+                    style={{ borderTop: `3px solid ${accent}` }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = accent;
+                      e.currentTarget.style.transform = "translateY(-6px)";
+                      e.currentTarget.style.boxShadow = `0 8px 32px ${accent}33`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "";
+                      e.currentTarget.style.transform = "";
+                      e.currentTarget.style.boxShadow = "";
+                    }}
+                  >
+                    <div className="pointer-events-none select-none absolute left-1/2 top-1/2 z-0 whitespace-nowrap font-heading font-black" style={{ fontSize: "72px", color: "rgba(199,125,255,0.04)", transform: "translate(-50%, -50%) rotate(-30deg)" }}>CLASSIFIED</div>
+                    <h3 className="font-heading font-bold text-lg mb-2 z-10 relative" style={{ color: "var(--color-text)" }}>{project.title}</h3>
+                    <p className="font-body text-sm flex-grow mb-4 z-10 relative leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{project.desc}</p>
+                    <div className="flex flex-wrap gap-2 mb-4 z-10 relative">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="font-body text-xs px-3 py-1 rounded-full border" style={{ background: "var(--tech-tag-bg)", color: "var(--tech-tag-text)", borderColor: "rgba(57,255,142,0.2)" }}>{tag}</span>
+                      ))}
+                    </div>
+                    <div className="border-t pt-4 mt-auto flex gap-4 z-10 relative" style={{ borderColor: "var(--color-border)" }}>
+                      <a href={project.github} aria-label={`${project.title} GitHub`} className="transition-all duration-300 hover:scale-110 hover:text-[#39FF8E]"><IconGithub size={18} /></a>
+                      <a href={project.live} aria-label={`${project.title} Live Link`} className="transition-all duration-300 hover:scale-110 hover:text-[#4FC3F7]"><IconExternalLink size={18} /></a>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </FadeInSection>
         </section>
       );
     };
 
-    // ── SKILLS ──
     const Skills = () => {
-      const solarRef = useRef();
       const categories = [
-        { title:"Languages", color:"#4FC3F7", skills:["Java","Python","JavaScript","SQL"] },
-        { title:"Frameworks", color:"#39FF8E", skills:["Spring Boot","FastAPI","React","Docker"] },
-        { title:"AI & ML", color:"#C77DFF", skills:["LangChain","Prompting","HuggingFace"] },
-        { title:"Cloud", color:"#FFD166", skills:["AWS","CI/CD","REST APIs","Postman"] }
+        { title: "Languages", color: "#4FC3F7", skills: ["Java", "Python", "JavaScript", "SQL"] },
+        { title: "Frameworks & Tools", color: "#39FF8E", skills: ["Spring Boot", "FastAPI", "React", "Docker"] },
+        { title: "AI & ML", color: "#C77DFF", skills: ["LangChain", "Prompting", "HuggingFace"] },
+        { title: "Cloud & DevOps", color: "#FFD166", skills: ["AWS", "CI/CD", "REST APIs", "Postman"] }
       ];
-      useEffect(() => { if (solarRef.current) { const cleanup = createSolarSystem(solarRef.current); return cleanup; } }, []);
+      const orbitRings = [
+        { size: 120, border: "rgba(79,195,247,0.25)" },
+        { size: 170, border: "rgba(57,255,142,0.2)" },
+        { size: 220, border: "rgba(199,125,255,0.18)" },
+        { size: 270, border: "rgba(255,209,102,0.15)" }
+      ];
+      const planets = [
+        { size: 20, color: "#4FC3F7", orbit: 60, duration: "6s" },
+        { size: 16, color: "#39FF8E", orbit: 85, duration: "8s" },
+        { size: 20, color: "#C77DFF", orbit: 110, duration: "12s" },
+        { size: 16, color: "#FFD166", orbit: 135, duration: "16s" }
+      ];
+
       return (
-        <section id="skills" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
-          <FadeInSection>
-            <div className="text-center mb-8"><h2 className="font-heading font-bold text-3xl md:text-4xl mb-2 heading-skills">Crew Capabilities</h2><p className="text-[var(--color-subtle)] font-body">What I bring to the table</p></div>
-            <div className="w-full mb-8 h-[220px]"><canvas ref={solarRef} className="w-full h-full" /></div>
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-              {categories.map((cat, idx) => (
-                <div key={idx} className="bg-[var(--about-card-bg)] border border-[var(--color-border)] rounded-2xl p-6 transition-all hover:border-[--cat-color]" style={{'--cat-color':cat.color, borderLeft:`4px solid ${cat.color}`}}>
-                  <h3 className="font-heading font-bold text-lg mb-5" style={{color:cat.color}}>{cat.title}</h3>
-                  <div className="flex flex-wrap gap-3">{cat.skills.map(s => <div key={s} className="flex items-center gap-2 bg-[var(--skill-pill-bg)] border border-[var(--skill-pill-border)] text-[var(--color-text)] px-4 py-2 rounded-full text-sm font-body transition-transform hover:scale-105"><span className="w-1.5 h-1.5 rounded-full" style={{backgroundColor:cat.color, boxShadow:`0 0 6px ${cat.color}`}} />{s}</div>)}</div>
+        <section id="skills" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto relative">
+          <img src={SOUTHERN_RING} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover z-0 pointer-events-none" style={{ opacity: 0.08, mixBlendMode: "screen" }} />
+          <FadeInSection className="relative z-10">
+            <h2 className="gradient-text-blue-violet font-heading font-bold text-3xl md:text-4xl text-center mb-2">Crew Capabilities</h2>
+            <p className="font-body text-sm text-center mb-12" style={{ color: "var(--color-nebula-violet)" }}>What I bring aboard the Hail Mary</p>
+            <div className="relative mx-auto mb-16 h-[220px] w-[220px] sm:h-[280px] sm:w-[280px]">
+              <div className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ background: "radial-gradient(circle, #FFD166, #FF6B6B)", boxShadow: "0 0 30px #FFD166, 0 0 60px rgba(255,209,102,0.4)" }}></div>
+              {orbitRings.map((ring) => (
+                <div key={ring.size} className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border" style={{ width: `${ring.size}px`, height: `${ring.size}px`, borderColor: ring.border }}></div>
+              ))}
+              {planets.map((planet) => (
+                <div
+                  key={planet.color}
+                  className="absolute left-1/2 top-1/2 rounded-full"
+                  style={{
+                    width: `${planet.size}px`,
+                    height: `${planet.size}px`,
+                    marginLeft: `${-planet.size / 2}px`,
+                    marginTop: `${-planet.size / 2}px`,
+                    background: planet.color,
+                    boxShadow: `0 0 8px ${planet.color}`,
+                    ["--orbit-r"]: `${planet.orbit}px`,
+                    animation: `orbit ${planet.duration} linear infinite`
+                  }}
+                ></div>
+              ))}
+            </div>
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {categories.map((category) => (
+                <div key={category.title} className="nebula-card p-6 relative z-10" style={{ borderTop: `2px solid ${category.color}` }}>
+                  <h3 className="font-heading font-bold text-lg mb-5" style={{ color: category.color }}>{category.title}</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {category.skills.map((skill) => (
+                      <div
+                        key={skill}
+                        className="font-body text-sm px-4 py-2 rounded-full flex items-center gap-2 transition-all duration-200 hover:scale-105 border"
+                        style={{ background: "var(--skill-pill-bg)", borderColor: "var(--skill-pill-border)", color: "var(--color-text)" }}
+                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = category.color; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--skill-pill-border)"; }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: category.color }}></span>
+                        {skill}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
@@ -330,21 +1081,26 @@
       );
     };
 
-    // ── CERTIFICATIONS ──
     const Certifications = () => {
-      const certCols = ["#39FF8E", "#4FC3F7", "#C77DFF"];
       const certs = [
-        { title:"OCP: Java SE 11", issuer:"Oracle" }, { title:"AWS Cloud Practitioner", issuer:"Amazon" }, { title:"Deep Learning Spec.", issuer:"Coursera" }
+        { title: "OCP: Java SE 11", issuer: "Oracle", year: "2024", color: "#39FF8E" },
+        { title: "AWS Cloud Practitioner", issuer: "Amazon", year: "2024", color: "#4FC3F7" },
+        { title: "Deep Learning Spec.", issuer: "Coursera", year: "2023", color: "#C77DFF" }
       ];
+
       return (
-        <section id="certifications" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto overflow-hidden">
+        <section id="certifications" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto overflow-hidden">
           <FadeInSection>
-            <div className="text-center mb-12"><h2 className="font-heading font-bold text-3xl md:text-4xl mb-2 heading-certs">Mission Credentials</h2><p className="text-[var(--color-subtle)] font-body">Verifiable credentials</p></div>
-            <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto pb-8 hide-scrollbar snap-x touch-pan-x">
-              {certs.map((c, i) => (
-                <div key={i} className="min-w-[280px] md:min-w-0 snap-center bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl p-6 shadow-lg" style={{borderLeft:`4px solid ${certCols[i]}`}}>
-                  <h3 className="font-heading font-bold text-[var(--color-text)] text-base md:text-lg mb-2">{c.title}</h3>
-                  <p className="text-[var(--color-text-muted)] font-body text-sm">{c.issuer}</p>
+            <h2 className="gradient-text-gold-crimson font-heading font-bold text-3xl md:text-4xl text-center mb-2">Mission Credentials</h2>
+            <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto hide-scrollbar pt-10 pb-2">
+              {certs.map((cert) => (
+                <div key={cert.title} className="nebula-card p-6 relative group min-w-[280px] md:min-w-0" style={{ borderLeft: `4px solid ${cert.color}` }}>
+                  <div className="absolute right-4 top-4 transition-all duration-300 group-hover:opacity-50" style={{ color: cert.color, opacity: 0.15 }}>
+                    <IconAward size={48} />
+                  </div>
+                  <h3 className="font-heading font-bold text-[var(--color-text)] text-base md:text-lg pr-10 mb-2">{cert.title}</h3>
+                  <p className="font-body text-sm mb-3" style={{ color: "var(--color-text-muted)" }}>{cert.issuer}</p>
+                  <span className="font-body text-xs px-3 py-1 rounded-full border" style={{ background: "var(--tech-tag-bg)", color: "var(--color-nebula-gold)", borderColor: "rgba(255,209,102,0.3)" }}>{cert.year}</span>
                 </div>
               ))}
             </div>
@@ -353,64 +1109,312 @@
       );
     };
 
-    // ── CONTACT ──
-    const Contact = () => {
-      const [formData, setFormData] = useState({name:'',email:'',message:''});
-      const [state, setState] = useState('idle');
-      const handleSubmit = async (e) => {
-        e.preventDefault(); setState('loading');
-        try { await window.storage.set('messages:'+Date.now(), JSON.stringify({...formData, sentAt:new Date().toISOString()})); setState('success'); setFormData({name:'',email:'',message:''}); }
-        catch(e) { setState('error'); }
+    const Contact = ({ triggerRocky }) => {
+      const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+      const [errors, setErrors] = useState({});
+      const [submitState, setSubmitState] = useState("idle");
+      const [inboxOpen, setInboxOpen] = useState(false);
+      const [messages, setMessages] = useState([]);
+      const [loadingMsgs, setLoadingMsgs] = useState(false);
+
+      const loadMessages = async () => {
+        setLoadingMsgs(true);
+        try {
+          const keys = await window.storage.list("messages:");
+          const rawMessages = await Promise.all(keys.map((key) => window.storage.get(key)));
+          const parsedMessages = rawMessages
+            .map((raw) => {
+              try {
+                return JSON.parse(raw);
+              } catch (error) {
+                return null;
+              }
+            })
+            .filter(Boolean)
+            .sort((a, b) => new Date(b.sentAt) - new Date(a.sentAt));
+          setMessages(parsedMessages);
+        } finally {
+          setLoadingMsgs(false);
+        }
       };
-      const inputCls = "w-full bg-[var(--input-bg)] border border-[var(--input-border)] rounded-[10px] px-[14px] py-[10px] text-[var(--color-text)] font-body focus:ring-1 focus:ring-[var(--color-primary)] focus:outline-none transition-all";
+
+      useEffect(() => {
+        const handleShortcut = (event) => {
+          if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "m") {
+            event.preventDefault();
+            setInboxOpen(true);
+            loadMessages();
+          }
+        };
+        window.addEventListener("keydown", handleShortcut);
+        return () => window.removeEventListener("keydown", handleShortcut);
+      }, []);
+
+      const handleDelete = async (id) => {
+        await window.storage.delete("messages:" + id);
+        loadMessages();
+      };
+
+      const validate = () => {
+        const nextErrors = {};
+        if (!formData.name.trim()) nextErrors.name = "Name is required.";
+        if (!formData.email.trim()) nextErrors.email = "Email is required.";
+        if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) nextErrors.email = "Enter a valid email address.";
+        if (!formData.message.trim()) nextErrors.message = "Message is required.";
+        setErrors(nextErrors);
+        return Object.keys(nextErrors).length === 0;
+      };
+
+      const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (!validate()) {
+          setSubmitState("error");
+          return;
+        }
+        setSubmitState("loading");
+        const msg = {
+          id: Date.now().toString(),
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+          sentAt: new Date().toISOString()
+        };
+        try {
+          await window.storage.set("messages:" + msg.id, JSON.stringify(msg));
+          setSubmitState("success");
+          setFormData({ name: "", email: "", message: "" });
+          setErrors({});
+        } catch (error) {
+          setSubmitState("error");
+        }
+      };
+
+      const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        setErrors((prev) => {
+          const next = { ...prev };
+          delete next[name];
+          return next;
+        });
+        if (submitState === "error") {
+          setSubmitState("idle");
+        }
+      };
+
+      const inputStyle = {
+        background: "var(--input-bg)",
+        borderColor: "var(--input-border)",
+        color: "var(--color-text)",
+        boxShadow: "none"
+      };
+
       return (
-        <section id="contact" className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative">
-          <FadeInSection>
-            <div className="text-center mb-16"><h2 className="font-heading font-bold text-3xl md:text-4xl mb-3 heading-contact">Open Transmission</h2><p className="text-[var(--color-text-muted)] font-body">Ready for cosmic collaboration.</p></div>
+        <section id="contact" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto relative">
+          <img src={DEEP_FIELD} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover z-0 pointer-events-none" style={{ opacity: 0.06, mixBlendMode: "screen" }} />
+          <FadeInSection className="relative z-10">
+            <h2 className="gradient-text-green-blue font-heading font-bold text-3xl md:text-4xl text-center mb-3">Open Transmission</h2>
+            <p className="font-body text-center max-w-lg mx-auto mb-16" style={{ color: "var(--color-text-muted)" }}>
+              I'm open to opportunities, collaborations, or just a good tech conversation.
+            </p>
+
             <div className="grid lg:grid-cols-2 gap-12">
               <div className="space-y-4">
-                {[{ic:<IconMail />,l:"Email",v:"akshatha@example.com"}, {ic:<IconLinkedin />,l:"LinkedIn",v:"linkedin.com/in/akshatha"}, {ic:<IconGithub />,l:"GitHub",v:"github.com/akshatha"}].map((it,i)=>(
-                  <div key={i} className="flex items-center p-5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl hover:border-[var(--color-primary)] transition-all group">
-                    <div className="bg-[var(--tech-tag-bg)] p-3 rounded-full text-[var(--color-primary)] group-hover:shadow-[0_0_12px_var(--color-primary)]">{it.ic}</div>
-                    <div className="ml-4"><p className="text-sm text-[var(--color-subtle)] font-heading">{it.l}</p><p className="text-[var(--color-text-muted)] font-body">{it.v}</p></div>
+                {[
+                  { icon: <IconMail />, label: "Email", value: "akshatha@example.com", bg: "rgba(57,255,142,0.1)", color: "#39FF8E", glow: "glow-green" },
+                  { icon: <IconLinkedin />, label: "LinkedIn", value: "linkedin.com/in/akshatha", bg: "rgba(79,195,247,0.1)", color: "#4FC3F7", glow: "glow-blue" },
+                  { icon: <IconGithub />, label: "GitHub", value: "github.com/akshatha", bg: "rgba(199,125,255,0.1)", color: "#C77DFF", glow: "glow-violet" },
+                  { icon: <IconMapPin />, label: "Location", value: "India", bg: "rgba(255,209,102,0.1)", color: "#FFD166", glow: "" }
+                ].map((item) => (
+                  <div key={item.label} className="nebula-card p-5 flex items-center group cursor-pointer" onDoubleClick={triggerRocky}>
+                    <div className={`p-3 rounded-full transition-all duration-300 ${item.glow}`} style={{ background: item.bg, color: item.color }}>
+                      {item.icon}
+                    </div>
+                    <div className="ml-4">
+                      <p className="font-body text-xs uppercase tracking-wider mb-0.5" style={{ color: "var(--color-subtle)" }}>{item.label}</p>
+                      <p className="font-body text-sm transition-colors duration-300 group-hover:text-[var(--color-text)]" style={{ color: "var(--color-text-muted)" }}>{item.value}</p>
+                    </div>
                   </div>
                 ))}
               </div>
-              <div className="bg-[var(--contact-form-bg)] border border-[var(--color-border)] p-8 rounded-[16px] scanlines">
-                {state==='success' ? <div className="text-center py-4"><h3 className="font-heading text-[var(--color-primary)] text-xl">Transmission Received.</h3><button onClick={()=>setState('idle')} className="mt-4 text-sm text-[var(--color-primary)] underline">Send another</button></div> :
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <input type="text" name="name" value={formData.name} onChange={(e)=>setFormData({...formData,name:e.target.value})} className={inputCls} placeholder="Name" required />
-                  <input type="email" name="email" value={formData.email} onChange={(e)=>setFormData({...formData,email:e.target.value})} className={inputCls} placeholder="Email" required />
-                  <textarea name="message" value={formData.message} onChange={(e)=>setFormData({...formData,message:e.target.value})} className={`${inputCls} h-32`} placeholder="Transmission detail..." required></textarea>
-                  <button type="submit" disabled={state==='loading'} className="w-full bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] font-heading font-bold rounded-[10px] py-3 hover:brightness-110 active:scale-95 transition-all glow-pulse">{state==='loading'?'Transmitting...':'Transmit Message'}</button>
-                </form>}
-              </div>
+
+              {submitState === "success" ? (
+                <div className="nebula-card p-8 text-center">
+                  <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full" style={{ background: "rgba(57,255,142,0.1)", color: "#39FF8E" }}>
+                    <IconMail size={28} />
+                  </div>
+                  <h3 className="gradient-text-green-blue font-heading font-bold text-xl mb-2">Transmission received. Ryland Grace will respond shortly.</h3>
+                  <p className="italic mb-6" style={{ color: "var(--color-subtle)" }}>— Akshatha Dungi</p>
+                  <button onClick={() => setSubmitState("idle")} className="rounded-xl px-5 py-3 transition-all duration-300" style={{ border: "1px solid rgba(57,255,142,0.5)", color: "#39FF8E" }}>
+                    Send another
+                  </button>
+                </div>
+              ) : (
+                <div className="nebula-card p-8">
+                  <h3 className="gradient-text-green-blue font-heading font-bold text-xl mb-6">Send a Message</h3>
+                  {submitState === "error" && Object.keys(errors).length > 0 ? (
+                    <div className="rounded-xl p-4 mb-4 border" style={{ background: "rgba(255,77,140,0.1)", borderColor: "rgba(255,77,140,0.3)", color: "#FF4D8C" }}>
+                      Please fix the highlighted fields and try again.
+                    </div>
+                  ) : null}
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                      <input name="name" value={formData.name} onChange={handleChange} placeholder="Your name" className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2" style={inputStyle} />
+                      {errors.name ? <p className="mt-1 text-xs" style={{ color: "#FF4D8C" }}>{errors.name}</p> : null}
+                    </div>
+                    <div>
+                      <input name="email" value={formData.email} onChange={handleChange} placeholder="Email address" className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2" style={inputStyle} />
+                      {errors.email ? <p className="mt-1 text-xs" style={{ color: "#FF4D8C" }}>{errors.email}</p> : null}
+                    </div>
+                    <div>
+                      <textarea name="message" value={formData.message} onChange={handleChange} placeholder="What are we building?" className="w-full min-h-[150px] rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2" style={inputStyle}></textarea>
+                      {errors.message ? <p className="mt-1 text-xs" style={{ color: "#FF4D8C" }}>{errors.message}</p> : null}
+                    </div>
+                    <button type="submit" disabled={submitState === "loading"} className="w-full py-3 rounded-xl font-heading font-bold transition-all duration-300 disabled:opacity-70" style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }}>
+                      {submitState === "loading" ? "Transmitting..." : "Transmit Message"}
+                    </button>
+                  </form>
+                </div>
+              )}
             </div>
           </FadeInSection>
+
+          {inboxOpen ? (
+            <div className="fixed inset-0 z-[9999] overflow-y-auto" style={{ background: "var(--color-bg)" }}>
+              <div className="max-w-5xl mx-auto px-6 py-10 sm:px-10">
+                <div className="mb-8 flex items-center justify-between gap-4">
+                  <h3 className="gradient-text-green-blue font-heading font-bold text-2xl">📡 MISSION CONTROL — Message Inbox</h3>
+                  <button onClick={() => setInboxOpen(false)} className="rounded-full border px-4 py-2 text-sm" style={{ borderColor: "var(--color-border)", color: "var(--color-text)" }}>
+                    Close
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  {loadingMsgs ? (
+                    <div className="nebula-card p-6">Loading transmissions...</div>
+                  ) : messages.length === 0 ? (
+                    <div className="nebula-card p-6">No transmissions received yet.</div>
+                  ) : (
+                    messages.map((message) => (
+                      <div key={message.id} className="nebula-card p-6">
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <p className="font-heading font-bold text-[var(--color-text)]">{message.name}</p>
+                            <p className="font-body text-sm" style={{ color: "var(--color-nebula-blue)" }}>{message.email}</p>
+                            <p className="font-body text-xs mt-1" style={{ color: "var(--color-subtle)" }}>{new Date(message.sentAt).toLocaleString()}</p>
+                          </div>
+                          <button onClick={() => handleDelete(message.id)} className="text-sm" style={{ color: "#FF4D8C" }}>
+                            Delete
+                          </button>
+                        </div>
+                        <p className="mt-4 font-body leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{message.message}</p>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+          ) : null}
         </section>
       );
     };
 
-    const Footer = () => <footer className="py-8 text-center mt-12 border-t border-[var(--color-subtle)] opacity-50"><p className="text-sm font-body">&copy; 2026 Akshatha Dungi — Built aboard the Hail Mary</p></footer>;
+    const Footer = () => (
+      <footer className="py-8 text-center" style={{ borderTop: "1px solid transparent", borderImage: "linear-gradient(90deg, transparent, #C77DFF, transparent) 1" }}>
+        <p className="font-body text-xs" style={{ color: "var(--color-subtle)" }}>
+          <span style={{ color: "#39FF8E" }}>●</span> <span style={{ color: "#C77DFF" }}>●</span> <span style={{ color: "#4FC3F7" }}>●</span>{" "}
+          &copy; 2026 Akshatha Dungi — Built aboard the Hail Mary · React & Tailwind
+        </p>
+      </footer>
+    );
 
     const App = () => {
-      const [active, setActive] = useState('hero');
-      const [isDark, setIsDark] = useState(() => localStorage.getItem('theme') !== 'light');
-      useEffect(() => { document.documentElement.setAttribute('data-theme', isDark?'dark':'light'); localStorage.setItem('theme', isDark?'dark':'light'); }, [isDark]);
+      const [activeSection, setActiveSection] = useState("hero");
+      const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") !== "light");
+      const [rockyVisible, setRockyVisible] = useState(false);
+
+      useEffect(() => {
+        document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+      }, [isDark]);
+
       useEffect(() => {
         const spy = () => {
-          const s = ['hero','about','experience','projects','skills','certifications','contact'];
-          const p = window.scrollY + 120;
-          for(const n of s){ const e=document.getElementById(n); if(e && e.offsetTop <= p && e.offsetTop + e.offsetHeight > p) setActive(n); }
+          const sections = ["hero", "about", "experience", "projects", "skills", "certifications", "contact"];
+          const p = window.scrollY + 100;
+          for (const sectionName of sections) {
+            const element = document.getElementById(sectionName);
+            if (element && element.offsetTop <= p && element.offsetTop + element.offsetHeight > p) {
+              setActiveSection(sectionName);
+            }
+          }
         };
-        window.addEventListener('scroll', spy); return () => window.removeEventListener('scroll', spy);
+        spy();
+        window.addEventListener("scroll", spy);
+        return () => window.removeEventListener("scroll", spy);
       }, []);
-      return (<div className="font-body text-[var(--color-text-muted)] min-h-screen relative selection:bg-[var(--color-primary)] selection:bg-opacity-20">
-        <Navbar activeSection={active} isDark={isDark} toggleTheme={()=>setIsDark(!isDark)} />
-        <main><Hero /><About /><Experience /><Projects /><Skills /><Certifications /><Contact /></main><Footer />
-      </div>);
+
+      const toggleTheme = () => setIsDark((p) => !p);
+
+      const triggerRocky = () => {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          [220, 330].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = freq;
+            osc.type = "sine";
+            gain.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.25);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.25 + 0.4);
+            osc.start(ctx.currentTime + i * 0.25);
+            osc.stop(ctx.currentTime + i * 0.25 + 0.4);
+          });
+        } catch (error) {
+        }
+        setRockyVisible(true);
+        setTimeout(() => setRockyVisible(false), 2000);
+      };
+
+      return (
+        <div className="font-body text-[var(--color-text-muted)] min-h-screen relative cosmic-bg">
+          <Navbar activeSection={activeSection} isDark={isDark} toggleTheme={toggleTheme} />
+          <main>
+            <Hero />
+            <hr className="section-divider" />
+            <About />
+            <hr className="section-divider" />
+            <Experience />
+            <hr className="section-divider" />
+            <Projects />
+            <hr className="section-divider" />
+            <Skills />
+            <hr className="section-divider" />
+            <Certifications />
+            <hr className="section-divider" />
+            <Contact triggerRocky={triggerRocky} />
+          </main>
+          <Footer />
+          <div style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 50, cursor: "pointer", opacity: 0.2 }} onClick={triggerRocky} title="♪">
+            <span style={{ fontFamily: "Share Tech Mono", fontSize: "10px", color: "#39FF8E" }}>♪</span>
+          </div>
+          {rockyVisible ? (
+            <div style={{ position: "fixed", bottom: "64px", right: "16px", zIndex: 50 }}>
+              <div style={{ width: 40, height: 50, position: "relative", animation: "fade-in-up 0.3s ease" }}>
+                <div style={{ width: 40, height: 30, background: "#39FF8E", borderRadius: "50% 50% 40% 40%", position: "absolute", bottom: 0, boxShadow: "0 0 15px #39FF8E" }}></div>
+                <div style={{ width: 30, height: 25, background: "#4FC3F7", borderRadius: "50%", position: "absolute", top: 0, left: 5, boxShadow: "0 0 10px #4FC3F7" }}></div>
+                <div style={{ width: 6, height: 6, background: "#04020E", borderRadius: "50%", position: "absolute", top: 8, left: 9 }}></div>
+                <div style={{ width: 6, height: 6, background: "#04020E", borderRadius: "50%", position: "absolute", top: 8, left: 19 }}></div>
+                <p style={{ color: "#39FF8E", fontFamily: "Share Tech Mono", fontSize: "8px", marginTop: 54, textAlign: "center", whiteSpace: "nowrap" }}>♪ strum strum ♪</p>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      );
     };
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
   </script>
 </body>
 </html>
