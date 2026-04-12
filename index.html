@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akshatha Dungi | Software Developer — Nebula Edition</title>
+  <title>Akshatha Dungi | Software Developer</title>
   <meta
     name="description"
-    content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI Curious. Inspired by NASA Nebula imagery."
+    content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI Curious."
   />
   <script>
     (function () {
@@ -295,6 +295,35 @@
       white-space: nowrap;
     }
 
+    .btn-liquid {
+      position: relative;
+      overflow: hidden;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+      z-index: 0;
+    }
+    .btn-liquid::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      background: inherit;
+      filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+    .btn-liquid:hover {
+      transform: scale(1.06) translateY(-2px);
+    }
+    .btn-liquid:hover::before {
+      opacity: 0.5;
+    }
+    .btn-liquid:active {
+      transform: scale(0.97);
+    }
+
     @media (max-width: 768px) {
       .cosmic-banner { height: 140px; }
       .nebula-card { border-radius: 12px; }
@@ -325,6 +354,45 @@
 
   <script type="text/babel">
     const { useEffect, useMemo, useRef, useState } = React;
+
+    function playClickSound(type = 'soft') {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (type === 'soft') {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(800, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.08);
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+          osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.1);
+        } else if (type === 'nav') {
+          [0, 0.05].forEach((delay, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.frequency.value = 600 + i * 200;
+            osc.type = 'triangle';
+            gain.gain.setValueAtTime(0.1, ctx.currentTime + delay);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.07);
+            osc.start(ctx.currentTime + delay); osc.stop(ctx.currentTime + delay + 0.07);
+          });
+        } else if (type === 'publish') {
+          [0, 0.08, 0.16].forEach((delay, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.frequency.value = [440, 550, 660][i];
+            osc.type = 'sine';
+            gain.gain.setValueAtTime(0.12, ctx.currentTime + delay);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.12);
+            osc.start(ctx.currentTime + delay); osc.stop(ctx.currentTime + delay + 0.12);
+          });
+        }
+      } catch(e) {}
+    }
 
     const PILLARS_WEBB = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/800px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg";
     const CARINA_WEBB = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Webb%27s_first_deep_field.jpg/800px-Webb%27s_first_deep_field.jpg";
@@ -450,9 +518,10 @@
 
     const ThemeToggle = ({ isDark, toggleTheme }) => (
       <button
-        onClick={toggleTheme}
+        onClick={() => { toggleTheme(); playClickSound('soft'); }}
         aria-label="Toggle Theme"
-        className="relative flex h-8 w-[58px] items-center rounded-full border transition-all duration-300 hover:scale-105"
+        className="btn-liquid relative flex h-8 w-[58px] items-center rounded-full border transition-all duration-300"
+        data-sound-handled="true"
         style={{
           background: isDark ? "linear-gradient(135deg, rgba(199,125,255,0.3), rgba(79,195,247,0.2))" : "linear-gradient(135deg, rgba(255,209,102,0.45), rgba(201,122,0,0.2))",
           borderColor: isDark ? "rgba(199,125,255,0.55)" : "rgba(201,122,0,0.45)"
@@ -476,7 +545,7 @@
     const Navbar = ({ activeSection, isDark, toggleTheme }) => {
       const [isScrolled, setIsScrolled] = useState(false);
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-      const navLinks = ["Hero", "About", "Experience", "Projects", "Skills", "Certifications", "Contact"];
+      const navLinks = ["Hero", "About", "Experience", "Projects", "Skills", "Certifications", "Blog", "Contact"];
 
       useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -490,6 +559,7 @@
       }, [activeSection]);
 
       const scrollTo = (id) => {
+        playClickSound('nav');
         const element = document.getElementById(id.toLowerCase());
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
@@ -508,7 +578,7 @@
           }}
         >
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-16">
-            <button onClick={() => scrollTo("Hero")} className="gradient-text-green-blue font-heading text-2xl font-black tracking-[0.2em] text-glow-green" aria-label="Go to Hero">
+            <button onClick={() => scrollTo("Hero")} className="gradient-text-green-blue font-heading text-2xl font-black tracking-[0.2em] text-glow-green" aria-label="Go to Hero" data-sound-handled="true">
               AD
             </button>
 
@@ -520,6 +590,7 @@
                   <button
                     key={link}
                     onClick={() => scrollTo(link)}
+                    data-sound-handled="true"
                     className={`nav-link ${isActive ? "nav-link-active text-[var(--color-text)]" : "text-[var(--color-text-muted)]"} font-body text-sm uppercase tracking-[0.18em] transition-colors duration-300 hover:text-[var(--color-text)]`}
                   >
                     {link}
@@ -533,7 +604,7 @@
 
             <div className="flex items-center gap-4 md:hidden">
               <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
-              <button onClick={() => setMobileMenuOpen((prev) => !prev)} className="text-[var(--color-text)] transition-colors hover:text-[var(--color-primary)]" aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}>
+              <button onClick={() => { setMobileMenuOpen((prev) => !prev); playClickSound('soft'); }} className="btn-liquid text-[var(--color-text)] transition-colors hover:text-[var(--color-primary)]" aria-label={mobileMenuOpen ? "Close menu" : "Open menu"} data-sound-handled="true">
                 {mobileMenuOpen ? <IconClose /> : <IconMenu />}
               </button>
             </div>
@@ -699,7 +770,7 @@
           </div>
 
           <div className="relative z-10 mx-auto w-full max-w-5xl px-6 sm:px-10 lg:px-16">
-            <p className="hero-fade-up font-body text-xs uppercase tracking-[0.3em]" style={{ color: "var(--color-nebula-violet)", opacity: 0.8, animationDelay: "0s" }}>MISSION LOG #001 · CREW MANIFEST</p>
+            <p className="hero-fade-up font-body text-xs uppercase tracking-[0.3em]" style={{ color: "var(--color-nebula-violet)", opacity: 0.8, animationDelay: "0s" }}>Welcome to my portfolio</p>
             <h1 className="hero-fade-up gradient-text-hero mt-5 font-heading font-black" style={{ fontSize: "clamp(44px,6vw,84px)", lineHeight: "1.02", animationDelay: "0.2s" }}>Akshatha Dungi</h1>
             <h2 className="hero-fade-up mt-6 font-body text-lg md:text-2xl" style={{ color: "var(--color-text)", animationDelay: "0.4s" }}>
               <span style={{ color: "var(--color-primary)" }}>$</span> {roles[roleIndex]}<span className="cursor-blink" style={{ color: "var(--color-primary)" }}>|</span>
@@ -708,10 +779,10 @@
               I build scalable backends, experiment with LLMs, and thrive on adaptability. Merging solid software engineering principles with dynamic new technologies.
             </p>
             <div className="hero-fade-up mt-10 flex flex-col gap-4 sm:flex-row" style={{ animationDelay: "0.8s" }}>
-              <button onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })} className="rounded-full px-8 py-3 font-heading font-bold transition-all duration-300 hover:scale-105 glow-green" style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }}>
+              <button onClick={() => { playClickSound('soft'); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }); }} className="btn-liquid rounded-full px-8 py-3 font-heading font-bold transition-all duration-300 glow-green" style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }} data-sound-handled="true">
                 View Projects
               </button>
-              <a href="#" className="rounded-full border-2 px-8 py-3 font-heading transition-all duration-300 hover:scale-105 glow-violet" style={{ borderColor: "var(--color-nebula-violet)", color: "var(--color-nebula-violet)" }}>
+              <a href="#" onClick={() => playClickSound('soft')} className="btn-liquid rounded-full border-2 px-8 py-3 font-heading transition-all duration-300 glow-violet" style={{ borderColor: "var(--color-nebula-violet)", color: "var(--color-nebula-violet)" }} data-sound-handled="true">
                 Download Resume
               </a>
             </div>
@@ -829,7 +900,7 @@
       return (
         <section id="about" className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
           <FadeInSection>
-            <h2 className="gradient-text-green-blue mb-2 font-heading text-3xl font-bold md:text-4xl">Mission Profile</h2>
+            <h2 className="gradient-text-green-blue mb-2 font-heading text-3xl font-bold md:text-4xl">About Me</h2>
             <img src={PILLARS_WEBB} className="cosmic-banner mb-12" alt="Pillars of Creation" style={{ height: "160px" }} />
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div className="flex justify-center md:justify-start">
@@ -857,7 +928,7 @@
                     <div className="relative z-10">
                       <h4 className="mb-4 font-heading text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-primary)]">What makes me adaptable</h4>
                       <ul className="space-y-3" style={{ color: "var(--color-text-muted)" }}>
-                        <li className="flex items-start gap-3"><span>⭐</span><span>Fast learner, fueled by curiosity (and nebula cosmic events).</span></li>
+                        <li className="flex items-start gap-3"><span>⭐</span><span>Fast learner, fueled by curiosity and passion for technology.</span></li>
                         <li className="flex items-start gap-3"><span>🧩</span><span>I treat every new technology like a puzzle to solve.</span></li>
                         <li className="flex items-start gap-3"><span>🎯</span><span>Focused on the end goal, flexible on the path to get there.</span></li>
                         <li className="flex items-start gap-3"><span>🤖</span><span>Continuously integrating AI to optimize my workflow.</span></li>
@@ -885,7 +956,7 @@
           <FadeInSection>
             <img src={STEPHANS} alt="Stephan's Quintet" className="cosmic-banner mb-10 opacity-80" style={{ height: "180px" }} />
             <div className="mb-16 text-center">
-              <h2 className="gradient-text-gold-crimson mb-2 font-heading text-3xl font-bold md:text-4xl">Mission History</h2>
+              <h2 className="gradient-text-gold-crimson mb-2 font-heading text-3xl font-bold md:text-4xl">Experience</h2>
             </div>
             <div className="relative mx-auto max-w-4xl">
               <div className="timeline-line absolute bottom-0 left-3 top-0 w-[2px] md:left-1/2 md:-translate-x-1/2"></div>
@@ -950,7 +1021,7 @@
           <img src={CARINA_WEBB} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover pointer-events-none z-0" style={{ opacity: 0.07, mixBlendMode: "screen" }} />
           <FadeInSection className="relative z-10">
             <div className="text-center mb-10">
-              <h2 className="gradient-text-violet-pink font-heading font-bold text-3xl md:text-4xl mb-2">Mission Dossiers</h2>
+              <h2 className="gradient-text-violet-pink font-heading font-bold text-3xl md:text-4xl mb-2">Projects</h2>
             </div>
             <div className="flex flex-wrap gap-3 justify-center mb-10">
               {filters.map((tab) => {
@@ -958,8 +1029,9 @@
                 return (
                   <button
                     key={tab}
-                    onClick={() => setFilter(tab)}
-                    className={`rounded-full px-5 py-2 transition-all ${active ? "font-heading font-bold" : "font-body border"}`}
+                    onClick={() => { playClickSound('soft'); setFilter(tab); }}
+                    data-sound-handled="true"
+                    className={`btn-liquid rounded-full px-5 py-2 transition-all ${active ? "font-heading font-bold" : "font-body border"}`}
                     style={active ? { background: "linear-gradient(135deg, #C77DFF, #FF4D8C)", color: "#04020E", boxShadow: "0 0 14px rgba(199,125,255,0.5)" } : { borderColor: "var(--color-border)", color: "var(--color-text-muted)" }}
                   >
                     {tab}
@@ -1007,6 +1079,186 @@
       );
     };
 
+    const RadarChart = () => {
+      const skills = [
+        { name: "Java", value: 90 },
+        { name: "Python", value: 80 },
+        { name: "JavaScript", value: 85 },
+        { name: "Spring Boot", value: 88 },
+        { name: "React", value: 75 },
+        { name: "AWS", value: 70 },
+        { name: "LangChain", value: 72 },
+        { name: "Docker", value: 78 }
+      ];
+      const [hovered, setHovered] = useState(null);
+      const cx = 230, cy = 230, maxR = 140;
+      const levels = [20, 40, 60, 80, 100];
+      const count = skills.length;
+      const angleStep = (2 * Math.PI) / count;
+      const startAngle = -Math.PI / 2;
+
+      const polarToXY = (angle, radius) => ({
+        x: cx + radius * Math.cos(angle),
+        y: cy + radius * Math.sin(angle)
+      });
+
+      const gridPolygons = levels.map((level) => {
+        const r = (level / 100) * maxR;
+        const pts = [];
+        for (let i = 0; i < count; i++) {
+          const a = startAngle + i * angleStep;
+          const p = polarToXY(a, r);
+          pts.push(`${p.x},${p.y}`);
+        }
+        return { level, points: pts.join(" ") };
+      });
+
+      const axisLines = skills.map((_, i) => {
+        const a = startAngle + i * angleStep;
+        const end = polarToXY(a, maxR);
+        return { x1: cx, y1: cy, x2: end.x, y2: end.y };
+      });
+
+      const dataPoints = skills.map((skill, i) => {
+        const a = startAngle + i * angleStep;
+        const r = (skill.value / 100) * maxR;
+        return { ...polarToXY(a, r), skill, index: i };
+      });
+      const dataPolygon = dataPoints.map((p) => `${p.x},${p.y}`).join(" ");
+
+      const labels = skills.map((skill, i) => {
+        const a = startAngle + i * angleStep;
+        const labelR = maxR + 30;
+        const pos = polarToXY(a, labelR);
+        let anchor = "middle";
+        if (pos.x < cx - 5) anchor = "end";
+        else if (pos.x > cx + 5) anchor = "start";
+        let dy = "0.35em";
+        if (pos.y < cy - 20) dy = "0.9em";
+        if (pos.y > cy + 20) dy = "-0.2em";
+        return { ...pos, anchor, dy, skill };
+      });
+
+      return (
+        <div className="relative mx-auto mb-16" style={{ maxWidth: "460px", width: "100%" }}>
+          <svg viewBox="0 0 460 460" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "auto" }}>
+            <defs>
+              <filter id="glow-radar">
+                <feGaussianBlur stdDeviation="3.5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <radialGradient id="radarFill" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="rgba(57,255,142,0.25)" />
+                <stop offset="100%" stopColor="rgba(57,255,142,0.06)" />
+              </radialGradient>
+            </defs>
+
+            {gridPolygons.map((g) => (
+              <polygon
+                key={g.level}
+                points={g.points}
+                fill="none"
+                stroke="rgba(199,125,255,0.2)"
+                strokeWidth="1"
+              />
+            ))}
+
+            {axisLines.map((line, i) => (
+              <line
+                key={i}
+                x1={line.x1}
+                y1={line.y1}
+                x2={line.x2}
+                y2={line.y2}
+                stroke="rgba(199,125,255,0.12)"
+                strokeWidth="1"
+              />
+            ))}
+
+            <polygon
+              points={dataPolygon}
+              fill="url(#radarFill)"
+              stroke="#39FF8E"
+              strokeWidth="2"
+              filter="url(#glow-radar)"
+              style={{ transition: "all 0.3s ease" }}
+            />
+
+            {dataPoints.map((pt) => (
+              <circle
+                key={pt.index}
+                cx={pt.x}
+                cy={pt.y}
+                r={hovered === pt.index ? 7 : 5}
+                fill={hovered === pt.index ? "#39FF8E" : "#0a0618"}
+                stroke="#39FF8E"
+                strokeWidth="2"
+                style={{ cursor: "pointer", transition: "all 0.2s ease", filter: hovered === pt.index ? "drop-shadow(0 0 8px #39FF8E)" : "none" }}
+                onMouseEnter={() => setHovered(pt.index)}
+                onMouseLeave={() => setHovered(null)}
+              />
+            ))}
+
+            {labels.map((lb, i) => (
+              <text
+                key={i}
+                x={lb.x}
+                y={lb.y}
+                textAnchor={lb.anchor}
+                dy={lb.dy}
+                fill="var(--color-text)"
+                fontSize="11"
+                fontFamily="'Share Tech Mono', monospace"
+                style={{ textShadow: "0 0 12px rgba(57,255,142,0.8), 0 0 24px rgba(57,255,142,0.4)" }}
+              >
+                {lb.skill.name}
+              </text>
+            ))}
+
+            {levels.map((level) => {
+              const r = (level / 100) * maxR;
+              return (
+                <text
+                  key={level}
+                  x={cx + 4}
+                  y={cy - r + 1}
+                  fill="var(--color-text-muted)"
+                  fontSize="8"
+                  fontFamily="'Share Tech Mono', monospace"
+                  opacity="0.5"
+                >
+                  {level}%
+                </text>
+              );
+            })}
+          </svg>
+
+          {hovered !== null && (
+            <div
+              className="absolute pointer-events-none font-body text-xs rounded-lg px-3 py-2 z-20"
+              style={{
+                left: `${(dataPoints[hovered].x / 460) * 100}%`,
+                top: `${(dataPoints[hovered].y / 460) * 100}%`,
+                transform: "translate(-50%, -140%)",
+                background: "rgba(10,6,24,0.92)",
+                border: "1px solid rgba(57,255,142,0.4)",
+                color: "#39FF8E",
+                boxShadow: "0 0 16px rgba(57,255,142,0.25)",
+                backdropFilter: "blur(8px)",
+                whiteSpace: "nowrap"
+              }}
+            >
+              <span style={{ color: "var(--color-text)", fontWeight: 600 }}>{skills[hovered].name}</span>
+              <span style={{ marginLeft: "6px", color: "#39FF8E" }}>{skills[hovered].value}%</span>
+            </div>
+          )}
+        </div>
+      );
+    };
+
     const Skills = () => {
       const categories = [
         { title: "Languages", color: "#4FC3F7", skills: ["Java", "Python", "JavaScript", "SQL"] },
@@ -1014,47 +1266,14 @@
         { title: "AI & ML", color: "#C77DFF", skills: ["LangChain", "Prompting", "HuggingFace"] },
         { title: "Cloud & DevOps", color: "#FFD166", skills: ["AWS", "CI/CD", "REST APIs", "Postman"] }
       ];
-      const orbitRings = [
-        { size: 120, border: "rgba(79,195,247,0.25)" },
-        { size: 170, border: "rgba(57,255,142,0.2)" },
-        { size: 220, border: "rgba(199,125,255,0.18)" },
-        { size: 270, border: "rgba(255,209,102,0.15)" }
-      ];
-      const planets = [
-        { size: 20, color: "#4FC3F7", orbit: 60, duration: "6s" },
-        { size: 16, color: "#39FF8E", orbit: 85, duration: "8s" },
-        { size: 20, color: "#C77DFF", orbit: 110, duration: "12s" },
-        { size: 16, color: "#FFD166", orbit: 135, duration: "16s" }
-      ];
 
       return (
         <section id="skills" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto relative">
           <img src={SOUTHERN_RING} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover z-0 pointer-events-none" style={{ opacity: 0.08, mixBlendMode: "screen" }} />
           <FadeInSection className="relative z-10">
-            <h2 className="gradient-text-blue-violet font-heading font-bold text-3xl md:text-4xl text-center mb-2">Crew Capabilities</h2>
-            <p className="font-body text-sm text-center mb-12" style={{ color: "var(--color-nebula-violet)" }}>What I bring aboard the Hail Mary</p>
-            <div className="relative mx-auto mb-16 h-[220px] w-[220px] sm:h-[280px] sm:w-[280px]">
-              <div className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ background: "radial-gradient(circle, #FFD166, #FF6B6B)", boxShadow: "0 0 30px #FFD166, 0 0 60px rgba(255,209,102,0.4)" }}></div>
-              {orbitRings.map((ring) => (
-                <div key={ring.size} className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border" style={{ width: `${ring.size}px`, height: `${ring.size}px`, borderColor: ring.border }}></div>
-              ))}
-              {planets.map((planet) => (
-                <div
-                  key={planet.color}
-                  className="absolute left-1/2 top-1/2 rounded-full"
-                  style={{
-                    width: `${planet.size}px`,
-                    height: `${planet.size}px`,
-                    marginLeft: `${-planet.size / 2}px`,
-                    marginTop: `${-planet.size / 2}px`,
-                    background: planet.color,
-                    boxShadow: `0 0 8px ${planet.color}`,
-                    ["--orbit-r"]: `${planet.orbit}px`,
-                    animation: `orbit ${planet.duration} linear infinite`
-                  }}
-                ></div>
-              ))}
-            </div>
+            <h2 className="gradient-text-blue-violet font-heading font-bold text-3xl md:text-4xl text-center mb-2">Technical Skills</h2>
+            <p className="font-body text-sm text-center mb-12" style={{ color: "var(--color-nebula-violet)" }}>Technologies & tools I work with</p>
+            <RadarChart />
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {categories.map((category) => (
                 <div key={category.title} className="nebula-card p-6 relative z-10" style={{ borderTop: `2px solid ${category.color}` }}>
@@ -1091,7 +1310,7 @@
       return (
         <section id="certifications" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto overflow-hidden">
           <FadeInSection>
-            <h2 className="gradient-text-gold-crimson font-heading font-bold text-3xl md:text-4xl text-center mb-2">Mission Credentials</h2>
+            <h2 className="gradient-text-gold-crimson font-heading font-bold text-3xl md:text-4xl text-center mb-2">Certifications</h2>
             <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto hide-scrollbar pt-10 pb-2">
               {certs.map((cert) => (
                 <div key={cert.title} className="nebula-card p-6 relative group min-w-[280px] md:min-w-0" style={{ borderLeft: `4px solid ${cert.color}` }}>
@@ -1104,6 +1323,233 @@
                 </div>
               ))}
             </div>
+          </FadeInSection>
+        </section>
+      );
+    };
+
+    const BLOG_TAG_STYLES = {
+      Engineering: { color: "#39FF8E", bg: "rgba(57,255,142,0.12)", border: "rgba(57,255,142,0.3)" },
+      AI: { color: "#C77DFF", bg: "rgba(199,125,255,0.12)", border: "rgba(199,125,255,0.3)" },
+      Thoughts: { color: "#4FC3F7", bg: "rgba(79,195,247,0.12)", border: "rgba(79,195,247,0.3)" },
+      Career: { color: "#FFD166", bg: "rgba(255,209,102,0.12)", border: "rgba(255,209,102,0.3)" }
+    };
+
+    const SEED_POST = {
+      id: "post_001",
+      title: "Why CS Fundamentals Matter More Than You Think",
+      date: "2026-04-12",
+      tag: "Engineering",
+      body: "Everyone wants to jump straight to frameworks. Learn React, learn Spring Boot, learn the hot new LLM library \u2014 and yes, those skills matter for getting hired. But after spending time debugging production systems, I\u2019ve come to believe that the engineers who compound fastest are the ones who invested early in the unglamorous stuff: data structures, OS concepts, networking basics, and algorithms.\n\nHere\u2019s why. Frameworks change constantly. What was the go-to tool three years ago is legacy code today. But the engineer who understands why a HashMap lookup is O(1) will immediately grasp why a new caching layer works. The one who knows how TCP handshakes work will debug a flaky microservice connection in minutes, not hours.\n\nCS fundamentals are leverage. They don\u2019t just help you use tools \u2014 they help you evaluate them, break them, and build better ones. Every time I\u2019ve hit a wall on a complex problem, it\u2019s been a first-principles CS concept that unlocked it, not knowledge of a specific API.\n\nIf you\u2019re early in your career: don\u2019t skip the boring parts. Your future self \u2014 the one on-call at 2am with a system misbehaving \u2014 will thank you."
+    };
+
+    const IconTrash = ({ size = 16, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+      </svg>
+    );
+
+    const Blog = () => {
+      const [posts, setPosts] = useState([]);
+      const [showForm, setShowForm] = useState(false);
+      const [formData, setFormData] = useState({ title: "", tag: "Engineering", body: "" });
+      const [loading, setLoading] = useState(true);
+      const [isAuthor, setIsAuthor] = useState(false);
+      const [expandedPosts, setExpandedPosts] = useState({});
+      const clickTimestamps = useRef([]);
+
+      const handleHeadingClick = () => {
+        const now = Date.now();
+        clickTimestamps.current = [...clickTimestamps.current.filter((t) => now - t < 2000), now];
+        if (clickTimestamps.current.length >= 5) {
+          setIsAuthor(true);
+          clickTimestamps.current = [];
+        }
+      };
+
+      const loadPosts = async () => {
+        setLoading(true);
+        try {
+          const raw = await window.storage.get("blog_posts");
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            setPosts(Array.isArray(parsed) ? parsed.sort((a, b) => new Date(b.date) - new Date(a.date)) : []);
+          } else {
+            const seed = [SEED_POST];
+            await window.storage.set("blog_posts", JSON.stringify(seed));
+            setPosts(seed);
+          }
+        } catch (e) {
+          setPosts([]);
+        }
+        setLoading(false);
+      };
+
+      const savePosts = async (newPosts) => {
+        await window.storage.set("blog_posts", JSON.stringify(newPosts));
+        setPosts(newPosts.sort((a, b) => new Date(b.date) - new Date(a.date)));
+      };
+
+      useEffect(() => { loadPosts(); }, []);
+
+      const handlePublish = async (e) => {
+        e.preventDefault();
+        if (!formData.title.trim() || !formData.body.trim()) return;
+        const newPost = {
+          id: Date.now().toString(),
+          title: formData.title.trim(),
+          tag: formData.tag,
+          body: formData.body.trim(),
+          date: new Date().toISOString().split("T")[0]
+        };
+        await savePosts([...posts, newPost]);
+        setFormData({ title: "", tag: "Engineering", body: "" });
+        setShowForm(false);
+        playClickSound("publish");
+      };
+
+      const handleDelete = async (id) => {
+        await savePosts(posts.filter((p) => p.id !== id));
+      };
+
+      const inputStyle = {
+        background: "var(--input-bg)",
+        borderColor: "var(--input-border)",
+        color: "var(--color-text)"
+      };
+
+      return (
+        <section id="blog" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto">
+          <FadeInSection>
+            <h2
+              className="gradient-text-violet-pink font-heading font-bold text-3xl md:text-4xl text-center mb-2"
+              onClick={handleHeadingClick}
+              style={{ cursor: "default", userSelect: "none" }}
+            >
+              Blog
+            </h2>
+            <p className="font-body text-sm text-center mb-10" style={{ color: "var(--color-nebula-violet)" }}>Thoughts on engineering, AI, and building things.</p>
+
+            {isAuthor && (
+              <div className="text-center mb-8">
+                <button
+                  onClick={() => { playClickSound('soft'); setShowForm((prev) => !prev); }}
+                  className="btn-liquid relative rounded-full px-8 py-3 font-heading font-bold transition-all duration-300 overflow-hidden group"
+                  data-sound-handled="true"
+                  style={{ background: "linear-gradient(135deg, #C77DFF, #FF4D8C)", color: "#04020E" }}
+                >
+                  <span className="relative z-10">{showForm ? "Cancel" : "+ Add Post"}</span>
+                  <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "linear-gradient(135deg, #FF4D8C, #C77DFF)" }}></span>
+                </button>
+              </div>
+            )}
+
+            {isAuthor && showForm && (
+              <div className="nebula-card p-8 max-w-2xl mx-auto mb-12">
+                <h3 className="gradient-text-violet-pink font-heading font-bold text-xl mb-6">New Post</h3>
+                <form onSubmit={handlePublish} className="space-y-4">
+                  <div>
+                    <input
+                      value={formData.title}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                      placeholder="Post title"
+                      className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2"
+                      style={inputStyle}
+                    />
+                  </div>
+                  <div>
+                    <select
+                      value={formData.tag}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, tag: e.target.value }))}
+                      className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2"
+                      style={inputStyle}
+                    >
+                      {Object.keys(BLOG_TAG_STYLES).map((tag) => (
+                        <option key={tag} value={tag}>{tag}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <textarea
+                      value={formData.body}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, body: e.target.value }))}
+                      placeholder="Write your post..."
+                      className="w-full min-h-[180px] rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2"
+                      style={inputStyle}
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={!formData.title.trim() || !formData.body.trim()}
+                    onClick={() => playClickSound('publish')}
+                    className="btn-liquid w-full py-3 rounded-xl font-heading font-bold transition-all duration-300 disabled:opacity-50"
+                    data-sound-handled="true"
+                    style={{ background: "linear-gradient(135deg, #C77DFF, #FF4D8C)", color: "#04020E" }}
+                  >
+                    Publish
+                  </button>
+                </form>
+              </div>
+            )}
+
+            {loading ? (
+              <p className="text-center" style={{ color: "var(--color-text-muted)" }}>Loading posts...</p>
+            ) : posts.length === 0 ? (
+              <p className="text-center" style={{ color: "var(--color-text-muted)" }}>No posts yet.</p>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {posts.map((post) => {
+                  const tagStyle = BLOG_TAG_STYLES[post.tag] || BLOG_TAG_STYLES.Thoughts;
+                  return (
+                    <div key={post.id} className="nebula-card p-6 flex flex-col h-full relative group" style={{ borderTop: `3px solid ${tagStyle.color}` }}>
+                      <div className="flex items-start justify-between gap-2 mb-3">
+                        <h3 className="font-heading font-bold text-base" style={{ color: "var(--color-text)" }}>{post.title}</h3>
+                        {isAuthor && (
+                          <button
+                            onClick={() => handleDelete(post.id)}
+                            className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded hover:bg-[rgba(255,77,140,0.15)] flex-shrink-0"
+                            style={{ color: "#FF4D8C" }}
+                            aria-label="Delete post"
+                          >
+                            <IconTrash size={14} />
+                          </button>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="font-body text-xs px-3 py-1 rounded-full border" style={{ background: tagStyle.bg, color: tagStyle.color, borderColor: tagStyle.border }}>{post.tag}</span>
+                        <span className="font-body text-xs" style={{ color: "var(--color-subtle)" }}>{post.date}</span>
+                      </div>
+                      <div
+                        className="font-body text-sm leading-relaxed whitespace-pre-line"
+                        style={{
+                          color: "var(--color-text-muted)",
+                          maxHeight: expandedPosts[post.id] ? "2000px" : "4.5rem",
+                          overflow: "hidden",
+                          transition: "max-height 0.4s ease"
+                        }}
+                      >
+                        {post.body}
+                      </div>
+                      <button
+                        onClick={() => setExpandedPosts((prev) => ({ ...prev, [post.id]: !prev[post.id] }))}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          padding: 0,
+                          marginTop: "0.5rem",
+                          color: "var(--color-primary)",
+                          fontFamily: '"Share Tech Mono", monospace',
+                          fontSize: "0.8rem",
+                          cursor: "pointer"
+                        }}
+                      >
+                        {expandedPosts[post.id] ? "show less" : "...read more"}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </FadeInSection>
         </section>
       );
@@ -1213,7 +1659,7 @@
         <section id="contact" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto relative">
           <img src={DEEP_FIELD} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover z-0 pointer-events-none" style={{ opacity: 0.06, mixBlendMode: "screen" }} />
           <FadeInSection className="relative z-10">
-            <h2 className="gradient-text-green-blue font-heading font-bold text-3xl md:text-4xl text-center mb-3">Open Transmission</h2>
+            <h2 className="gradient-text-green-blue font-heading font-bold text-3xl md:text-4xl text-center mb-3">Get In Touch</h2>
             <p className="font-body text-center max-w-lg mx-auto mb-16" style={{ color: "var(--color-text-muted)" }}>
               I'm open to opportunities, collaborations, or just a good tech conversation.
             </p>
@@ -1243,7 +1689,7 @@
                   <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full" style={{ background: "rgba(57,255,142,0.1)", color: "#39FF8E" }}>
                     <IconMail size={28} />
                   </div>
-                  <h3 className="gradient-text-green-blue font-heading font-bold text-xl mb-2">Transmission received. Ryland Grace will respond shortly.</h3>
+                  <h3 className="gradient-text-green-blue font-heading font-bold text-xl mb-2">Message received! I'll get back to you shortly.</h3>
                   <p className="italic mb-6" style={{ color: "var(--color-subtle)" }}>— Akshatha Dungi</p>
                   <button onClick={() => setSubmitState("idle")} className="rounded-xl px-5 py-3 transition-all duration-300" style={{ border: "1px solid rgba(57,255,142,0.5)", color: "#39FF8E" }}>
                     Send another
@@ -1267,11 +1713,11 @@
                       {errors.email ? <p className="mt-1 text-xs" style={{ color: "#FF4D8C" }}>{errors.email}</p> : null}
                     </div>
                     <div>
-                      <textarea name="message" value={formData.message} onChange={handleChange} placeholder="What are we building?" className="w-full min-h-[150px] rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2" style={inputStyle}></textarea>
+                      <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Your message" className="w-full min-h-[150px] rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2" style={inputStyle}></textarea>
                       {errors.message ? <p className="mt-1 text-xs" style={{ color: "#FF4D8C" }}>{errors.message}</p> : null}
                     </div>
-                    <button type="submit" disabled={submitState === "loading"} className="w-full py-3 rounded-xl font-heading font-bold transition-all duration-300 disabled:opacity-70" style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }}>
-                      {submitState === "loading" ? "Transmitting..." : "Transmit Message"}
+                    <button type="submit" onClick={() => playClickSound('soft')} disabled={submitState === "loading"} className="btn-liquid w-full py-3 rounded-xl font-heading font-bold transition-all duration-300 disabled:opacity-70" style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }} data-sound-handled="true">
+                      {submitState === "loading" ? "Sending..." : "Send Message"}
                     </button>
                   </form>
                 </div>
@@ -1283,16 +1729,16 @@
             <div className="fixed inset-0 z-[9999] overflow-y-auto" style={{ background: "var(--color-bg)" }}>
               <div className="max-w-5xl mx-auto px-6 py-10 sm:px-10">
                 <div className="mb-8 flex items-center justify-between gap-4">
-                  <h3 className="gradient-text-green-blue font-heading font-bold text-2xl">📡 MISSION CONTROL — Message Inbox</h3>
+                  <h3 className="gradient-text-green-blue font-heading font-bold text-2xl">📬 Message Inbox</h3>
                   <button onClick={() => setInboxOpen(false)} className="rounded-full border px-4 py-2 text-sm" style={{ borderColor: "var(--color-border)", color: "var(--color-text)" }}>
                     Close
                   </button>
                 </div>
                 <div className="space-y-4">
                   {loadingMsgs ? (
-                    <div className="nebula-card p-6">Loading transmissions...</div>
+                    <div className="nebula-card p-6">Loading messages...</div>
                   ) : messages.length === 0 ? (
-                    <div className="nebula-card p-6">No transmissions received yet.</div>
+                    <div className="nebula-card p-6">No messages received yet.</div>
                   ) : (
                     messages.map((message) => (
                       <div key={message.id} className="nebula-card p-6">
@@ -1322,7 +1768,7 @@
       <footer className="py-8 text-center" style={{ borderTop: "1px solid transparent", borderImage: "linear-gradient(90deg, transparent, #C77DFF, transparent) 1" }}>
         <p className="font-body text-xs" style={{ color: "var(--color-subtle)" }}>
           <span style={{ color: "#39FF8E" }}>●</span> <span style={{ color: "#C77DFF" }}>●</span> <span style={{ color: "#4FC3F7" }}>●</span>{" "}
-          &copy; 2026 Akshatha Dungi — Built aboard the Hail Mary · React & Tailwind
+          &copy; 2026 Akshatha Dungi — Built with React & Tailwind
         </p>
       </footer>
     );
@@ -1339,7 +1785,7 @@
 
       useEffect(() => {
         const spy = () => {
-          const sections = ["hero", "about", "experience", "projects", "skills", "certifications", "contact"];
+          const sections = ["hero", "about", "experience", "projects", "skills", "certifications", "blog", "contact"];
           const p = window.scrollY + 100;
           for (const sectionName of sections) {
             const element = document.getElementById(sectionName);
@@ -1392,6 +1838,8 @@
             <hr className="section-divider" />
             <Certifications />
             <hr className="section-divider" />
+            <Blog />
+            <hr className="section-divider" />
             <Contact triggerRocky={triggerRocky} />
           </main>
           <Footer />
@@ -1415,6 +1863,13 @@
 
     const root = ReactDOM.createRoot(document.getElementById("root"));
     root.render(<App />);
+
+    document.addEventListener('click', (e) => {
+      const interactive = e.target.closest('a, button, [role="button"]');
+      if (interactive && !interactive.dataset.soundHandled) {
+        playClickSound('soft');
+      }
+    });
   </script>
 </body>
 </html>

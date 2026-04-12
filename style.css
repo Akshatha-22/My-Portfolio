@@ -1,11 +1,11 @@
-/* ===== PROJECT HAIL MARY — NEBULA THEME ===== */
+/* ===== PORTFOLIO — NEBULA THEME ===== */
 
 :root {
     --color-bg: #04020E;
     --color-surface: #0A0618;
     --color-surface-2: #110825;
 
-    /* Primary accent — Astrophage bioluminescent green */
+    /* Primary accent — bioluminescent green */
     --color-primary: #39FF8E;
 
     /* Secondary accents — pulled from Webb nebula imagery */
@@ -303,7 +303,7 @@ body {
 .rocky-arm-l { left: -10px; transform: rotate(15deg); }
 .rocky-arm-r { right: -10px; transform: rotate(-15deg); }
 
-.mission-label {
+.section-label {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.75rem;
     letter-spacing: 0.25em;
