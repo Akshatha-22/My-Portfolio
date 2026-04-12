@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akshatha Dungi | Software Developer</title>
-  <meta
-    name="description"
-    content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI Curious."
-  />
+  <meta name="description"
+    content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI/ML Enthusiast." />
   <script>
     (function () {
       const savedTheme = localStorage.getItem("theme");
@@ -20,13 +19,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&display=swap"
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init('aJqA2jGL-q0HyC-0H');
+  </script>
   <script>
     tailwind.config = {
       theme: {
@@ -177,11 +179,25 @@
       background-clip: text;
     }
 
-    .glow-green { box-shadow: 0 0 20px rgba(57, 255, 142, 0.4), 0 0 40px rgba(57, 255, 142, 0.15); }
-    .glow-violet { box-shadow: 0 0 20px rgba(199, 125, 255, 0.4), 0 0 40px rgba(199, 125, 255, 0.15); }
-    .glow-blue { box-shadow: 0 0 20px rgba(79, 195, 247, 0.4), 0 0 40px rgba(79, 195, 247, 0.15); }
-    .glow-pink { box-shadow: 0 0 20px rgba(255, 77, 140, 0.4), 0 0 40px rgba(255, 77, 140, 0.15); }
-    .text-glow-green { text-shadow: 0 0 12px rgba(57, 255, 142, 0.8), 0 0 24px rgba(57, 255, 142, 0.4); }
+    .glow-green {
+      box-shadow: 0 0 20px rgba(57, 255, 142, 0.4), 0 0 40px rgba(57, 255, 142, 0.15);
+    }
+
+    .glow-violet {
+      box-shadow: 0 0 20px rgba(199, 125, 255, 0.4), 0 0 40px rgba(199, 125, 255, 0.15);
+    }
+
+    .glow-blue {
+      box-shadow: 0 0 20px rgba(79, 195, 247, 0.4), 0 0 40px rgba(79, 195, 247, 0.15);
+    }
+
+    .glow-pink {
+      box-shadow: 0 0 20px rgba(255, 77, 140, 0.4), 0 0 40px rgba(255, 77, 140, 0.15);
+    }
+
+    .text-glow-green {
+      text-shadow: 0 0 12px rgba(57, 255, 142, 0.8), 0 0 24px rgba(57, 255, 142, 0.4);
+    }
 
     .nebula-card {
       background: rgba(10, 6, 24, 0.7);
@@ -192,14 +208,19 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
-    .nebula-card:hover { transform: translateY(-4px); }
+    .nebula-card:hover {
+      transform: translateY(-4px);
+    }
 
     [data-theme="light"] .nebula-card {
       background: rgba(255, 240, 214, 0.75);
       border-color: rgba(0, 0, 0, 0.08);
     }
 
-    .scanlines { position: relative; }
+    .scanlines {
+      position: relative;
+    }
+
     .scanlines::after {
       content: "";
       position: absolute;
@@ -220,33 +241,184 @@
       -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
     }
 
-    @keyframes float-shape-1 { 0%,100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-30px) scale(1.05); } }
-    @keyframes float-shape-2 { 0%,100% { transform: translateY(0px) scale(1); } 50% { transform: translateY(20px) scale(0.95); } }
-    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes glow-pulse { 0%,100% { box-shadow: 0 0 10px rgba(57, 255, 142, 0.5); } 50% { box-shadow: 0 0 28px rgba(57, 255, 142, 0.9), 0 0 50px rgba(57, 255, 142, 0.3); } }
-    @keyframes terminal-blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
-    @keyframes fade-in-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
-    @keyframes bounce-down { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+    @keyframes float-shape-1 {
 
-    .spinning { animation: spin 4s linear infinite; }
-    .not-spinning { }
-    .animate-float { animation: float 3s ease-in-out infinite; }
-    .animate-float-shape-1 { animation: float-shape-1 8s ease-in-out infinite; }
-    .animate-float-shape-2 { animation: float-shape-2 6s ease-in-out infinite; }
-    .animate-glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
-    .cursor-blink { animation: terminal-blink 1s step-end infinite; }
-    .pulse-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
-    .bounce-down { animation: bounce-down 1.8s ease-in-out infinite; }
+      0%,
+      100% {
+        transform: translateY(0px) scale(1);
+      }
 
-    .fade-in-section { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .timeline-line { background: linear-gradient(to bottom, #39ff8e, #c77dff, #ff4d8c); }
-    .section-divider { width: 100%; height: 2px; border: none; background: linear-gradient(90deg, transparent, #c77dff, #39ff8e, #4fc3f7, #ff4d8c, transparent); margin: 0; opacity: 0.4; }
-    .nav-link { position: relative; }
+      50% {
+        transform: translateY(-30px) scale(1.05);
+      }
+    }
+
+    @keyframes float-shape-2 {
+
+      0%,
+      100% {
+        transform: translateY(0px) scale(1);
+      }
+
+      50% {
+        transform: translateY(20px) scale(0.95);
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes glow-pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 10px rgba(57, 255, 142, 0.5);
+      }
+
+      50% {
+        box-shadow: 0 0 28px rgba(57, 255, 142, 0.9), 0 0 50px rgba(57, 255, 142, 0.3);
+      }
+    }
+
+    @keyframes terminal-blink {
+
+      0%,
+      49% {
+        opacity: 1;
+      }
+
+      50%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(1.4);
+      }
+    }
+
+    @keyframes bounce-down {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(10px);
+      }
+    }
+
+    .spinning {
+      animation: spin 4s linear infinite;
+    }
+
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .animate-float-shape-1 {
+      animation: float-shape-1 8s ease-in-out infinite;
+    }
+
+    .animate-float-shape-2 {
+      animation: float-shape-2 6s ease-in-out infinite;
+    }
+
+    .animate-glow-pulse {
+      animation: glow-pulse 2s ease-in-out infinite;
+    }
+
+    .cursor-blink {
+      animation: terminal-blink 1s step-end infinite;
+    }
+
+    .pulse-dot {
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    .bounce-down {
+      animation: bounce-down 1.8s ease-in-out infinite;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .timeline-line {
+      background: linear-gradient(to bottom, #39ff8e, #c77dff, #ff4d8c);
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 2px;
+      border: none;
+      background: linear-gradient(90deg, transparent, #c77dff, #39ff8e, #4fc3f7, #ff4d8c, transparent);
+      margin: 0;
+      opacity: 0.4;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
     .nav-link::after {
       content: "";
       position: absolute;
@@ -262,7 +434,9 @@
     }
 
     .nav-link:hover::after,
-    .nav-link-active::after { transform: scaleX(1); }
+    .nav-link-active::after {
+      transform: scaleX(1);
+    }
 
     .hero-deep-field {
       position: fixed;
@@ -277,9 +451,21 @@
       pointer-events: none;
     }
 
-    .hero-fade-up { opacity: 0; animation: fade-in-up 0.8s ease forwards; }
-    .mobile-drawer-panel { background: var(--drawer-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-    .nav-shell { transition: background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease; }
+    .hero-fade-up {
+      opacity: 0;
+      animation: fade-in-up 0.8s ease forwards;
+    }
+
+    .mobile-drawer-panel {
+      background: var(--drawer-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .nav-shell {
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    }
+
     .classified-watermark {
       position: absolute;
       top: 50%;
@@ -303,6 +489,7 @@
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
       z-index: 0;
     }
+
     .btn-liquid::before {
       content: '';
       position: absolute;
@@ -314,23 +501,259 @@
       transition: opacity 0.3s ease;
       z-index: -1;
     }
+
     .btn-liquid:hover {
       transform: scale(1.06) translateY(-2px);
     }
+
     .btn-liquid:hover::before {
       opacity: 0.5;
     }
+
     .btn-liquid:active {
       transform: scale(0.97);
     }
 
     @media (max-width: 768px) {
-      .cosmic-banner { height: 140px; }
-      .nebula-card { border-radius: 12px; }
+      .cosmic-banner {
+        height: 140px;
+      }
+
+      .nebula-card {
+        border-radius: 12px;
+      }
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-33.333%);
+      }
+    }
+
+    @keyframes scroll-right {
+      0% {
+        transform: translateX(-33.333%);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .scroll-track {
+      display: flex;
+      gap: 10px;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .scroll-left {
+      animation: scroll-left 28s linear infinite;
+    }
+
+    .scroll-right {
+      animation: scroll-right 28s linear infinite;
+    }
+
+    .scroll-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes loading-fade-in {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes loading-slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes loading-blob {
+
+      0%,
+      100% {
+        transform: scale(1) translate(0, 0);
+      }
+
+      50% {
+        transform: scale(1.15) translate(20px, -20px);
+      }
+    }
+
+    @keyframes loading-bar-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 6px #39FF8E;
+      }
+
+      50% {
+        box-shadow: 0 0 18px #4FC3F7, 0 0 30px #C77DFF;
+      }
     }
   </style>
 </head>
+
 <body>
+  <div id="loading-screen" style="
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    font-family: 'Orbitron', sans-serif;
+    overflow: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  ">
+
+    <!-- Starfield canvas behind the loading content -->
+    <canvas id="loading-canvas" style="
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    "></canvas>
+
+    <!-- Glow blobs -->
+    <div style="
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(199,125,255,0.12), transparent 70%);
+      top: 20%; left: 30%;
+      pointer-events: none; z-index: 0;
+      animation: loading-blob 4s ease-in-out infinite;
+    "></div>
+    <div style="
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(57,255,142,0.1), transparent 70%);
+      bottom: 25%; right: 25%;
+      pointer-events: none; z-index: 0;
+      animation: loading-blob 4s ease-in-out infinite reverse;
+    "></div>
+
+    <!-- Main content -->
+    <div style="position: relative; z-index: 1; text-align: center; 
+      padding: 0 24px;">
+
+      <!-- Animated bracket decoration -->
+      <div style="
+        font-family: 'Share Tech Mono', monospace;
+        font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+        color: #39FF8E;
+        opacity: 0.5;
+        letter-spacing: 0.3em;
+        margin-bottom: 28px;
+        animation: loading-fade-in 0.6s ease forwards;
+        animation-delay: 0.1s;
+        opacity: 0;
+      ">{ initializing . portfolio . v1.0 }</div>
+
+      <!-- Name -->
+      <div style="
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2rem, 6vw, 4.5rem);
+        font-weight: 900;
+        background: linear-gradient(135deg, #F0EEFF 0%, #C77DFF 40%, 
+          #4FC3F7 75%, #39FF8E 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 0.04em;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        animation: loading-slide-up 0.8s ease forwards;
+        animation-delay: 0.3s;
+        opacity: 0;
+        transform: translateY(20px);
+      ">Akshatha Dungi</div>
+
+      <!-- Catchy phrase -->
+      <div style="
+        font-family: 'Share Tech Mono', monospace;
+        font-size: clamp(0.8rem, 2.2vw, 1.1rem);
+        color: #C77DFF;
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
+        animation: loading-slide-up 0.8s ease forwards;
+        animation-delay: 0.6s;
+        opacity: 0;
+        transform: translateY(16px);
+      ">I don't just write code —</div>
+
+      <div style="
+        font-family: 'Share Tech Mono', monospace;
+        font-size: clamp(0.8rem, 2.2vw, 1.1rem);
+        color: #39FF8E;
+        letter-spacing: 0.08em;
+        margin-bottom: 48px;
+        text-shadow: 0 0 20px rgba(57,255,142,0.4);
+        animation: loading-slide-up 0.8s ease forwards;
+        animation-delay: 0.85s;
+        opacity: 0;
+        transform: translateY(16px);
+      ">I engineer solutions that matter.</div>
+
+      <!-- Progress bar -->
+      <div style="
+        width: min(320px, 80vw);
+        height: 2px;
+        background: rgba(255,255,255,0.06);
+        border-radius: 9999px;
+        margin: 0 auto 16px;
+        overflow: hidden;
+        animation: loading-fade-in 0.5s ease forwards;
+        animation-delay: 1.1s;
+        opacity: 0;
+      ">
+        <div id="loading-progress-bar" style="
+          height: 100%;
+          width: 0%;
+          border-radius: 9999px;
+          background: linear-gradient(90deg, #39FF8E, #4FC3F7, #C77DFF);
+          transition: width 0.1s linear;
+        "></div>
+      </div>
+
+      <!-- Loading label -->
+      <div id="loading-label" style="
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.65rem;
+        color: rgba(155,142,196,0.6);
+        letter-spacing: 0.2em;
+        animation: loading-fade-in 0.5s ease forwards;
+        animation-delay: 1.1s;
+        opacity: 0;
+      ">loading</div>
+
+    </div>
+  </div>
+
   <div id="root"></div>
 
   <script>
@@ -349,10 +772,117 @@
         return Promise.resolve(keys);
       }
     };
+
+    (function () {
+
+      /* ── Mini starfield on loading canvas ── */
+      var lc = document.getElementById('loading-canvas');
+      if (lc) {
+        var ctx = lc.getContext('2d');
+        lc.width = window.innerWidth;
+        lc.height = window.innerHeight;
+        var stars = [];
+        for (var i = 0; i < 180; i++) {
+          stars.push({
+            x: Math.random() * lc.width,
+            y: Math.random() * lc.height,
+            r: Math.random() * 1.2 + 0.3,
+            o: Math.random() * 0.7 + 0.2,
+            speed: Math.random() * 0.3 + 0.05
+          });
+        }
+        var loadingStarFrame;
+        function drawLoadingStars() {
+          ctx.clearRect(0, 0, lc.width, lc.height);
+          stars.forEach(function (s) {
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(240,238,255,' + s.o + ')';
+            ctx.fill();
+            s.y -= s.speed;
+            if (s.y < 0) {
+              s.y = lc.height;
+              s.x = Math.random() * lc.width;
+            }
+          });
+          loadingStarFrame = requestAnimationFrame(drawLoadingStars);
+        }
+        drawLoadingStars();
+      }
+
+
+
+      /* ── Progress bar animation ── */
+      var bar = document.getElementById('loading-progress-bar');
+      var label = document.getElementById('loading-label');
+
+      var loadingPhrases = [
+        'compiling ambition...',
+        'importing curiosity...',
+        'deploying passion...',
+        'rendering portfolio...',
+        'almost there...'
+      ];
+
+      var startTime = Date.now();
+      var totalDuration = 3200;
+
+      function updateProgress() {
+        var elapsed = Date.now() - startTime;
+        var progress = Math.min((elapsed / totalDuration) * 100, 100);
+        if (bar) bar.style.width = progress + '%';
+        if (label) {
+          var idx = Math.min(
+            Math.floor((progress / 100) * loadingPhrases.length),
+            loadingPhrases.length - 1
+          );
+          label.textContent = loadingPhrases[idx];
+        }
+        if (progress < 100) {
+          requestAnimationFrame(updateProgress);
+        }
+      }
+      setTimeout(function () { requestAnimationFrame(updateProgress); }, 1100);
+
+      /* ── Dismiss loading screen ── */
+      setTimeout(function () {
+        var screen = document.getElementById('loading-screen');
+        if (screen) {
+          screen.style.opacity = '0';
+          screen.style.visibility = 'hidden';
+          setTimeout(function () {
+            screen.style.display = 'none';
+            if (typeof loadingStarFrame !== 'undefined') {
+              cancelAnimationFrame(loadingStarFrame);
+            }
+          }, 800);
+        }
+      }, 3500);
+
+    })();
   </script>
   <script src="three-bg.js"></script>
 
   <script type="text/babel">
+    /*
+      EMAILJS SETUP — do this once at emailjs.com (free):
+      1. Sign up at https://www.emailjs.com
+      2. Add a new Email Service → connect your Gmail (akshathadungi04@gmail.com)
+         → copy the Service ID (e.g. 'service_xxxxxxx')
+      3. Create an Email Template with these variables:
+           From name:    {{from_name}}
+           From email:   {{from_email}}  
+           Message:      {{message}}
+           To email:     akshathadungi04@gmail.com
+         → copy the Template ID (e.g. 'template_xxxxxxx')
+      4. Go to Account → copy your Public Key
+      5. Replace the 3 placeholder strings below with your actual IDs
+    */
+
+    const EMAILJS_SERVICE_ID = 'service_8n5h8gh';
+    const EMAILJS_TEMPLATE_ID = 'template_40hphlh';
+    const EMAILJS_PUBLIC_KEY = 'aJqA2jGL-q0HyC-0H';
+
     const { useEffect, useMemo, useRef, useState } = React;
 
     function playClickSound(type = 'soft') {
@@ -391,7 +921,7 @@
             osc.start(ctx.currentTime + delay); osc.stop(ctx.currentTime + delay + 0.12);
           });
         }
-      } catch(e) {}
+      } catch (e) { }
     }
 
     const PILLARS_WEBB = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/800px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg";
@@ -471,6 +1001,40 @@
     const IconChevronDown = ({ size = 24, className = "" }) => (
       <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" className={className}>
         <path d="m6 9 6 6 6-6" />
+      </svg>
+    );
+
+    const IconZap = ({ size = 16, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M4 14.5 14 3l-3 9h9l-10 11.5 3-9H4z" />
+      </svg>
+    );
+    const IconBox = ({ size = 16, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+        <polyline points="3.29 7 12 12 20.71 7" />
+        <line x1="12" y1="22" x2="12" y2="12" />
+      </svg>
+    );
+    const IconTarget = ({ size = 16, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="6" />
+        <circle cx="12" cy="12" r="2" />
+      </svg>
+    );
+    const IconCpu = ({ size = 16, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <rect width="16" height="16" x="4" y="4" rx="2" />
+        <rect width="6" height="6" x="9" y="9" rx="1" />
+        <path d="M15 2v2" />
+        <path d="M15 20v2" />
+        <path d="M2 15h2" />
+        <path d="M2 9h2" />
+        <path d="M20 15h2" />
+        <path d="M20 9h2" />
+        <path d="M9 2v2" />
+        <path d="M9 20v2" />
       </svg>
     );
 
@@ -631,7 +1195,7 @@
 
     const Hero = () => {
       const canvasRef = useRef(null);
-      const roles = useMemo(() => ["Software Developer", "Backend Specialist", "AI Curious", "Software Developer · Backend Specialist · AI Curious"], []);
+      const roles = useMemo(() => ["Software Developer", "Backend Specialist", "AI/ML Enthusiast", "Software Developer ·  Backend Specialist · AI/ML Enthusiast"], []);
       const [roleIndex, setRoleIndex] = useState(3);
 
       useEffect(() => {
@@ -782,7 +1346,19 @@
               <button onClick={() => { playClickSound('soft'); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }); }} className="btn-liquid rounded-full px-8 py-3 font-heading font-bold transition-all duration-300 glow-green" style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }} data-sound-handled="true">
                 View Projects
               </button>
-              <a href="#" onClick={() => playClickSound('soft')} className="btn-liquid rounded-full border-2 px-8 py-3 font-heading transition-all duration-300 glow-violet" style={{ borderColor: "var(--color-nebula-violet)", color: "var(--color-nebula-violet)" }} data-sound-handled="true">
+              <a
+                href="Akshatha_march_resume.pdf"
+                download="Akshatha_Dungi_Resume.pdf"
+                onClick={() => playClickSound('soft')}
+                className="btn-liquid rounded-full border-2 px-8 py-3 font-heading transition-all duration-300 hover:scale-105 glow-violet"
+                style={{
+                  borderColor: "var(--color-nebula-violet)",
+                  color: "var(--color-nebula-violet)",
+                  textDecoration: 'none',
+                  display: 'inline-block'
+                }}
+                data-sound-handled="true"
+              >
                 Download Resume
               </a>
             </div>
@@ -928,14 +1504,34 @@
                     <div className="relative z-10">
                       <h4 className="mb-4 font-heading text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-primary)]">What makes me adaptable</h4>
                       <ul className="space-y-3" style={{ color: "var(--color-text-muted)" }}>
-                        <li className="flex items-start gap-3"><span>⭐</span><span>Fast learner, fueled by curiosity and passion for technology.</span></li>
-                        <li className="flex items-start gap-3"><span>🧩</span><span>I treat every new technology like a puzzle to solve.</span></li>
-                        <li className="flex items-start gap-3"><span>🎯</span><span>Focused on the end goal, flexible on the path to get there.</span></li>
-                        <li className="flex items-start gap-3"><span>🤖</span><span>Continuously integrating AI to optimize my workflow.</span></li>
+                        <li className="flex items-start gap-4">
+                          <span className="flex-shrink-0 mt-1" style={{ color: "var(--color-primary)" }}>
+                            <IconZap size={15} />
+                          </span>
+                          <span>Fast learner, fueled by curiosity and passion for technology.</span>
+                        </li>
+                        <li className="flex items-start gap-4">
+                          <span className="flex-shrink-0 mt-1" style={{ color: "var(--color-primary)" }}>
+                            <IconBox size={15} />
+                          </span>
+                          <span>I treat every new technology like a puzzle to solve.</span>
+                        </li>
+                        <li className="flex items-start gap-4">
+                          <span className="flex-shrink-0 mt-1" style={{ color: "var(--color-primary)" }}>
+                            <IconTarget size={15} />
+                          </span>
+                          <span>Focused on the end goal, flexible on the path to get there.</span>
+                        </li>
+                        <li className="flex items-start gap-4">
+                          <span className="flex-shrink-0 mt-1" style={{ color: "var(--color-primary)" }}>
+                            <IconCpu size={15} />
+                          </span>
+                          <span>Continuously integrating AI to optimize my workflow.</span>
+                        </li>
                       </ul>
                     </div>
                   </div>
-                  <p className="italic" style={{ color: "var(--color-nebula-gold)" }}>💼 Open to roles where adaptability is valued as much as expertise.</p>
+                  <p className="italic" style={{ color: "var(--color-nebula-gold)" }}>Open to roles where adaptability is valued as much as expertise.</p>
                 </div>
               </div>
             </div>
@@ -945,41 +1541,177 @@
     };
 
     const Experience = () => {
-      const jobs = [
-        { role: "Software Developer", company: "Tech Solutions Inc.", period: "2024 - Present", description: "Scaling backend infrastructure using Spring Boot, PostgreSQL, and AWS. Integrating LLM pipelines via LangChain to automate internal tools.", color: "#39FF8E" },
-        { role: "Junior Backend Engineer", company: "Innovate AI", period: "2023 - 2024", description: "Built and maintained REST APIs in Python (FastAPI). Containerized applications with Docker to streamline deployment.", color: "#C77DFF" },
-        { role: "Software Engineering Intern", company: "Startup Co.", period: "2022 - 2023", description: "Contributed to front-end development using React and Tailwind CSS. Developed internal admin dashboards.", color: "#FFD166" }
+      const experiences = [
+        {
+          type: 'education',
+          title: 'B.Tech in Computer Science and Systems Engineering',
+          org: 'Andhra University College of Engineering',
+          location: 'Visakhapatnam',
+          period: 'Oct 2022 – Apr 2026',
+          badge: 'Education',
+          color: '#4FC3F7',
+          highlights: [
+            'CGPA: 8.96',
+            'Coursework: Data Structures, Algorithms, Databases, Computer Networks, Operating Systems, OOP, Machine Learning'
+          ]
+        },
+        {
+          type: 'work',
+          title: 'Data Science Intern',
+          org: 'ISI, Kolkata',
+          location: 'Online',
+          period: 'Jun 2025 – Aug 2025',
+          badge: 'Work Experience',
+          color: '#39FF8E',
+          highlights: [
+            'Engineered an ANN achieving 97% multi-class classification accuracy, improving predictive performance by 15% over existing models',
+            'MLOps: Implemented evaluation metrics and visualization for stakeholder reporting',
+            'Stack: Python, TensorFlow, Keras, Scikit-learn, Pandas, NumPy, Matplotlib'
+          ]
+        },
+        {
+          type: 'work',
+          title: 'SQL Developer Intern',
+          org: 'Digifac',
+          location: 'Visakhapatnam',
+          period: 'May 2025 – Jul 2025',
+          badge: 'Work Experience',
+          color: '#39FF8E',
+          highlights: [
+            'Developed and optimized 15+ complex SQL queries using PostgreSQL and pgAdmin, improving data retrieval efficiency by 40%',
+            'Collaborated with senior developers to design normalized database structures supporting business intelligence reporting',
+            'Participated in Agile development processes, contributing to bi-weekly sprints and daily stand-ups'
+          ]
+        },
+        {
+          type: 'leadership',
+          title: 'Intern — Incubation Center',
+          org: 'a-hub',
+          location: 'Visakhapatnam',
+          period: 'Jan 2023 – May 2023',
+          badge: 'Leadership & Management',
+          color: '#FFD166',
+          highlights: [
+            'Organized a university-wide internship drive, liaising with career services and 10+ corporate partners',
+            'Facilitated 30+ internship offers across Business, Engineering, and IT fields'
+          ]
+        }
       ];
 
       return (
         <section id="experience" className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
           <FadeInSection>
             <img src={STEPHANS} alt="Stephan's Quintet" className="cosmic-banner mb-10 opacity-80" style={{ height: "180px" }} />
-            <div className="mb-16 text-center">
+            <div className="mb-8 text-center">
               <h2 className="gradient-text-gold-crimson mb-2 font-heading text-3xl font-bold md:text-4xl">Experience</h2>
             </div>
+
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '40px', marginTop: '8px', justifyContent: 'center' }}>
+              {[
+                { label: 'Education', color: '#4FC3F7' },
+                { label: 'Work Experience', color: '#39FF8E' },
+                { label: 'Leadership & Management', color: '#FFD166' }
+              ].map(({ label, color }) => (
+                <span key={label} style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '7px',
+                  fontSize: '0.7rem', fontFamily: '"Share Tech Mono", monospace',
+                  color: color, opacity: 0.8
+                }}>
+                  <span style={{
+                    width: '8px', height: '8px', borderRadius: '50%',
+                    background: color, display: 'inline-block',
+                    boxShadow: `0 0 6px ${color}`
+                  }} />
+                  {label}
+                </span>
+              ))}
+            </div>
+
             <div className="relative mx-auto max-w-4xl">
-              <div className="timeline-line absolute bottom-0 left-3 top-0 w-[2px] md:left-1/2 md:-translate-x-1/2"></div>
-              <div className="space-y-12">
-                {jobs.map((job, index) => {
-                  const accentBorder = index === 0 ? "#39FF8E" : index === 1 ? "#C77DFF" : "#FFD166";
-                  const dotGradient = index === 0 ? "radial-gradient(circle, #39FF8E, #4FC3F7)" : index === 1 ? "radial-gradient(circle, #C77DFF, #4FC3F7)" : "radial-gradient(circle, #FFD166, #FF6B6B)";
-                  return (
-                    <div key={`${job.role}-${job.company}`} className="relative md:grid md:grid-cols-2 md:gap-12">
-                      <div className={`mb-6 pl-12 md:mb-0 md:pl-0 ${index % 2 === 0 ? "md:col-start-1 md:pr-10" : "md:col-start-2 md:pl-10"}`}>
-                        <div className="nebula-card border-t-2 p-6" style={{ borderTopColor: accentBorder }}>
-                          <div className="mb-4 flex flex-wrap items-center gap-3">
-                            <h3 className="font-heading text-lg font-bold" style={{ color: "var(--color-text)" }}>{job.role}</h3>
-                            <span className="rounded-full border px-3 py-1 font-body text-xs" style={{ background: "#110825", color: "var(--color-nebula-gold)", borderColor: "rgba(255, 209, 102, 0.3)" }}>{job.period}</span>
-                          </div>
-                          <p className="mb-3 font-body font-semibold" style={{ color: "var(--color-nebula-blue)" }}>{job.company}</p>
-                          <p className="font-body text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{job.description}</p>
-                        </div>
-                      </div>
-                      <div className="absolute left-3 top-8 h-5 w-5 -translate-x-1/2 rounded-full md:left-1/2 md:top-10" style={{ background: dotGradient, boxShadow: `0 0 12px ${accentBorder}`, animation: "glow-pulse 2s ease-in-out infinite" }}></div>
+              <div className="space-y-0">
+                {experiences.map((exp, index) => (
+                  <div key={index} style={{ display: 'flex', gap: '20px', marginBottom: '36px' }}>
+
+                    {/* Timeline dot */}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+                      <div style={{
+                        width: '14px', height: '14px', borderRadius: '50%',
+                        background: exp.color, marginTop: '4px', flexShrink: 0,
+                        boxShadow: `0 0 10px ${exp.color}, 0 0 20px ${exp.color}40`
+                      }} />
+                      {/* Connector line — skip for last item */}
+                      {index < experiences.length - 1 && (
+                        <div style={{
+                          width: '2px', flex: 1, marginTop: '4px',
+                          background: `linear-gradient(to bottom, ${exp.color}60, transparent)`,
+                          minHeight: '40px'
+                        }} />
+                      )}
                     </div>
-                  );
-                })}
+
+                    {/* Card */}
+                    <div className="nebula-card" style={{
+                      flex: 1, padding: '20px',
+                      borderLeft: `3px solid ${exp.color}`,
+                      marginBottom: '4px'
+                    }}>
+
+                      {/* Badge + period row */}
+                      <div style={{
+                        display: 'flex', alignItems: 'center',
+                        justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px',
+                        marginBottom: '8px'
+                      }}>
+                        <span style={{
+                          fontSize: '0.62rem', fontFamily: '"Share Tech Mono", monospace',
+                          color: exp.color, border: `1px solid ${exp.color}40`,
+                          borderRadius: '9999px', padding: '2px 10px',
+                          background: `${exp.color}10`, letterSpacing: '0.08em'
+                        }}>
+                          {exp.badge}
+                        </span>
+                        <span style={{
+                          fontSize: '0.7rem', color: 'var(--color-text-muted)',
+                          fontFamily: '"Share Tech Mono", monospace', opacity: 0.65
+                        }}>
+                          {exp.period}
+                        </span>
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="font-heading font-bold" style={{
+                        color: 'var(--color-text)', fontSize: '1rem',
+                        marginBottom: '2px', lineHeight: '1.3'
+                      }}>
+                        {exp.title}
+                      </h3>
+
+                      {/* Org + location */}
+                      <p style={{
+                        fontSize: '0.78rem', color: exp.color,
+                        fontFamily: '"Share Tech Mono", monospace',
+                        marginBottom: '12px', opacity: 0.8
+                      }}>
+                        {exp.org}
+                        {exp.location ? ` · ${exp.location}` : ''}
+                      </p>
+
+                      {/* Highlights */}
+                      <ul style={{ margin: 0, paddingLeft: '16px' }}>
+                        {exp.highlights.map((point, i) => (
+                          <li key={i} style={{
+                            fontSize: '0.78rem', color: 'var(--color-text-muted)',
+                            fontFamily: '"Share Tech Mono", monospace',
+                            lineHeight: '1.6', marginBottom: '4px'
+                          }}>
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </FadeInSection>
@@ -1000,20 +1732,237 @@
       </svg>
     );
 
+    const parseResult = (str) => {
+      const prefix = str.charAt(0);
+      const numberMatch = str.match(/(\d+(?:\.\d+)?)/);
+      if (!numberMatch) return { prefix, number: 0, suffix: "", rest: str.slice(2), decimalPlaces: 0 };
+
+      const numberStr = numberMatch[1];
+      const number = parseFloat(numberStr);
+      const decimalPlaces = numberStr.includes('.') ? numberStr.split('.')[1].length : 0;
+      const endOfNumber = numberMatch.index + numberStr.length;
+      const afterNumber = str.slice(endOfNumber);
+
+      let suffix = "";
+      let rest = afterNumber;
+      const suffixMatch = afterNumber.match(/^([%×\+]+|(?:\s+timesteps)|(?:\s+classes)|(?:\s+model[s]?))/i);
+      if (suffixMatch) {
+        suffix = suffixMatch[0];
+        rest = afterNumber.slice(suffix.length);
+      }
+
+      return { prefix, number, suffix, rest, decimalPlaces };
+    };
+
+    function useCountUp(target, duration = 1200, started = false) {
+      const [current, setCurrent] = useState(0);
+      useEffect(() => {
+        if (!started) return;
+        if (target === 0) return;
+        let startTime = null;
+        const step = (timestamp) => {
+          if (!startTime) startTime = timestamp;
+          const progress = Math.min((timestamp - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          setCurrent(Math.floor(eased * target * 100) / 100);
+          if (progress < 1) requestAnimationFrame(step);
+          else setCurrent(target);
+        };
+        requestAnimationFrame(step);
+      }, [target, duration, started]);
+      return current;
+    }
+
+    const ResultStat = ({ result, started }) => {
+      const parsed = parseResult(result);
+      const count = useCountUp(parsed.number, 1200, started);
+      const display = Number.isInteger(parsed.number)
+        ? Math.floor(count)
+        : count.toFixed(parsed.decimalPlaces);
+
+      const isReduction = parsed.prefix === '▼';
+      const accentColor = isReduction ? '#FF4D8C' : '#39FF8E';
+
+      return (
+        <div style={{
+          display: 'flex', alignItems: 'baseline', gap: '4px',
+          marginBottom: '5px', fontFamily: '"Share Tech Mono", monospace'
+        }}>
+          <span style={{ color: accentColor, fontSize: '0.7rem', minWidth: '10px' }}>
+            {parsed.prefix}
+          </span>
+          <span style={{
+            color: accentColor,
+            fontSize: '1rem', fontWeight: 'bold', lineHeight: 1,
+            textShadow: isReduction
+              ? '0 0 10px rgba(255,77,140,0.6)'
+              : '0 0 10px rgba(57,255,142,0.6)',
+            minWidth: '2ch'
+          }}>
+            {display}
+          </span>
+          <span style={{ color: accentColor, fontSize: '0.8rem', opacity: 0.9 }}>
+            {parsed.suffix}
+          </span>
+          <span style={{
+            color: 'var(--color-text-muted)', fontSize: '0.68rem',
+            opacity: 0.75, marginLeft: '2px'
+          }}>
+            {parsed.rest}
+          </span>
+        </div>
+      );
+    };
+
+    const ProjectCard = ({ project }) => {
+      const cardRef = useRef(null);
+      const [started, setStarted] = useState(false);
+
+      useEffect(() => {
+        const el = cardRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setStarted(true);
+              observer.disconnect();
+            }
+          },
+          { threshold: 0.3 }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+      }, []);
+
+      const logoMap = {
+        "Python": "python/python-original.svg",
+        "Keras": "keras/keras-original.svg",
+        "NumPy": "numpy/numpy-original.svg",
+        "Pandas": "pandas/pandas-original.svg",
+        "Matplotlib": "matplotlib/matplotlib-original.svg",
+        "Scikit-learn": "scikitlearn/scikitlearn-original.svg",
+        "PyTorch": "pytorch/pytorch-original.svg",
+        "Docker": "docker/docker-original.svg",
+        "GitHub Actions": "githubactions/githubactions-original.svg",
+        "Git": "git/git-original.svg"
+      };
+
+      return (
+        <div
+          ref={cardRef}
+          className="nebula-card p-6 flex flex-col h-full relative overflow-hidden transition-all duration-300"
+          style={{ borderTop: `3px solid #39FF8E` }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "#39FF8E";
+            e.currentTarget.style.transform = "translateY(-6px)";
+            e.currentTarget.style.boxShadow = `0 8px 32px rgba(57,255,142,0.2)`;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "";
+            e.currentTarget.style.transform = "";
+            e.currentTarget.style.boxShadow = "";
+          }}
+        >
+          <div className="pointer-events-none select-none absolute left-1/2 top-1/2 z-0 whitespace-nowrap font-heading font-black" style={{ fontSize: "72px", color: "rgba(199,125,255,0.04)", transform: "translate(-50%, -50%) rotate(-30deg)" }}>PROJECT</div>
+          <h3 className="font-heading font-bold text-lg mb-2 z-10 relative" style={{ color: "var(--color-text)" }}>{project.title}</h3>
+          <p className="font-body text-sm mb-4 z-10 relative leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{project.desc}</p>
+
+          <div style={{ marginBottom: '14px' }} className="z-10 relative">
+            {project.results.map((r, i) => (
+              <ResultStat key={i} result={r} started={started} />
+            ))}
+          </div>
+
+          <div className="flex flex-wrap gap-2 mb-6 z-10 relative">
+            {project.tags.map((tag) => (
+              <span key={tag} style={{
+                display: 'inline-flex', alignItems: 'center',
+                gap: '5px', background: 'var(--tech-tag-bg)', color: 'var(--tech-tag-text)',
+                border: '1px solid rgba(57,255,142,0.2)', borderRadius: '9999px',
+                fontSize: '0.7rem', padding: '3px 10px', fontFamily: '"Share Tech Mono", monospace'
+              }}>
+                {logoMap[tag] && (
+                  <img
+                    src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${logoMap[tag]}`}
+                    alt=""
+                    width="13" height="13"
+                    style={{ flexShrink: 0 }}
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                )}
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="border-t pt-4 mt-auto flex items-center gap-4 z-10 relative" style={{ borderColor: "var(--color-border)" }}>
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => playClickSound('soft')}
+              className="btn-liquid"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                padding: '6px 14px', borderRadius: '9999px', fontSize: '0.75rem',
+                border: '1px solid rgba(57,255,142,0.35)', color: '#39FF8E',
+                fontFamily: '"Share Tech Mono", monospace', textDecoration: 'none',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(57,255,142,0.1)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+            >
+              <IconGithub size={13} /> View on GitHub
+            </a>
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => playClickSound('soft')}
+              className="transition-all duration-300 hover:scale-110 hover:text-[#4FC3F7]"
+              style={{ color: 'var(--color-text-muted)' }}
+              aria-label={`${project.title} Live Link`}
+            >
+              <IconExternalLink size={18} />
+            </a>
+          </div>
+        </div>
+      );
+    };
+
     const Projects = () => {
       const [filter, setFilter] = useState("All");
-      const filters = ["All", "Backend", "AI", "Frontend"];
+      const filters = ["All", "AI"];
       const projects = [
-        { title: "MicroCommerce", desc: "Scalable Spring Boot microservice backend for a modern e-commerce platform.", tags: ["Java", "Spring Boot"], github: "#", live: "#", filter: "Backend" },
-        { title: "LLM Pipeline Toolkit", desc: "Utility suite for chaining dynamic LLM prompts and managing context windows.", tags: ["Python", "LangChain"], github: "#", live: "#", filter: "AI" },
-        { title: "DevPortal API", desc: "Comprehensive REST API with role-based auth and automated Swagger docs.", tags: ["FastAPI", "Redis"], github: "#", live: "#", filter: "Frontend" }
+        {
+          title: "Iris Flower Classification",
+          filter: "AI",
+          desc: "Multi-class flower classification using a Keras neural network trained on the classic Iris dataset. Covers data preprocessing, model architecture design, training, and evaluation with visualised accuracy/loss curves.",
+          results: [
+            "✓ 3 classes — Setosa, Versicolor, Virginica",
+            "▲ 97%+ validation accuracy",
+            "✓ Keras sequential model with dense layers"
+          ],
+          tags: ["Python", "Keras", "NumPy", "Pandas", "Matplotlib", "Scikit-learn"],
+          github: "https://github.com/Akshatha-22/IRIS-dataset-classification",
+          live: "https://github.com/Akshatha-22/IRIS-dataset-classification"
+        },
+        {
+          title: "AI Confidence Calibration Failure Detection",
+          filter: "AI",
+          desc: "Detects when neural network confidence scores become miscalibrated before failure occurs. Uses RNN-based sequence modelling to identify early warning signals across 5 model architectures, reducing Expected Calibration Error significantly.",
+          results: [
+            "▲ 89% gradient-ECE correlation — RNN predictability",
+            "▼ 3.34% ECE — Calibration error achieved",
+            "▲ 37 timesteps — Early warning before failure",
+            "✓ 5× models — Architecture comparison"
+          ],
+          tags: ["PyTorch", "Python", "NumPy", "Pandas", "Matplotlib", "Scikit-learn", "Docker", "GitHub Actions"],
+          github: "https://github.com/Akshatha-22/Calibration-Confidence",
+          live: "https://github.com/Akshatha-22/Calibration-Confidence"
+        }
       ];
-      const accentFor = (projectFilter) => {
-        if (projectFilter === "Backend") return "#4FC3F7";
-        if (projectFilter === "AI") return "#39FF8E";
-        if (projectFilter === "Frontend") return "#C77DFF";
-        return "#FFD166";
-      };
+
       const filteredProjects = filter === "All" ? projects : projects.filter((project) => project.filter === filter);
 
       return (
@@ -1039,40 +1988,10 @@
                 );
               })}
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProjects.map((project) => {
-                const accent = accentFor(project.filter);
-                return (
-                  <div
-                    key={project.title}
-                    className="nebula-card p-6 flex flex-col h-full relative overflow-hidden"
-                    style={{ borderTop: `3px solid ${accent}` }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = accent;
-                      e.currentTarget.style.transform = "translateY(-6px)";
-                      e.currentTarget.style.boxShadow = `0 8px 32px ${accent}33`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "";
-                      e.currentTarget.style.transform = "";
-                      e.currentTarget.style.boxShadow = "";
-                    }}
-                  >
-                    <div className="pointer-events-none select-none absolute left-1/2 top-1/2 z-0 whitespace-nowrap font-heading font-black" style={{ fontSize: "72px", color: "rgba(199,125,255,0.04)", transform: "translate(-50%, -50%) rotate(-30deg)" }}>CLASSIFIED</div>
-                    <h3 className="font-heading font-bold text-lg mb-2 z-10 relative" style={{ color: "var(--color-text)" }}>{project.title}</h3>
-                    <p className="font-body text-sm flex-grow mb-4 z-10 relative leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{project.desc}</p>
-                    <div className="flex flex-wrap gap-2 mb-4 z-10 relative">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="font-body text-xs px-3 py-1 rounded-full border" style={{ background: "var(--tech-tag-bg)", color: "var(--tech-tag-text)", borderColor: "rgba(57,255,142,0.2)" }}>{tag}</span>
-                      ))}
-                    </div>
-                    <div className="border-t pt-4 mt-auto flex gap-4 z-10 relative" style={{ borderColor: "var(--color-border)" }}>
-                      <a href={project.github} aria-label={`${project.title} GitHub`} className="transition-all duration-300 hover:scale-110 hover:text-[#39FF8E]"><IconGithub size={18} /></a>
-                      <a href={project.live} aria-label={`${project.title} Live Link`} className="transition-all duration-300 hover:scale-110 hover:text-[#4FC3F7]"><IconExternalLink size={18} /></a>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
+              {filteredProjects.map((project) => (
+                <ProjectCard key={project.title} project={project} />
+              ))}
             </div>
           </FadeInSection>
         </section>
@@ -1081,14 +2000,14 @@
 
     const RadarChart = () => {
       const skills = [
-        { name: "Java", value: 90 },
-        { name: "Python", value: 80 },
-        { name: "JavaScript", value: 85 },
-        { name: "Spring Boot", value: 88 },
-        { name: "React", value: 75 },
-        { name: "AWS", value: 70 },
-        { name: "LangChain", value: 72 },
-        { name: "Docker", value: 78 }
+        { name: 'Python', value: 92 },
+        { name: 'Java', value: 82 },
+        { name: 'React', value: 78 },
+        { name: 'Spring Boot', value: 80 },
+        { name: 'PyTorch', value: 75 },
+        { name: 'AWS/Azure', value: 72 },
+        { name: 'Docker', value: 76 },
+        { name: 'LangChain', value: 74 },
       ];
       const [hovered, setHovered] = useState(null);
       const cx = 230, cy = 230, maxR = 140;
@@ -1260,11 +2179,41 @@
     };
 
     const Skills = () => {
-      const categories = [
-        { title: "Languages", color: "#4FC3F7", skills: ["Java", "Python", "JavaScript", "SQL"] },
-        { title: "Frameworks & Tools", color: "#39FF8E", skills: ["Spring Boot", "FastAPI", "React", "Docker"] },
-        { title: "AI & ML", color: "#C77DFF", skills: ["LangChain", "Prompting", "HuggingFace"] },
-        { title: "Cloud & DevOps", color: "#FFD166", skills: ["AWS", "CI/CD", "REST APIs", "Postman"] }
+
+
+      const techLogoMap = {
+        'HTML5': 'html5/html5-original',
+        'CSS3': 'css3/css3-original',
+        'JavaScript': 'javascript/javascript-original',
+        'React': 'react/react-original',
+        'Tailwind CSS': 'tailwindcss/tailwindcss-original',
+        'Vite': 'vitejs/vitejs-original',
+        'Node.js': 'nodejs/nodejs-original',
+        'Express': 'express/express-original',
+        'EJS': 'embeddedjavascript/embeddedjavascript-original',
+        'PostgreSQL': 'postgresql/postgresql-original',
+        'MongoDB': 'mongodb/mongodb-original',
+        'Spring Boot': 'spring/spring-original',
+        'Flask': 'flask/flask-original',
+        'Python': 'python/python-original',
+        'PyTorch': 'pytorch/pytorch-original',
+        'TensorFlow': 'tensorflow/tensorflow-original',
+        'Scikit-learn': 'scikitlearn/scikitlearn-original',
+        'Docker': 'docker/docker-original',
+        'Git': 'git/git-original',
+        'GitHub Actions': 'githubactions/githubactions-original',
+        'Microsoft Azure': 'azure/azure-original',
+        'Vercel': 'vercel/vercel-original',
+        'Java': 'java/java-original',
+        'C': 'c/c-original',
+      };
+
+      const techRows = [
+        { category: 'Frontend', speed: '28s', direction: 'left', items: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Tailwind CSS', 'Responsive Design', 'Vite'], rowColor: '#4FC3F7', rowBorder: 'rgba(79,195,247,0.3)', rowBg: 'rgba(79,195,247,0.08)' },
+        { category: 'Backend', speed: '32s', direction: 'right', items: ['Node.js', 'Express', 'EJS', 'REST APIs', 'SQL', 'PostgreSQL', 'MongoDB', 'Spring Boot', 'Flask'], rowColor: '#39FF8E', rowBorder: 'rgba(57,255,142,0.3)', rowBg: 'rgba(57,255,142,0.08)' },
+        { category: 'AI / ML', speed: '24s', direction: 'left', items: ['Python', 'PyTorch', 'TensorFlow', 'Scikit-learn', 'LangChain', 'OpenAI API', 'Deep Learning', 'LLM Integration'], rowColor: '#C77DFF', rowBorder: 'rgba(199,125,255,0.3)', rowBg: 'rgba(199,125,255,0.08)' },
+        { category: 'DevOps', speed: '30s', direction: 'right', items: ['Microsoft Azure', 'Git', 'GitHub Actions', 'CI/CD Pipelines', 'Docker', 'Vercel'], rowColor: '#FFD166', rowBorder: 'rgba(255,209,102,0.3)', rowBg: 'rgba(255,209,102,0.08)' },
+        { category: 'Languages', speed: '26s', direction: 'left', items: ['C', 'Python', 'Java', 'SQL', 'JavaScript'], rowColor: '#FF6B6B', rowBorder: 'rgba(255,107,107,0.3)', rowBg: 'rgba(255,107,107,0.08)' }
       ];
 
       return (
@@ -1273,57 +2222,238 @@
           <FadeInSection className="relative z-10">
             <h2 className="gradient-text-blue-violet font-heading font-bold text-3xl md:text-4xl text-center mb-2">Technical Skills</h2>
             <p className="font-body text-sm text-center mb-12" style={{ color: "var(--color-nebula-violet)" }}>Technologies & tools I work with</p>
+
             <RadarChart />
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {categories.map((category) => (
-                <div key={category.title} className="nebula-card p-6 relative z-10" style={{ borderTop: `2px solid ${category.color}` }}>
-                  <h3 className="font-heading font-bold text-lg mb-5" style={{ color: category.color }}>{category.title}</h3>
-                  <div className="flex flex-wrap gap-3">
-                    {category.skills.map((skill) => (
-                      <div
-                        key={skill}
-                        className="font-body text-sm px-4 py-2 rounded-full flex items-center gap-2 transition-all duration-200 hover:scale-105 border"
-                        style={{ background: "var(--skill-pill-bg)", borderColor: "var(--skill-pill-border)", color: "var(--color-text)" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = category.color; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--skill-pill-border)"; }}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: category.color }}></span>
-                        {skill}
+
+            <div className="mb-16 mt-8 space-y-4">
+              {techRows.map((row, idx) => {
+                const pills = [...row.items, ...row.items, ...row.items];
+                return (
+                  <div key={idx} style={{ display: 'flex', alignItems: 'center' }}>
+                    <span style={{
+                      minWidth: '70px', fontSize: '0.6rem', color: 'var(--color-text-muted)',
+                      opacity: 0.5, paddingRight: '10px', textAlign: 'right',
+                      letterSpacing: '0.12em', textTransform: 'uppercase'
+                    }}>
+                      {row.category}
+                    </span>
+                    <div style={{ overflow: 'hidden', flex: 1 }}>
+                      <div className={`scroll-track ${row.direction === 'left' ? 'scroll-left' : 'scroll-right'}`}
+                        style={{ animationDuration: row.speed }}>
+                        {pills.map((label, i) => (
+                          <span key={i} style={{
+                            display: 'inline-flex', alignItems: 'center', gap: '6px',
+                            padding: '5px 12px', borderRadius: '9999px', whiteSpace: 'nowrap',
+                            fontSize: '0.72rem', fontFamily: '"Share Tech Mono", monospace',
+                            background: row.rowBg, border: `1px solid ${row.rowBorder}`, color: row.rowColor,
+                            flexShrink: 0
+                          }}>
+                            {techLogoMap[label] && (
+                              <img
+                                src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${techLogoMap[label]}.svg`}
+                                alt="" width="14" height="14" style={{ flexShrink: 0 }}
+                                onError={e => { e.target.style.display = 'none'; }}
+                              />
+                            )}
+                            {label}
+                          </span>
+                        ))}
                       </div>
-                    ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
+
+
           </FadeInSection>
         </section>
       );
     };
 
     const Certifications = () => {
+      const [activeCert, setActiveCert] = useState(null);
+
+      useEffect(() => {
+        const handleKey = (e) => {
+          if (e.key === 'Escape') setActiveCert(null);
+        };
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+      }, []);
+
+      useEffect(() => {
+        if (activeCert) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+      }, [activeCert]);
+
       const certs = [
-        { title: "OCP: Java SE 11", issuer: "Oracle", year: "2024", color: "#39FF8E" },
-        { title: "AWS Cloud Practitioner", issuer: "Amazon", year: "2024", color: "#4FC3F7" },
-        { title: "Deep Learning Spec.", issuer: "Coursera", year: "2023", color: "#C77DFF" }
+        {
+          title: "Ask Questions to Make Data-Driven Decisions",
+          issuer: "Google",
+          platform: "Coursera",
+          date: "Jan 2026",
+          color: "#4FC3F7",
+          file: "certifications/Coursera UHALIE7XBMO4.pdf",
+          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+        },
+        {
+          title: "Foundations: Data, Data, Everywhere",
+          issuer: "Google",
+          platform: "Coursera",
+          date: "Jan 2026",
+          color: "#39FF8E",
+          file: "certifications/Coursera VS6GI5O8XVEQ.pdf",
+          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
+        },
+        {
+          title: "Product Management: An Introduction",
+          issuer: "IBM",
+          platform: "Coursera",
+          date: "Aug 2025",
+          color: "#C77DFF",
+          file: "certifications/PM_intro_Certificate.pdf",
+          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ibm/ibm-original.svg"
+        }
       ];
 
       return (
         <section id="certifications" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto overflow-hidden">
           <FadeInSection>
             <h2 className="gradient-text-gold-crimson font-heading font-bold text-3xl md:text-4xl text-center mb-2">Certifications</h2>
-            <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto hide-scrollbar pt-10 pb-2">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
               {certs.map((cert) => (
-                <div key={cert.title} className="nebula-card p-6 relative group min-w-[280px] md:min-w-0" style={{ borderLeft: `4px solid ${cert.color}` }}>
-                  <div className="absolute right-4 top-4 transition-all duration-300 group-hover:opacity-50" style={{ color: cert.color, opacity: 0.15 }}>
-                    <IconAward size={48} />
+                <div key={cert.title}
+                  className="nebula-card p-6 relative group"
+                  style={{ borderLeft: `4px solid ${cert.color}` }}
+                >
+                  <div style={{
+                    position: 'absolute', top: '16px', right: '16px',
+                    width: '32px', height: '32px', opacity: 0.7
+                  }}>
+                    <img
+                      src={cert.logo}
+                      alt={cert.issuer}
+                      width="32" height="32"
+                      style={{ objectFit: 'contain' }}
+                      onError={e => { e.target.style.display = 'none'; }}
+                    />
                   </div>
-                  <h3 className="font-heading font-bold text-[var(--color-text)] text-base md:text-lg pr-10 mb-2">{cert.title}</h3>
-                  <p className="font-body text-sm mb-3" style={{ color: "var(--color-text-muted)" }}>{cert.issuer}</p>
-                  <span className="font-body text-xs px-3 py-1 rounded-full border" style={{ background: "var(--tech-tag-bg)", color: "var(--color-nebula-gold)", borderColor: "rgba(255,209,102,0.3)" }}>{cert.year}</span>
+
+                  <h3 className="font-heading font-bold text-base mb-1 pr-10"
+                    style={{ color: 'var(--color-text)', lineHeight: '1.3' }}>
+                    {cert.title}
+                  </h3>
+
+                  <p className="font-body text-xs mb-1"
+                    style={{ color: cert.color, opacity: 0.85 }}>
+                    {cert.issuer} · {cert.platform}
+                  </p>
+
+                  <p className="font-body text-xs mb-4"
+                    style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>
+                    {cert.date}
+                  </p>
+
+                  <button
+                    onClick={() => { setActiveCert(cert); playClickSound('soft'); }}
+                    className="btn-liquid"
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', gap: '6px',
+                      padding: '5px 14px', borderRadius: '9999px',
+                      fontSize: '0.7rem', fontFamily: 'Share Tech Mono, monospace',
+                      border: `1px solid ${cert.color}40`,
+                      color: cert.color, background: 'transparent',
+                      cursor: 'pointer', transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = `${cert.color}15`}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    ✓ View Certificate
+                  </button>
                 </div>
               ))}
             </div>
           </FadeInSection>
+
+          {activeCert && (
+            <div
+              onClick={() => setActiveCert(null)}
+              style={{
+                position: 'fixed', inset: 0, zIndex: 9999,
+                background: 'rgba(0, 0, 0, 0.92)',
+                backdropFilter: 'blur(8px)',
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center',
+                padding: '20px',
+                animation: 'fade-in-up 0.25s ease'
+              }}
+            >
+              <div
+                onClick={e => e.stopPropagation()}
+                style={{
+                  width: '100%', maxWidth: '900px',
+                  display: 'flex', alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: '12px', flexShrink: 0
+                }}
+              >
+                <div>
+                  <p className="font-heading font-bold"
+                    style={{ color: activeCert.color, fontSize: '0.9rem', margin: 0 }}>
+                    {activeCert.title}
+                  </p>
+                  <p className="font-body"
+                    style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', margin: 0 }}>
+                    {activeCert.issuer} · {activeCert.platform} · {activeCert.date}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setActiveCert(null)}
+                  style={{
+                    background: 'transparent', border: '1px solid rgba(255,255,255,0.15)',
+                    color: 'var(--color-text-muted)', borderRadius: '9999px',
+                    padding: '4px 14px', fontSize: '0.75rem',
+                    fontFamily: 'Share Tech Mono, monospace',
+                    cursor: 'pointer', flexShrink: 0
+                  }}
+                >
+                  ✕ Close
+                </button>
+              </div>
+
+              <div
+                onClick={e => e.stopPropagation()}
+                style={{
+                  width: '100%', maxWidth: '900px',
+                  height: 'min(75vh, 640px)',
+                  border: `1px solid ${activeCert.color}30`,
+                  borderRadius: '12px', overflow: 'hidden',
+                  flexShrink: 0
+                }}
+              >
+                <iframe
+                  src={activeCert.file}
+                  title={activeCert.title}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 'none', background: '#fff' }}
+                />
+              </div>
+
+              <p style={{
+                color: 'rgba(255,255,255,0.2)', fontSize: '0.65rem',
+                fontFamily: 'Share Tech Mono, monospace',
+                marginTop: '10px', flexShrink: 0
+              }}>
+                click outside to close
+              </p>
+            </div>
+          )}
         </section>
       );
     };
@@ -1419,138 +2549,150 @@
       };
 
       return (
-        <section id="blog" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto">
-          <FadeInSection>
-            <h2
-              className="gradient-text-violet-pink font-heading font-bold text-3xl md:text-4xl text-center mb-2"
-              onClick={handleHeadingClick}
-              style={{ cursor: "default", userSelect: "none" }}
-            >
-              Blog
-            </h2>
-            <p className="font-body text-sm text-center mb-10" style={{ color: "var(--color-nebula-violet)" }}>Thoughts on engineering, AI, and building things.</p>
+        <section id="blog" className="py-24 px-6 sm:px-10 lg:px-16">
+          <div style={{ maxWidth: "900px", marginLeft: "auto", marginRight: "auto" }}>
+            <FadeInSection>
+              <h2
+                className="gradient-text-violet-pink font-heading font-bold text-3xl md:text-4xl text-center mb-2"
+                onClick={handleHeadingClick}
+                style={{ cursor: "default", userSelect: "none" }}
+              >
+                Blog
+              </h2>
+              <p className="font-body text-sm text-center mb-10" style={{ color: "var(--color-nebula-violet)" }}>
+                Thoughts on engineering, AI, and building things.
+              </p>
 
-            {isAuthor && (
-              <div className="text-center mb-8">
-                <button
-                  onClick={() => { playClickSound('soft'); setShowForm((prev) => !prev); }}
-                  className="btn-liquid relative rounded-full px-8 py-3 font-heading font-bold transition-all duration-300 overflow-hidden group"
-                  data-sound-handled="true"
-                  style={{ background: "linear-gradient(135deg, #C77DFF, #FF4D8C)", color: "#04020E" }}
-                >
-                  <span className="relative z-10">{showForm ? "Cancel" : "+ Add Post"}</span>
-                  <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "linear-gradient(135deg, #FF4D8C, #C77DFF)" }}></span>
-                </button>
-              </div>
-            )}
-
-            {isAuthor && showForm && (
-              <div className="nebula-card p-8 max-w-2xl mx-auto mb-12">
-                <h3 className="gradient-text-violet-pink font-heading font-bold text-xl mb-6">New Post</h3>
-                <form onSubmit={handlePublish} className="space-y-4">
-                  <div>
-                    <input
-                      value={formData.title}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-                      placeholder="Post title"
-                      className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2"
-                      style={inputStyle}
-                    />
-                  </div>
-                  <div>
-                    <select
-                      value={formData.tag}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, tag: e.target.value }))}
-                      className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2"
-                      style={inputStyle}
-                    >
-                      {Object.keys(BLOG_TAG_STYLES).map((tag) => (
-                        <option key={tag} value={tag}>{tag}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <textarea
-                      value={formData.body}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, body: e.target.value }))}
-                      placeholder="Write your post..."
-                      className="w-full min-h-[180px] rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2"
-                      style={inputStyle}
-                    ></textarea>
-                  </div>
+              {isAuthor && (
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
                   <button
-                    type="submit"
-                    disabled={!formData.title.trim() || !formData.body.trim()}
-                    onClick={() => playClickSound('publish')}
-                    className="btn-liquid w-full py-3 rounded-xl font-heading font-bold transition-all duration-300 disabled:opacity-50"
+                    onClick={() => { playClickSound('soft'); setShowForm((prev) => !prev); }}
+                    className="btn-liquid relative rounded-full px-8 py-3 font-heading font-bold transition-all duration-300 overflow-hidden group"
                     data-sound-handled="true"
                     style={{ background: "linear-gradient(135deg, #C77DFF, #FF4D8C)", color: "#04020E" }}
                   >
-                    Publish
+                    <span className="relative z-10">{showForm ? "Cancel" : "+ Add Post"}</span>
+                    <span className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: "linear-gradient(135deg, #FF4D8C, #C77DFF)" }}></span>
                   </button>
-                </form>
-              </div>
-            )}
+                </div>
+              )}
 
-            {loading ? (
-              <p className="text-center" style={{ color: "var(--color-text-muted)" }}>Loading posts...</p>
-            ) : posts.length === 0 ? (
-              <p className="text-center" style={{ color: "var(--color-text-muted)" }}>No posts yet.</p>
-            ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {posts.map((post) => {
-                  const tagStyle = BLOG_TAG_STYLES[post.tag] || BLOG_TAG_STYLES.Thoughts;
-                  return (
-                    <div key={post.id} className="nebula-card p-6 flex flex-col h-full relative group" style={{ borderTop: `3px solid ${tagStyle.color}` }}>
-                      <div className="flex items-start justify-between gap-2 mb-3">
-                        <h3 className="font-heading font-bold text-base" style={{ color: "var(--color-text)" }}>{post.title}</h3>
-                        {isAuthor && (
-                          <button
-                            onClick={() => handleDelete(post.id)}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded hover:bg-[rgba(255,77,140,0.15)] flex-shrink-0"
-                            style={{ color: "#FF4D8C" }}
-                            aria-label="Delete post"
-                          >
-                            <IconTrash size={14} />
-                          </button>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-3 mb-4">
-                        <span className="font-body text-xs px-3 py-1 rounded-full border" style={{ background: tagStyle.bg, color: tagStyle.color, borderColor: tagStyle.border }}>{post.tag}</span>
-                        <span className="font-body text-xs" style={{ color: "var(--color-subtle)" }}>{post.date}</span>
-                      </div>
-                      <div
-                        className="font-body text-sm leading-relaxed whitespace-pre-line"
-                        style={{
-                          color: "var(--color-text-muted)",
-                          maxHeight: expandedPosts[post.id] ? "2000px" : "4.5rem",
-                          overflow: "hidden",
-                          transition: "max-height 0.4s ease"
-                        }}
-                      >
-                        {post.body}
-                      </div>
-                      <button
-                        onClick={() => setExpandedPosts((prev) => ({ ...prev, [post.id]: !prev[post.id] }))}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          padding: 0,
-                          marginTop: "0.5rem",
-                          color: "var(--color-primary)",
-                          fontFamily: '"Share Tech Mono", monospace',
-                          fontSize: "0.8rem",
-                          cursor: "pointer"
-                        }}
-                      >
-                        {expandedPosts[post.id] ? "show less" : "...read more"}
-                      </button>
+              {isAuthor && showForm && (
+                <div className="nebula-card p-8 max-w-2xl mx-auto mb-12">
+                  <h3 className="gradient-text-violet-pink font-heading font-bold text-xl mb-6">New Post</h3>
+                  <form onSubmit={handlePublish} className="space-y-4">
+                    <div>
+                      <input
+                        value={formData.title}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                        placeholder="Post title"
+                        className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2"
+                        style={inputStyle}
+                      />
                     </div>
-                  );
-                })}
-              </div>
-            )}
-          </FadeInSection>
+                    <div>
+                      <select
+                        value={formData.tag}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, tag: e.target.value }))}
+                        className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2"
+                        style={inputStyle}
+                      >
+                        {Object.keys(BLOG_TAG_STYLES).map((tag) => (
+                          <option key={tag} value={tag}>{tag}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <textarea
+                        value={formData.body}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, body: e.target.value }))}
+                        placeholder="Write your post..."
+                        className="w-full min-h-[180px] rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2"
+                        style={inputStyle}
+                      ></textarea>
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={!formData.title.trim() || !formData.body.trim()}
+                      onClick={() => playClickSound('publish')}
+                      className="btn-liquid w-full py-3 rounded-xl font-heading font-bold transition-all duration-300 disabled:opacity-50"
+                      data-sound-handled="true"
+                      style={{ background: "linear-gradient(135deg, #C77DFF, #FF4D8C)", color: "#04020E" }}
+                    >
+                      Publish
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {loading ? (
+                <p className="text-center" style={{ color: "var(--color-text-muted)" }}>Loading posts...</p>
+              ) : posts.length === 0 ? (
+                <p className="text-center" style={{ color: "var(--color-text-muted)" }}>No posts yet.</p>
+              ) : (
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 560px), 1fr))",
+                  gap: "24px",
+                  maxWidth: "760px",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  width: "100%"
+                }}>
+                  {posts.map((post) => {
+                    const tagStyle = BLOG_TAG_STYLES[post.tag] || BLOG_TAG_STYLES.Thoughts;
+                    return (
+                      <div key={post.id} className="nebula-card p-6 flex flex-col h-full relative group" style={{ borderTop: `3px solid ${tagStyle.color}` }}>
+                        <div className="flex items-start justify-between gap-2 mb-3">
+                          <h3 className="font-heading font-bold text-base" style={{ color: "var(--color-text)" }}>{post.title}</h3>
+                          {isAuthor && (
+                            <button
+                              onClick={() => handleDelete(post.id)}
+                              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded hover:bg-[rgba(255,77,140,0.15)] flex-shrink-0"
+                              style={{ color: "#FF4D8C" }}
+                              aria-label="Delete post"
+                            >
+                              <IconTrash size={14} />
+                            </button>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-3 mb-4">
+                          <span className="font-body text-xs px-3 py-1 rounded-full border" style={{ background: tagStyle.bg, color: tagStyle.color, borderColor: tagStyle.border }}>{post.tag}</span>
+                          <span className="font-body text-xs" style={{ color: "var(--color-subtle)" }}>{post.date}</span>
+                        </div>
+                        <div
+                          className="font-body text-sm leading-relaxed whitespace-pre-line"
+                          style={{
+                            color: "var(--color-text-muted)",
+                            maxHeight: expandedPosts[post.id] ? "2000px" : "4.5rem",
+                            overflow: "hidden",
+                            transition: "max-height 0.4s ease"
+                          }}
+                        >
+                          {post.body}
+                        </div>
+                        <button
+                          onClick={() => setExpandedPosts((prev) => ({ ...prev, [post.id]: !prev[post.id] }))}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            padding: 0,
+                            marginTop: "0.5rem",
+                            color: "var(--color-primary)",
+                            fontFamily: '"Share Tech Mono", monospace',
+                            fontSize: "0.8rem",
+                            cursor: "pointer"
+                          }}
+                        >
+                          {expandedPosts[post.id] ? "show less" : "...read more"}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </FadeInSection>
+          </div>
         </section>
       );
     };
@@ -1558,10 +2700,45 @@
     const Contact = ({ triggerRocky }) => {
       const [formData, setFormData] = useState({ name: "", email: "", message: "" });
       const [errors, setErrors] = useState({});
-      const [submitState, setSubmitState] = useState("idle");
+      const [submitState, setSubmitState] = useState("idle"); // idle, loading, success, error
       const [inboxOpen, setInboxOpen] = useState(false);
       const [messages, setMessages] = useState([]);
       const [loadingMsgs, setLoadingMsgs] = useState(false);
+
+      const contactDetails = [
+        {
+          label: 'Email',
+          value: 'akshathadungi04@gmail.com',
+          display: 'akshathadungi04@gmail.com',
+          href: 'mailto:akshathadungi04@gmail.com',
+          color: '#39FF8E',
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg'
+        },
+        {
+          label: 'GitHub',
+          value: 'github.com/Akshatha-22',
+          display: 'github.com/Akshatha-22',
+          href: 'https://github.com/Akshatha-22',
+          color: '#C77DFF',
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg'
+        },
+        {
+          label: 'LinkedIn',
+          value: 'linkedin.com/in/akshathadungi2212',
+          display: 'akshathadungi2212',
+          href: 'https://www.linkedin.com/in/akshathadungi2212',
+          color: '#4FC3F7',
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg'
+        },
+        {
+          label: 'Location',
+          value: 'Visakhapatnam, India',
+          display: 'Visakhapatnam, India',
+          href: 'https://www.google.com/maps/search/Visakhapatnam,+Andhra+Pradesh,+India',
+          color: '#FFD166',
+          logo: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi3_hdpi.png'
+        }
+      ];
 
       const loadMessages = async () => {
         setLoadingMsgs(true);
@@ -1604,34 +2781,57 @@
       const validate = () => {
         const nextErrors = {};
         if (!formData.name.trim()) nextErrors.name = "Name is required.";
-        if (!formData.email.trim()) nextErrors.email = "Email is required.";
-        if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) nextErrors.email = "Enter a valid email address.";
+        if (!formData.email.trim() || !/^\S+@\S+\.\S+$/.test(formData.email)) nextErrors.email = "Valid email is required.";
         if (!formData.message.trim()) nextErrors.message = "Message is required.";
         setErrors(nextErrors);
         return Object.keys(nextErrors).length === 0;
       };
 
-      const handleSubmit = async (event) => {
-        event.preventDefault();
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+
         if (!validate()) {
-          setSubmitState("error");
+          setSubmitState('error');
           return;
         }
-        setSubmitState("loading");
-        const msg = {
-          id: Date.now().toString(),
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          message: formData.message.trim(),
-          sentAt: new Date().toISOString()
-        };
+
+        setSubmitState('loading');
+        setErrors({});
+
         try {
+          // Send email via EmailJS
+          await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            {
+              from_name: formData.name,
+              from_email: formData.email,
+              message: formData.message,
+              to_email: 'akshathadungi04@gmail.com',
+              reply_to: formData.email,
+            },
+            EMAILJS_PUBLIC_KEY
+          );
+
+          // Also save to localStorage inbox as before
+          const msg = {
+            id: Date.now().toString(),
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            message: formData.message.trim(),
+            sentAt: new Date().toISOString()
+          };
           await window.storage.set("messages:" + msg.id, JSON.stringify(msg));
-          setSubmitState("success");
-          setFormData({ name: "", email: "", message: "" });
-          setErrors({});
-        } catch (error) {
-          setSubmitState("error");
+
+          playClickSound('publish');
+          setSubmitState('success');
+          setFormData({ name: '', email: '', message: '' });
+
+          setTimeout(() => setSubmitState('idle'), 5000);
+
+        } catch (err) {
+          console.error('EmailJS error:', err);
+          setSubmitState('error');
         }
       };
 
@@ -1664,60 +2864,103 @@
               I'm open to opportunities, collaborations, or just a good tech conversation.
             </p>
 
-            <div className="grid lg:grid-cols-2 gap-12">
-              <div className="space-y-4">
-                {[
-                  { icon: <IconMail />, label: "Email", value: "akshatha@example.com", bg: "rgba(57,255,142,0.1)", color: "#39FF8E", glow: "glow-green" },
-                  { icon: <IconLinkedin />, label: "LinkedIn", value: "linkedin.com/in/akshatha", bg: "rgba(79,195,247,0.1)", color: "#4FC3F7", glow: "glow-blue" },
-                  { icon: <IconGithub />, label: "GitHub", value: "github.com/akshatha", bg: "rgba(199,125,255,0.1)", color: "#C77DFF", glow: "glow-violet" },
-                  { icon: <IconMapPin />, label: "Location", value: "India", bg: "rgba(255,209,102,0.1)", color: "#FFD166", glow: "" }
-                ].map((item) => (
-                  <div key={item.label} className="nebula-card p-5 flex items-center group cursor-pointer" onDoubleClick={triggerRocky}>
-                    <div className={`p-3 rounded-full transition-all duration-300 ${item.glow}`} style={{ background: item.bg, color: item.color }}>
-                      {item.icon}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+              {contactDetails.map((item) => {
+                const isLink = !!item.href;
+                const Card = isLink ? 'a' : 'div';
+                return (
+                  <Card
+                    key={item.label}
+                    href={item.href}
+                    target={isLink ? "_blank" : undefined}
+                    rel={isLink ? "noopener noreferrer" : undefined}
+                    onClick={() => isLink && playClickSound('soft')}
+                    onDoubleClick={triggerRocky}
+                    className={`nebula-card p-6 flex flex-col items-center text-center group ${isLink ? 'btn-liquid cursor-pointer' : ''}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <div style={{
+                      width: '36px', height: '36px', borderRadius: '50%', flexShrink: 0,
+                      background: `${item.color}15`,
+                      border: `1px solid ${item.color}30`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      marginBottom: '16px'
+                    }}>
+                      <img
+                        src={item.logo}
+                        alt={item.label}
+                        width="18" height="18"
+                        style={{
+                          objectFit: 'contain',
+                          filter: item.label === 'GitHub'
+                            ? 'invert(1) brightness(1.5)'
+                            : 'none'
+                        }}
+                        onError={e => { e.target.style.display = 'none'; }}
+                      />
                     </div>
-                    <div className="ml-4">
-                      <p className="font-body text-xs uppercase tracking-wider mb-0.5" style={{ color: "var(--color-subtle)" }}>{item.label}</p>
-                      <p className="font-body text-sm transition-colors duration-300 group-hover:text-[var(--color-text)]" style={{ color: "var(--color-text-muted)" }}>{item.value}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                    <p className="font-body text-[0.65rem] uppercase tracking-[0.2em] mb-1" style={{ color: "var(--color-subtle)" }}>{item.label}</p>
+                    <p className="font-body text-xs break-all" style={{ color: item.color, opacity: 0.9 }}>{item.display}</p>
+                  </Card>
+                );
+              })}
+            </div>
 
+            <div className="max-w-3xl mx-auto">
               {submitState === "success" ? (
-                <div className="nebula-card p-8 text-center">
-                  <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full" style={{ background: "rgba(57,255,142,0.1)", color: "#39FF8E" }}>
-                    <IconMail size={28} />
+                <div className="nebula-card p-12 text-center" style={{ animation: 'fade-in-up 0.5s ease' }}>
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "rgba(57,255,142,0.1)", color: "#39FF8E", border: '1px solid rgba(57,255,142,0.2)' }}>
+                    <IconMail size={32} />
                   </div>
-                  <h3 className="gradient-text-green-blue font-heading font-bold text-xl mb-2">Message received! I'll get back to you shortly.</h3>
+                  <div style={{ color: '#39FF8E', fontFamily: '"Share Tech Mono", monospace', fontSize: '0.85rem', textAlign: 'center', padding: '16px' }}>
+                    ✓ Message sent! I'll get back to you soon.
+                  </div>
                   <p className="italic mb-6" style={{ color: "var(--color-subtle)" }}>— Akshatha Dungi</p>
-                  <button onClick={() => setSubmitState("idle")} className="rounded-xl px-5 py-3 transition-all duration-300" style={{ border: "1px solid rgba(57,255,142,0.5)", color: "#39FF8E" }}>
+                  <button onClick={() => setSubmitState("idle")} className="rounded-full px-6 py-2 text-xs transition-all duration-300" style={{ border: "1px solid rgba(57,255,142,0.5)", color: "#39FF8E" }}>
                     Send another
                   </button>
                 </div>
               ) : (
-                <div className="nebula-card p-8">
-                  <h3 className="gradient-text-green-blue font-heading font-bold text-xl mb-6">Send a Message</h3>
-                  {submitState === "error" && Object.keys(errors).length > 0 ? (
-                    <div className="rounded-xl p-4 mb-4 border" style={{ background: "rgba(255,77,140,0.1)", borderColor: "rgba(255,77,140,0.3)", color: "#FF4D8C" }}>
-                      Please fix the highlighted fields and try again.
+                <div className="nebula-card p-8 lg:p-10">
+                  <h3 className="gradient-text-green-blue font-heading font-bold text-xl mb-8">Send a Message</h3>
+
+                  {submitState === "error" && (
+                    <div className="rounded-xl p-4 mb-6 border" style={{ background: "rgba(255,77,140,0.1)", borderColor: "rgba(255,77,140,0.3)", color: "#FF4D8C" }}>
+                      <p className="font-body text-sm mb-2">Something went wrong. Please check the fields or try again later.</p>
+                      <div style={{ color: '#FF4D8C', fontFamily: '"Share Tech Mono", monospace', fontSize: '0.8rem' }}>
+                        You can also email me directly at
+                        <a href="mailto:akshathadungi04@gmail.com" style={{ color: '#4FC3F7', marginLeft: '4px', textDecoration: 'underline' }}>
+                          akshathadungi04@gmail.com
+                        </a>
+                      </div>
                     </div>
-                  ) : null}
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <input name="name" value={formData.name} onChange={handleChange} placeholder="Your name" className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2" style={inputStyle} />
-                      {errors.name ? <p className="mt-1 text-xs" style={{ color: "#FF4D8C" }}>{errors.name}</p> : null}
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <div className="space-y-1">
+                        <label className="text-[0.65rem] uppercase tracking-widest ml-1" style={{ color: 'var(--color-subtle)' }}>Name</label>
+                        <input name="name" value={formData.name} onChange={handleChange} placeholder="Your full name" className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-1" style={{ ...inputStyle, borderColor: errors.name ? '#FF4D8C' : 'var(--input-border)' }} />
+                        {errors.name && <p className="text-[0.65rem] ml-1" style={{ color: "#FF4D8C" }}>{errors.name}</p>}
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[0.65rem] uppercase tracking-widest ml-1" style={{ color: 'var(--color-subtle)' }}>Email</label>
+                        <input name="email" value={formData.email} onChange={handleChange} placeholder="your@email.com" className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-1" style={{ ...inputStyle, borderColor: errors.email ? '#FF4D8C' : 'var(--input-border)' }} />
+                        {errors.email && <p className="text-[0.65rem] ml-1" style={{ color: "#FF4D8C" }}>{errors.email}</p>}
+                      </div>
                     </div>
-                    <div>
-                      <input name="email" value={formData.email} onChange={handleChange} placeholder="Email address" className="w-full rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2" style={inputStyle} />
-                      {errors.email ? <p className="mt-1 text-xs" style={{ color: "#FF4D8C" }}>{errors.email}</p> : null}
+                    <div className="space-y-1">
+                      <label className="text-[0.65rem] uppercase tracking-widest ml-1" style={{ color: 'var(--color-subtle)' }}>Message</label>
+                      <textarea name="message" value={formData.message} onChange={handleChange} placeholder="What can I help you with?" className="w-full min-h-[140px] rounded-xl px-4 py-4 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-1" style={{ ...inputStyle, borderColor: errors.message ? '#FF4D8C' : 'var(--input-border)' }}></textarea>
+                      {errors.message && <p className="text-[0.65rem] ml-1" style={{ color: "#FF4D8C" }}>{errors.message}</p>}
                     </div>
-                    <div>
-                      <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Your message" className="w-full min-h-[150px] rounded-xl px-4 py-3 font-body text-sm border transition-all duration-200 focus:outline-none focus:ring-2" style={inputStyle}></textarea>
-                      {errors.message ? <p className="mt-1 text-xs" style={{ color: "#FF4D8C" }}>{errors.message}</p> : null}
-                    </div>
-                    <button type="submit" onClick={() => playClickSound('soft')} disabled={submitState === "loading"} className="btn-liquid w-full py-3 rounded-xl font-heading font-bold transition-all duration-300 disabled:opacity-70" style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }} data-sound-handled="true">
-                      {submitState === "loading" ? "Sending..." : "Send Message"}
+                    <button type="submit" disabled={submitState === "loading"} className="btn-liquid w-full py-4 rounded-xl font-heading font-bold tracking-widest transition-all duration-300 disabled:opacity-70 flex items-center justify-center gap-3 mt-4" style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E" }}>
+                      {submitState === "loading" ? (
+                        <>
+                          <span className="w-4 h-4 border-2 border-[#04020E] border-t-transparent rounded-full animate-spin"></span>
+                          Sending...
+                        </>
+                      ) : "Send Message"}
                     </button>
                   </form>
                 </div>
@@ -1725,51 +2968,77 @@
             </div>
           </FadeInSection>
 
-          {inboxOpen ? (
-            <div className="fixed inset-0 z-[9999] overflow-y-auto" style={{ background: "var(--color-bg)" }}>
-              <div className="max-w-5xl mx-auto px-6 py-10 sm:px-10">
-                <div className="mb-8 flex items-center justify-between gap-4">
-                  <h3 className="gradient-text-green-blue font-heading font-bold text-2xl">📬 Message Inbox</h3>
-                  <button onClick={() => setInboxOpen(false)} className="rounded-full border px-4 py-2 text-sm" style={{ borderColor: "var(--color-border)", color: "var(--color-text)" }}>
-                    Close
+          {inboxOpen && (
+            <div className="fixed inset-0 z-[9999] overflow-y-auto" style={{ background: "rgba(4, 2, 14, 0.98)", backdropFilter: 'blur(10px)' }}>
+              <div className="max-w-5xl mx-auto px-6 py-12 sm:px-10">
+                <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-6">
+                  <div>
+                    <h3 className="gradient-text-green-blue font-heading font-bold text-2xl uppercase tracking-wider">📬 Message Alpha</h3>
+                    <p className="font-body text-xs text-[var(--color-subtle)] mt-1">Local backup of incoming transmissions</p>
+                  </div>
+                  <button onClick={() => setInboxOpen(false)} className="rounded-full border px-6 py-2 text-xs font-heading tracking-widest hover:bg-white/5 transition-colors" style={{ borderColor: "var(--color-border)", color: "var(--color-text)" }}>
+                    Close Space
                   </button>
                 </div>
-                <div className="space-y-4">
+                <div className="grid gap-6">
                   {loadingMsgs ? (
-                    <div className="nebula-card p-6">Loading messages...</div>
+                    <div className="nebula-card p-8 text-center font-body">Scanning localStorage...</div>
                   ) : messages.length === 0 ? (
-                    <div className="nebula-card p-6">No messages received yet.</div>
+                    <div className="nebula-card p-12 text-center">
+                      <div className="text-4xl mb-4 opacity-20">🕳️</div>
+                      <p className="font-body text-sm" style={{ color: "var(--color-subtle)" }}>Inbox is currently empty.</p>
+                    </div>
                   ) : (
                     messages.map((message) => (
-                      <div key={message.id} className="nebula-card p-6">
-                        <div className="flex items-start justify-between gap-4">
+                      <div key={message.id} className="nebula-card p-6 border-l-2" style={{ borderLeftColor: '#39FF8E' }}>
+                        <div className="flex flex-wrap items-start justify-between gap-4">
                           <div>
-                            <p className="font-heading font-bold text-[var(--color-text)]">{message.name}</p>
-                            <p className="font-body text-sm" style={{ color: "var(--color-nebula-blue)" }}>{message.email}</p>
-                            <p className="font-body text-xs mt-1" style={{ color: "var(--color-subtle)" }}>{new Date(message.sentAt).toLocaleString()}</p>
+                            <p className="font-heading font-bold text-sm text-[var(--color-text)] uppercase tracking-wide">{message.name}</p>
+                            <p className="font-body text-xs" style={{ color: "var(--color-nebula-blue)" }}>{message.email}</p>
+                            <p className="font-body text-[0.6rem] mt-1 opacity-40 italic">{new Date(message.sentAt).toLocaleString()}</p>
                           </div>
-                          <button onClick={() => handleDelete(message.id)} className="text-sm" style={{ color: "#FF4D8C" }}>
+                          <button onClick={() => handleDelete(message.id)} className="text-[0.65rem] font-heading tracking-widest border border-red-500/30 px-3 py-1 rounded-full text-red-400 hover:bg-red-500/10 transition-colors uppercase">
                             Delete
                           </button>
                         </div>
-                        <p className="mt-4 font-body leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{message.message}</p>
+                        <div className="mt-6 p-4 rounded-lg bg-black/30 border border-white/5">
+                          <p className="font-body text-sm leading-relaxed whitespace-pre-wrap" style={{ color: "var(--color-text-muted)" }}>{message.message}</p>
+                        </div>
                       </div>
                     ))
                   )}
                 </div>
               </div>
             </div>
-          ) : null}
+          )}
         </section>
       );
     };
 
     const Footer = () => (
-      <footer className="py-8 text-center" style={{ borderTop: "1px solid transparent", borderImage: "linear-gradient(90deg, transparent, #C77DFF, transparent) 1" }}>
-        <p className="font-body text-xs" style={{ color: "var(--color-subtle)" }}>
-          <span style={{ color: "#39FF8E" }}>●</span> <span style={{ color: "#C77DFF" }}>●</span> <span style={{ color: "#4FC3F7" }}>●</span>{" "}
-          &copy; 2026 Akshatha Dungi — Built with React & Tailwind
-        </p>
+      <footer className="py-12 border-t" style={{ borderImage: "linear-gradient(90deg, transparent, var(--color-nebula-violet), transparent) 1" }}>
+        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-8">
+          <div className="flex gap-8">
+            <a href="https://github.com/Akshatha-22" target="_blank" rel="noopener noreferrer" className="text-[var(--color-subtle)] hover:text-[var(--color-primary)] transition-colors duration-300">
+              <IconGithub size={20} />
+            </a>
+            <a href="https://www.linkedin.com/in/akshathadungi2212" target="_blank" rel="noopener noreferrer" className="text-[var(--color-subtle)] hover:text-[var(--color-nebula-blue)] transition-colors duration-300">
+              <IconLinkedin size={20} />
+            </a>
+            <a href="mailto:akshathadungi04@gmail.com" className="text-[var(--color-subtle)] hover:text-[var(--color-nebula-pink)] transition-colors duration-300">
+              <IconMail size={20} />
+            </a>
+          </div>
+
+          <div className="text-center">
+            <p className="font-body text-[0.7rem] uppercase tracking-[0.3em] mb-3" style={{ color: "var(--color-subtle)" }}>
+              <span style={{ color: "#39FF8E" }}>●</span> Adaptable Developer <span style={{ color: "#4FC3F7" }}>●</span> AI Enthusiast
+            </p>
+            <p className="font-body text-[0.65rem]" style={{ color: "var(--color-subtle)", opacity: 0.6 }}>
+              &copy; 2026 Akshatha Dungi — Built with React, Tailwind & Neural Vibes
+            </p>
+          </div>
+        </div>
       </footer>
     );
 
@@ -1872,4 +3141,5 @@
     });
   </script>
 </body>
+
 </html>
