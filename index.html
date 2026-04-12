@@ -1477,7 +1477,13 @@
         <section id="about" className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
           <FadeInSection>
             <h2 className="gradient-text-green-blue mb-2 font-heading text-3xl font-bold md:text-4xl">About Me</h2>
-            <img src={PILLARS_WEBB} className="cosmic-banner mb-12" alt="Pillars of Creation" style={{ height: "160px" }} />
+            <div className="hidden sm:block">
+              <img src={PILLARS_WEBB} className="cosmic-banner mb-12"
+                alt="Pillars of Creation"
+                style={{ height: "160px" }}
+                onError={e => { e.target.style.display = 'none'; }}
+              />
+            </div>
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div className="flex justify-center md:justify-start">
                 <div className="relative inline-flex items-center justify-center" style={{ width: `${portraitSize}px`, height: `${portraitSize}px` }}>
@@ -1601,7 +1607,13 @@
       return (
         <section id="experience" className="mx-auto max-w-7xl px-6 py-24 sm:px-10 lg:px-16">
           <FadeInSection>
-            <img src={STEPHANS} alt="Stephan's Quintet" className="cosmic-banner mb-10 opacity-80" style={{ height: "180px" }} />
+            <div className="hidden sm:block">
+              <img src={STEPHANS} alt="Stephan's Quintet"
+                className="cosmic-banner mb-10 opacity-80"
+                style={{ height: "180px" }}
+                onError={e => { e.target.style.display = 'none'; }}
+              />
+            </div>
             <div className="mb-8 text-center">
               <h2 className="gradient-text-gold-crimson mb-2 font-heading text-3xl font-bold md:text-4xl">Experience</h2>
             </div>
