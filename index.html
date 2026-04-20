@@ -1155,7 +1155,7 @@
         >
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-10 lg:px-16">
             <button onClick={() => scrollTo("Hero")} className="gradient-text-green-blue font-heading text-2xl font-black tracking-[0.2em] text-glow-green" aria-label="Go to Hero" data-sound-handled="true">
-              AD
+              Home
             </button>
 
             <div className="hidden items-center gap-8 md:flex">
@@ -1363,7 +1363,7 @@
                 View Projects
               </button>
               <a
-                href="Akshatha_march_resume.pdf"
+                href="AkshathaDungi_2026_April_resume.pdf"
                 download="Akshatha_Dungi_Resume.pdf"
                 onClick={() => playClickSound('soft')}
                 className="btn-liquid rounded-full border-2 px-8 py-3 font-heading transition-all duration-300 hover:scale-105 glow-violet"
@@ -1549,7 +1549,7 @@
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent'
                     }}>
-                      AD
+                      A
                     </span>
                   </div>
                   <div className="absolute -bottom-20 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-3 w-max">
@@ -2411,7 +2411,7 @@
           date: "Aug 2025",
           color: "#C77DFF",
           file: "certifications/PM_intro_Certificate.pdf",
-          logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ibm/ibm-original.svg"
+          logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg"
         }
       ];
 
@@ -2427,7 +2427,7 @@
                 >
                   <div style={{
                     position: 'absolute', top: '16px', right: '16px',
-                    width: '32px', height: '32px', opacity: 0.7
+                    width: '32px', height: '32px', opacity: 1
                   }}>
                     <img
                       src={cert.logo}
@@ -2807,14 +2807,6 @@
 
       const contactDetails = [
         {
-          label: 'Email',
-          value: 'akshathadungi04@gmail.com',
-          display: 'akshathadungi04@gmail.com',
-          href: 'mailto:akshathadungi04@gmail.com',
-          color: '#39FF8E',
-          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg'
-        },
-        {
           label: 'GitHub',
           value: 'github.com/Akshatha-22',
           display: 'github.com/Akshatha-22',
@@ -2970,7 +2962,7 @@
               I'm open to opportunities, collaborations, or just a good tech conversation.
             </p>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="flex flex-wrap justify-center gap-6 mb-16 max-w-5xl mx-auto">
               {contactDetails.map((item) => {
                 const isLink = !!item.href;
                 const Card = isLink ? 'a' : 'div';
@@ -2982,7 +2974,7 @@
                     rel={isLink ? "noopener noreferrer" : undefined}
                     onClick={() => isLink && playClickSound('soft')}
                     onDoubleClick={triggerRocky}
-                    className={`nebula-card p-6 flex flex-col items-center text-center group ${isLink ? 'btn-liquid cursor-pointer' : ''}`}
+                    className={`nebula-card p-6 flex flex-col items-center text-center group ${isLink ? 'btn-liquid cursor-pointer' : ''} w-full sm:w-[280px]`}
                     style={{ textDecoration: 'none' }}
                   >
                     <div style={{
