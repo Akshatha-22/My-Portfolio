@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akshatha Dungi | Software Developer</title>
   <meta name="description"
-    content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI/ML Enthusiast." />
+    content="Portfolio of Akshatha Dungi — Software Developer, Backend Specialist, AI/ML Engineer." />
   <script>
     (function () {
       const savedTheme = localStorage.getItem("theme");
@@ -1121,7 +1121,7 @@
     const Navbar = ({ activeSection, isDark, toggleTheme }) => {
       const [isScrolled, setIsScrolled] = useState(false);
       const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-      const navLinks = ["Hero", "About", "Experience", "Projects", "Skills", "Certifications", "Blog", "Contact"];
+      const navLinks = ["About", "Experience", "Projects", "Skills", "Certifications", "Blog", "Contact"];
 
       useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -1207,7 +1207,7 @@
 
     const Hero = () => {
       const canvasRef = useRef(null);
-      const roles = useMemo(() => ["Software Developer", "Backend Specialist", "AI/ML Enthusiast", "Software Developer ·  Backend Specialist · AI/ML Enthusiast"], []);
+      const roles = useMemo(() => ["Software Developer", "Backend Specialist", "AI/ML Engineer", "Software Developer ·  Backend Specialist · AI/ML Engineer"], []);
       const [roleIndex, setRoleIndex] = useState(3);
 
       useEffect(() => {
@@ -1615,12 +1615,13 @@
           title: 'B.Tech in Computer Science and Systems Engineering',
           org: 'Andhra University College of Engineering',
           location: 'Visakhapatnam',
-          period: 'Oct 2022 – Apr 2026',
+          period: '2022 – 2026',
           badge: 'Education',
           color: '#4FC3F7',
           highlights: [
-            'CGPA: 8.96',
-            'Coursework: Data Structures, Algorithms, Databases, Computer Networks, Operating Systems, OOP, Machine Learning'
+            { text: 'CGPA: 8.96', award: false },
+            { text: 'Academic Excellence Award Recipient', award: true },
+            { text: 'Coursework: Data Structures, Algorithms, Databases, Computer Networks, Operating Systems, OOP, Artificial Intelligence, Machine Learning', award: false }
           ]
         },
         {
@@ -1632,9 +1633,9 @@
           badge: 'Work Experience',
           color: '#39FF8E',
           highlights: [
-            'Engineered an ANN achieving 97% multi-class classification accuracy, improving predictive performance by 15% over existing models',
-            'MLOps: Implemented evaluation metrics and visualization for stakeholder reporting',
-            'Stack: Python, TensorFlow, Keras, Scikit-learn, Pandas, NumPy, Matplotlib'
+            { text: 'Engineered an ANN achieving 97% multi-class classification accuracy, improving predictive performance by 15% over existing models', award: false },
+            { text: 'MLOps: Implemented evaluation metrics and visualization for stakeholder reporting', award: false },
+            { text: 'Stack: Python, TensorFlow, Keras, Scikit-learn, Pandas, NumPy, Matplotlib', award: false }
           ]
         },
         {
@@ -1646,9 +1647,9 @@
           badge: 'Work Experience',
           color: '#39FF8E',
           highlights: [
-            'Developed and optimized 15+ complex SQL queries using PostgreSQL and pgAdmin, improving data retrieval efficiency by 40%',
-            'Collaborated with senior developers to design normalized database structures supporting business intelligence reporting',
-            'Participated in Agile development processes, contributing to bi-weekly sprints and daily stand-ups'
+            { text: 'Developed and optimized 15+ complex SQL queries using PostgreSQL and pgAdmin, improving data retrieval efficiency by 40%', award: false },
+            { text: 'Collaborated with senior developers to design normalized database structures supporting business intelligence reporting', award: false },
+            { text: 'Participated in Agile development processes, contributing to bi-weekly sprints and daily stand-ups', award: false }
           ]
         },
         {
@@ -1660,8 +1661,8 @@
           badge: 'Leadership & Management',
           color: '#FFD166',
           highlights: [
-            'Organized a university-wide internship drive, liaising with career services and 10+ corporate partners',
-            'Facilitated 30+ internship offers across Business, Engineering, and IT fields'
+            { text: 'Organized a university-wide internship drive, liaising with career services and 10+ corporate partners', award: false },
+            { text: 'Facilitated 30+ internship offers across Business, Engineering, and IT fields', award: false }
           ]
         }
       ];
@@ -1775,14 +1776,31 @@
                       </p>
 
                       {/* Highlights */}
-                      <ul style={{ margin: 0, paddingLeft: '16px' }}>
+                      <ul style={{ margin: 0, paddingLeft: 0 }}>
                         {exp.highlights.map((point, i) => (
                           <li key={i} style={{
-                            fontSize: '0.78rem', color: 'var(--color-text-muted)',
+                            fontSize: '0.78rem',
+                            color: point.award ? '#FFD166' : 'var(--color-text-muted)',
                             fontFamily: '"Share Tech Mono", monospace',
-                            lineHeight: '1.6', marginBottom: '4px'
+                            lineHeight: '1.6',
+                            marginBottom: '4px',
+                            textShadow: point.award ? '0 0 10px rgba(255,209,102,0.4)' : 'none',
+                            listStyle: 'none',
+                            marginLeft: '0px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '7px'
                           }}>
-                            {point}
+                            {point.award
+                              ? <IconAward size={13} style={{ color: '#FFD166', flexShrink: 0 }} />
+                              : <span style={{
+                                  width: '5px', height: '5px', borderRadius: '50%',
+                                  background: 'var(--color-text-muted)',
+                                  opacity: 0.5, flexShrink: 0,
+                                  display: 'inline-block'
+                                }} />
+                            }
+                            {point.text}
                           </li>
                         ))}
                       </ul>
