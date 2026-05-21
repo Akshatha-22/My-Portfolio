@@ -7,7 +7,7 @@
 
 A modern, responsive developer portfolio with an interactive Three.js starfield background, radar skill graph, blog, and Web Audio click sounds. No build tools — runs directly in the browser.
 
-🔗 **Live Demo:** https://akshatha-22.github.io/My-Portfolio/git
+🔗 **Live Demo:** https://akshatha-22.github.io/My-Portfolio/
 
 ---
 
