@@ -614,6 +614,30 @@
     img[src="null"] {
       display: none !important;
     }
+
+    .tech-logo {
+      transition: all 0.3s ease;
+    }
+
+    .tech-logo:hover {
+      transform: scale(1.15) rotate(8deg);
+      filter: brightness(1.2);
+    }
+
+    @keyframes float-up {
+      0% {
+        opacity: 0.9;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-70px) scale(0.7);
+      }
+    }
+
+    .animate-float-up {
+      animation: float-up 2.8s ease-in-out infinite;
+    }
   </style>
 </head>
 
@@ -966,6 +990,15 @@
         <path d="M15 3h6v6" />
         <path d="M10 14 21 3" />
         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      </svg>
+    );
+    const IconPaper = ({ size = 18, className = "" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <path d="M14 2v6h6" />
+        <path d="M16 13H8" />
+        <path d="M16 17H8" />
+        <path d="M10 9H8" />
       </svg>
     );
     const IconMenu = ({ size = 24, className = "" }) => (
@@ -1363,7 +1396,7 @@
                 View Projects
               </button>
               <a
-                href="AkshathaDungi_2026_April_resume.pdf"
+                href="Akshatha_Resume_AI_ML.pdf"
                 download="Akshatha_Dungi_Resume.pdf"
                 onClick={() => playClickSound('soft')}
                 className="btn-liquid rounded-full border-2 px-8 py-3 font-heading transition-all duration-300 hover:scale-105 glow-violet"
@@ -1506,60 +1539,61 @@
             </div>
             <div className="grid items-center gap-16 md:grid-cols-2">
               <div className="flex justify-center">
-                <div className="relative flex items-center justify-center mx-auto md:mx-0 shrink-0" style={{ width: `${portraitSize}px`, height: `${portraitSize}px` }}>
-                  <canvas ref={planetCanvasRef} style={{ position: "absolute", inset: 0, zIndex: 0, borderRadius: "50%", width: `${portraitSize}px`, height: `${portraitSize}px` }} />
-                  <img
-                    ref={imgRef}
-                    src="mei.jpeg"
-                    alt="Akshatha Dungi"
-                    className="relative z-10 rounded-full object-cover shrink-0"
-                    style={{
-                      width: `${portraitSize}px`,
-                      height: `${portraitSize}px`,
-                      boxShadow: "0 0 0 3px #39FF8E, 0 0 20px rgba(57,255,142,0.5), 0 0 40px rgba(199,125,255,0.2)",
-                      flex: 'none'
-                    }}
-                    onError={e => {
-                      e.target.style.display = 'none';
-                      const fallback = document.getElementById('profile-fallback');
-                      if (fallback) fallback.style.display = 'flex';
-                    }}
-                  />
-                  <div
-                    id="profile-fallback"
-                    className="shrink-0 items-center justify-center"
-                    style={{
-                      display: 'none',
-                      width: `${portraitSize}px`,
-                      height: `${portraitSize}px`,
-                      borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #1A0A3A, #0A0618)',
-                      border: '3px solid #39FF8E',
-                      boxShadow: '0 0 20px rgba(57,255,142,0.5)',
-                      position: 'relative',
-                      zIndex: 10,
-                      flex: 'none'
-                    }}
-                  >
-                    <span style={{
-                      fontFamily: 'Orbitron, sans-serif',
-                      fontSize: isMobile ? '2.5rem' : '3.5rem',
-                      fontWeight: '900',
-                      background: 'linear-gradient(135deg, #C77DFF, #4FC3F7)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent'
-                    }}>
-                      A
-                    </span>
+                <div className="relative flex flex-col items-center">
+                  {/* Profile Picture Container */}
+                  <div className="relative flex items-center justify-center mx-auto md:mx-0 shrink-0" style={{ width: `${portraitSize}px`, height: `${portraitSize}px` }}>
+                    <canvas ref={planetCanvasRef} style={{ position: "absolute", inset: 0, zIndex: 0, borderRadius: "50%", width: `${portraitSize}px`, height: `${portraitSize}px` }} />
+                    <img
+                      ref={imgRef}
+                      src="mei.jpeg"
+                      alt="Akshatha Dungi"
+                      className="relative z-10 rounded-full object-cover shrink-0"
+                      style={{
+                        width: `${portraitSize}px`,
+                        height: `${portraitSize}px`,
+                        boxShadow: "0 0 0 3px #39FF8E, 0 0 25px rgba(57,255,142,0.5), 0 0 45px rgba(199,125,255,0.25)",
+                      }}
+                      onError={e => {
+                        e.target.style.display = 'none';
+                        const fallback = document.getElementById('profile-fallback');
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div
+                      id="profile-fallback"
+                      className="shrink-0 items-center justify-center hidden"
+                      style={{
+                        width: `${portraitSize}px`,
+                        height: `${portraitSize}px`,
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #1A0A3A, #0A0618)',
+                        border: '3px solid #39FF8E',
+                        boxShadow: '0 0 25px rgba(57,255,142,0.5)',
+                      }}
+                    >
+                      <span style={{
+                        fontFamily: 'Orbitron, sans-serif',
+                        fontSize: isMobile ? '2.5rem' : '3.5rem',
+                        fontWeight: '900',
+                        background: 'linear-gradient(135deg, #C77DFF, #4FC3F7)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent'
+                      }}>A</span>
+                    </div>
                   </div>
-                  <div className="absolute -bottom-20 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-3 w-max">
-                    <button onClick={togglePlay} className={`flex h-14 w-14 items-center justify-center rounded-full text-[18px] transition-all duration-300 hover:scale-110 ${isPlaying ? "animate-glow-pulse" : ""}`} style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E", boxShadow: "0 0 20px rgba(57,255,142,0.4)" }} aria-label={isPlaying ? "Pause music" : "Play music"}>
+                  {/* Play / Pause Button - Clearly Below the Circle */}
+                  <div className="mt-8 flex flex-col items-center gap-3">
+                    <button onClick={togglePlay} className={`flex h-14 w-14 items-center justify-center rounded-full text-[18px] transition-all duration-300 hover:scale-110 shadow-lg ${isPlaying ? "animate-glow-pulse" : ""}`} style={{ background: "linear-gradient(135deg, #39FF8E, #4FC3F7)", color: "#04020E", boxShadow: "0 0 25px rgba(57,255,142,0.5)" }} aria-label={isPlaying ? "Pause music" : "Play music"}>
                       {isPlaying ? <IconPause /> : <IconPlay className="ml-[2px]" />}
                     </button>
-                    <div className="flex items-center gap-2 italic whitespace-nowrap" style={{ color: "var(--color-text-muted)", fontSize: '0.75rem', fontFamily: '"Share Tech Mono", monospace', opacity: isPlaying ? 1 : 0.65 }}>
-                      <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)] pulse-dot"></span>
-                      <span>Now playing ♪ BANANA SHAKE</span>
-                    </div>
+                    {/* Glowing Floating Music Icons */}
+                    {isPlaying && (
+                      <div className="flex gap-6 mt-2 relative h-12">
+                        <span className="text-3xl animate-float-up" style={{ color: '#FFD700', textShadow: '0 0 15px #FFD700, 0 0 30px #FFEA00' }}>♪</span>
+                        <span className="text-3xl animate-float-up" style={{ color: '#FFD700', textShadow: '0 0 15px #FFD700, 0 0 30px #FFEA00', animationDelay: '0.35s' }}>♫</span>
+                        <span className="text-3xl animate-float-up" style={{ color: '#FFD700', textShadow: '0 0 15px #FFD700, 0 0 30px #FFEA00', animationDelay: '0.7s' }}>♪</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1567,7 +1601,7 @@
               <div className="pt-24 md:pt-0">
                 <div className="space-y-6 font-body leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
                   <p className="text-lg" style={{ color: "var(--color-text)" }}>I'm the kind of developer who thrives on change. The tech landscape evolves rapidly, and I believe the best solutions come from being adaptable.</p>
-                  <p>One day I'm deep in <span style={{ color: "var(--color-primary)", fontWeight: 600 }}>Java code</span> building robust architectures... The next, establishing <span style={{ color: "var(--color-primary)", fontWeight: 600 }}>LLM pipelines</span> to solve complex logical problems.</p>
+                  <p>One day I'm deep in <span style={{ color: "var(--color-primary)", fontWeight: 600 }}>C++ code</span> building robust architectures... The next, establishing <span style={{ color: "var(--color-primary)", fontWeight: 600 }}>LLM pipelines</span> to solve complex logical problems.</p>
                   <div className="nebula-card scanlines mt-8 p-6">
                     <div className="relative z-10">
                       <h4 className="mb-4 font-heading text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-primary)]">What makes me adaptable</h4>
@@ -1999,30 +2033,45 @@
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => playClickSound('soft')}
-              className="btn-liquid"
+              className="btn-liquid flex-1"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '6px',
-                padding: '6px 14px', borderRadius: '9999px', fontSize: '0.75rem',
-                border: '1px solid rgba(57,255,142,0.35)', color: '#39FF8E',
-                fontFamily: '"Share Tech Mono", monospace', textDecoration: 'none',
-                transition: 'all 0.2s ease'
+                padding: '8px 16px', borderRadius: '9999px', fontSize: '0.8rem',
+                border: '1px solid rgba(57,255,142,0.35)', color: '#39FF8E'
               }}
-              onMouseEnter={e => e.currentTarget.style.background = 'rgba(57,255,142,0.1)'}
-              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
             >
-              <IconGithub size={13} /> View on GitHub
+              <IconGithub size={16} /> Repository
             </a>
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => playClickSound('soft')}
-              className="transition-all duration-300 hover:scale-110 hover:text-[#4FC3F7]"
-              style={{ color: 'var(--color-text-muted)' }}
-              aria-label={`${project.title} Live Link`}
-            >
-              <IconExternalLink size={18} />
-            </a>
+            {project.paperButton ? (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => playClickSound('soft')}
+                className="btn-liquid flex-1 flex items-center justify-center gap-2"
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '9999px',
+                  fontSize: '0.8rem',
+                  border: '1px solid #c77dff',
+                  color: '#c77dff',
+                  background: 'transparent'
+                }}
+              >
+                <IconPaper size={17} /> Read Conference Paper
+              </a>
+            ) : (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => playClickSound('soft')}
+                className="transition-all duration-300 hover:scale-110 hover:text-[#4FC3F7]"
+                style={{ color: 'var(--color-text-muted)' }}
+              >
+                <IconExternalLink size={20} />
+              </a>
+            )}
           </div>
         </div>
       );
@@ -2048,16 +2097,17 @@
         {
           title: "AI Confidence Calibration Failure Detection",
           filter: "AI",
-          desc: "Detects when neural network confidence scores become miscalibrated before failure occurs. Uses RNN-based sequence modelling to identify early warning signals across 5 model architectures, reducing Expected Calibration Error significantly.",
+          desc: "IEEE 2026 published research — First architecture-comparative study on confidence calibration across 5 neural networks (MLP, Deep MLP, Residual MLP, RNN, LSTM) on FinSen financial time-series dataset (160K records).",
           results: [
-            "▲ 89% gradient-ECE correlation — RNN predictability",
-            "▼ 3.34% ECE — Calibration error achieved",
-            "▲ 37 timesteps — Early warning before failure",
-            "✓ 5× models — Architecture comparison"
+            "✓ Best ECE 0.0032 (MLP)",
+            "▲ R² 0.983 Accuracy",
+            "✓ 240 experiments • Gradient-ECE r=0.568",
+            "✓ Self-recovering calibration in Residual MLP"
           ],
-          tags: ["PyTorch", "Python", "NumPy", "Pandas", "Matplotlib", "Scikit-learn", "Docker", "GitHub Actions"],
+          tags: ["PyTorch", "NumPy", "Pandas", "Matplotlib", "Scikit-learn", "Jupyter", "Docker"],
           github: "https://github.com/Akshatha-22/Calibration-Confidence",
-          live: "https://github.com/Akshatha-22/Calibration-Confidence"
+          live: "conference_paper_1896 (3).pdf",
+          paperButton: true
         }
       ];
 
@@ -2068,9 +2118,7 @@
           <img src={CARINA_WEBB} alt="" aria-hidden="true"
             className="absolute inset-0 h-full w-full object-cover pointer-events-none z-0"
             style={{ opacity: 0.07, mixBlendMode: "screen" }}
-            onError={e => {
-              e.target.style.display = 'none';
-            }}
+            onError={e => { e.target.style.display = 'none'; }}
           />
           <FadeInSection className="relative z-10">
             <div className="text-center mb-10">
@@ -2105,10 +2153,11 @@
     const RadarChart = () => {
       const skills = [
         { name: 'Python', value: 92 },
-        { name: 'Java', value: 82 },
+        { name: 'Java', value: 60 },
+        { name: 'C++', value: 90 },
         { name: 'React', value: 78 },
-        { name: 'Spring Boot', value: 80 },
-        { name: 'PyTorch', value: 75 },
+        { name: 'Spring Boot', value: 60 },
+        { name: 'PyTorch', value: 80 },
         { name: 'AWS/Azure', value: 72 },
         { name: 'Docker', value: 76 },
         { name: 'LangChain', value: 74 },
@@ -2310,6 +2359,7 @@
         'Vercel': 'vercel/vercel-original',
         'Java': 'java/java-original',
         'C': 'c/c-original',
+        'C++': 'cplusplus/cplusplus-original',
       };
 
       const techRows = [
@@ -2317,7 +2367,7 @@
         { category: 'Backend', speed: '32s', direction: 'right', items: ['Node.js', 'Express', 'EJS', 'REST APIs', 'SQL', 'PostgreSQL', 'MongoDB', 'Spring Boot', 'Flask'], rowColor: '#39FF8E', rowBorder: 'rgba(57,255,142,0.3)', rowBg: 'rgba(57,255,142,0.08)' },
         { category: 'AI / ML', speed: '24s', direction: 'left', items: ['Python', 'PyTorch', 'TensorFlow', 'Scikit-learn', 'LangChain', 'OpenAI API', 'Deep Learning', 'LLM Integration'], rowColor: '#C77DFF', rowBorder: 'rgba(199,125,255,0.3)', rowBg: 'rgba(199,125,255,0.08)' },
         { category: 'DevOps', speed: '30s', direction: 'right', items: ['Microsoft Azure', 'Git', 'GitHub Actions', 'CI/CD Pipelines', 'Docker', 'Vercel'], rowColor: '#FFD166', rowBorder: 'rgba(255,209,102,0.3)', rowBg: 'rgba(255,209,102,0.08)' },
-        { category: 'Languages', speed: '26s', direction: 'left', items: ['C', 'Python', 'Java', 'SQL', 'JavaScript'], rowColor: '#FF6B6B', rowBorder: 'rgba(255,107,107,0.3)', rowBg: 'rgba(255,107,107,0.08)' }
+        { category: 'Languages', speed: '26s', direction: 'left', items: ['C', 'C++', 'Python', 'Java', 'SQL', 'JavaScript'], rowColor: '#FF6B6B', rowBorder: 'rgba(255,107,107,0.3)', rowBg: 'rgba(255,107,107,0.08)' }
       ];
 
       return (
