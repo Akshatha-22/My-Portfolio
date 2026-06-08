@@ -1974,7 +1974,19 @@
         "PyTorch": "pytorch/pytorch-original.svg",
         "Docker": "docker/docker-original.svg",
         "GitHub Actions": "githubactions/githubactions-original.svg",
-        "Git": "git/git-original.svg"
+        "Git": "git/git-original.svg",
+        "React": "react/react-original.svg",
+        "TypeScript": "typescript/typescript-original.svg",
+        "Vite": "vite/vite-original.svg",
+        "Tailwind CSS": "tailwindcss/tailwindcss-original.svg",
+        "FastAPI": "fastapi/fastapi-original.svg",
+        "SQLite": "sqlite/sqlite-original.svg",
+        "PostgreSQL": "postgresql/postgresql-original.svg",
+        "FAISS": null,
+        "Framer Motion": null,
+        "jsPDF": null,
+        "Railway": null,
+        "Vercel": null
       };
 
       return (
@@ -2079,11 +2091,14 @@
 
     const Projects = () => {
       const [filter, setFilter] = useState("All");
-      const filters = ["All", "AI"];
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const carouselRef = React.useRef(null);
+      const filters = ["All", "AI/ML", "Web Dev"];
+      React.useEffect(() => { setCurrentIndex(0); }, [filter]);
       const projects = [
         {
           title: "Iris Flower Classification",
-          filter: "AI",
+          filter: "AI/ML",
           desc: "Multi-class flower classification using a Keras neural network trained on the classic Iris dataset. Covers data preprocessing, model architecture design, training, and evaluation with visualised accuracy/loss curves.",
           results: [
             "✓ 3 classes — Setosa, Versicolor, Virginica",
@@ -2096,7 +2111,7 @@
         },
         {
           title: "AI Confidence Calibration Failure Detection",
-          filter: "AI",
+          filter: "AI/ML",
           desc: "IEEE 2026 published research — First architecture-comparative study on confidence calibration across 5 neural networks (MLP, Deep MLP, Residual MLP, RNN, LSTM) on FinSen financial time-series dataset (160K records).",
           results: [
             "✓ Best ECE 0.0032 (MLP)",
@@ -2108,10 +2123,29 @@
           github: "https://github.com/Akshatha-22/Calibration-Confidence",
           live: "conference_paper_1896 (3).pdf",
           paperButton: true
+        },
+        {
+          title: "Remi — AI Chatbot Widget",
+          filter: "Web Dev",
+          desc: "Production-ready embeddable AI chatbot widget built solo in 1.5 weeks. React + FastAPI with SSE streaming, RAG document intelligence, natural language PDF generation, JWT auth, and full CI/CD. Zero manual deployment steps from commit to production.",
+          results: [
+            "▲ 55 tests — auth security, RAG pipeline, SSE streaming & multi-user isolation, passing in 14s",
+            "✓ RAG built without LangChain — pure FAISS + MiniLM implementation",
+            "✓ 4 LLM providers behind one interface — system never fails due to a single API outage",
+            "▲ $0/month infrastructure with per month upgrade path",
+            "✓ Production-ready in 1.5 weeks — solo build"
+          ],
+          tags: ["React", "TypeScript", "FastAPI", "Python", "Vite", "Tailwind CSS", "PostgreSQL"],
+          github: "https://github.com/Akshatha-22/chatbot-widget.git",
+          live: "https://remi-zeta-nine.vercel.app/"
         }
       ];
 
       const filteredProjects = filter === "All" ? projects : projects.filter((project) => project.filter === filter);
+      
+      const visibleCount = typeof window !== 'undefined' && window.innerWidth >= 1024 ? 2 : 1;
+      const maxIndex = Math.max(0, filteredProjects.length - visibleCount);
+      const safeIndex = Math.min(currentIndex, maxIndex);
 
       return (
         <section id="projects" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto relative">
@@ -2140,10 +2174,101 @@
                 );
               })}
             </div>
-            <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
-              {filteredProjects.map((project) => (
-                <ProjectCard key={project.title} project={project} />
-              ))}
+            <div style={{ position: 'relative' }}>
+
+              {/* Navigation buttons row */}
+              <div style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+                gap: '10px', marginBottom: '20px'
+              }}>
+                <span style={{
+                  fontSize: '0.72rem', fontFamily: '"Share Tech Mono", monospace',
+                  color: 'var(--color-text-muted)', opacity: 0.7
+                }}>
+                  {safeIndex + 1} / {filteredProjects.length}
+                </span>
+                <button
+                  onClick={() => { playClickSound('soft'); setCurrentIndex(i => Math.max(0, i - 1)); }}
+                  disabled={safeIndex === 0}
+                  className="btn-liquid"
+                  aria-label="Previous project"
+                  style={{
+                    width: '40px', height: '40px', borderRadius: '50%',
+                    border: '1px solid rgba(199,125,255,0.4)',
+                    background: safeIndex === 0 ? 'transparent' : 'rgba(199,125,255,0.08)',
+                    color: safeIndex === 0 ? 'var(--color-subtle)' : '#C77DFF',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    cursor: safeIndex === 0 ? 'not-allowed' : 'pointer',
+                    fontSize: '1rem', transition: 'all 0.2s ease',
+                    opacity: safeIndex === 0 ? 0.35 : 1
+                  }}
+                >‹</button>
+                <button
+                  onClick={() => { playClickSound('soft'); setCurrentIndex(i => Math.min(maxIndex, i + 1)); }}
+                  disabled={safeIndex >= maxIndex}
+                  className="btn-liquid"
+                  aria-label="Next project"
+                  style={{
+                    width: '40px', height: '40px', borderRadius: '50%',
+                    border: '1px solid rgba(199,125,255,0.4)',
+                    background: safeIndex >= maxIndex ? 'transparent' : 'rgba(199,125,255,0.08)',
+                    color: safeIndex >= maxIndex ? 'var(--color-subtle)' : '#C77DFF',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    cursor: safeIndex >= maxIndex ? 'not-allowed' : 'pointer',
+                    fontSize: '1rem', transition: 'all 0.2s ease',
+                    opacity: safeIndex >= maxIndex ? 0.35 : 1
+                  }}
+                >›</button>
+              </div>
+
+              {/* Carousel track */}
+              <div style={{ overflow: 'hidden', width: '100%' }} ref={carouselRef}>
+                <div style={{
+                  display: 'flex',
+                  gap: '32px',
+                  transition: 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transform: `translateX(calc(-${safeIndex} * (100% / ${visibleCount} + ${visibleCount > 1 ? '16px' : '0px'})))`,
+                  willChange: 'transform'
+                }}>
+                  {filteredProjects.map((project) => (
+                    <div
+                      key={project.title}
+                      style={{
+                        flex: `0 0 calc(${100 / visibleCount}% - ${visibleCount > 1 ? '16px' : '0px'})`,
+                        minWidth: 0
+                      }}
+                    >
+                      <ProjectCard project={project} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Dot indicators */}
+              <div style={{
+                display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '24px'
+              }}>
+                {filteredProjects.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => { playClickSound('soft'); setCurrentIndex(i); }}
+                    aria-label={`Go to project ${i + 1}`}
+                    style={{
+                      width: i === safeIndex ? '20px' : '8px',
+                      height: '8px',
+                      borderRadius: '9999px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0,
+                      background: i === safeIndex
+                        ? 'linear-gradient(90deg, #C77DFF, #FF4D8C)'
+                        : 'rgba(199,125,255,0.25)',
+                      transition: 'all 0.3s ease'
+                    }}
+                  />
+                ))}
+              </div>
+
             </div>
           </FadeInSection>
         </section>
