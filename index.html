@@ -638,6 +638,41 @@
     .animate-float-up {
       animation: float-up 2.8s ease-in-out infinite;
     }
+
+    /* CAROUSEL — mobile tap targets */
+    @media (max-width: 640px) {
+      /* Ensure section horizontal padding doesn't clip carousel */
+      #projects, #certifications, #blog {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+      }
+      /* Dots row wraps nicely */
+      .carousel-dots {
+        flex-wrap: wrap;
+        max-width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    /* PROJECTS grid — 2 cols on large screens, 1 on mobile (handled by 
+       useCarousel visible count) */
+    @media (min-width: 1280px) {
+      #projects .nebula-card {
+        min-height: 420px;
+      }
+    }
+
+    /* CERT cards equal height in carousel */
+    #certifications .nebula-card {
+      height: 100%;
+      min-height: 180px;
+    }
+
+    /* BLOG cards equal height */
+    #blog .nebula-card {
+      height: 100%;
+    }
   </style>
 </head>
 
@@ -920,6 +955,92 @@
     const EMAILJS_PUBLIC_KEY = 'aJqA2jGL-q0HyC-0H';
 
     const { useEffect, useMemo, useRef, useState } = React;
+
+    const useCarousel = (items, visibleDesktop = 1, visibleMobile = 1) => {
+      const [index, setIndex] = React.useState(0);
+      const visible = typeof window !== 'undefined' && window.innerWidth >= 768
+        ? visibleDesktop : visibleMobile;
+      const max = Math.max(0, items.length - visible);
+      const safe = Math.min(index, max);
+      const prev = () => { playClickSound('soft'); setIndex(i => Math.max(0, i - 1)); };
+      const next = () => { playClickSound('soft'); setIndex(i => Math.min(max, i + 1)); };
+      const goTo = (i) => { playClickSound('soft'); setIndex(i); };
+      React.useEffect(() => { setIndex(0); }, [items.length]);
+      return { index: safe, max, visible, prev, next, goTo };
+    };
+
+    const CarouselShell = ({ items, index, max, visible, prev, next, goTo, 
+      accentColor = '#C77DFF', renderItem, gap = 24, itemMinWidth = 0 }) => {
+      return (
+        <div style={{ position: 'relative', width: '100%' }}>
+
+          {/* NAV ROW */}
+          <div style={{ display: 'flex', alignItems: 'center', 
+            justifyContent: 'flex-end', gap: '10px', marginBottom: '20px' }}>
+            <span style={{ fontSize: '0.7rem', fontFamily: '"Share Tech Mono", monospace',
+              color: 'var(--color-text-muted)', opacity: 0.6 }}>
+              {index + 1} / {items.length}
+            </span>
+            {[{ fn: prev, label: '‹', disabled: index === 0 },
+              { fn: next, label: '›', disabled: index >= max }].map(({ fn, label, disabled }) => (
+              <button key={label} onClick={fn} disabled={disabled}
+                className="btn-liquid"
+                aria-label={label === '‹' ? 'Previous' : 'Next'}
+                style={{
+                  width: '38px', height: '38px', borderRadius: '50%', border: 'none',
+                  background: disabled ? 'rgba(255,255,255,0.04)' : `${accentColor}18`,
+                  color: disabled ? 'var(--color-subtle)' : accentColor,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: disabled ? 'not-allowed' : 'pointer',
+                  fontSize: '1.1rem', transition: 'all 0.2s ease',
+                  opacity: disabled ? 0.3 : 1,
+                  outline: `1px solid ${disabled ? 'rgba(255,255,255,0.06)' : accentColor + '44'}`
+                }}>{label}</button>
+            ))}
+          </div>
+
+          {/* TRACK */}
+          <div style={{ overflow: 'hidden', width: '100%' }}>
+            <div style={{
+              display: 'flex', gap: `${gap}px`,
+              transition: 'transform 0.42s cubic-bezier(0.4,0,0.2,1)',
+              transform: `translateX(calc(-${index} * (100% / ${visible} + ${visible > 1 ? gap/2 : 0}px)))`,
+              willChange: 'transform'
+            }}>
+              {items.map((item, i) => (
+                <div key={i} style={{
+                  flex: `0 0 calc(${100 / visible}% - ${visible > 1 ? gap / 2 : 0}px)`,
+                  minWidth: itemMinWidth ? `${itemMinWidth}px` : 0
+                }}>
+                  {renderItem(item, i)}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* DOTS */}
+          {items.length > 1 && (
+            <div style={{ display: 'flex', justifyContent: 'center', 
+              gap: '8px', marginTop: '20px' }}>
+              {items.map((_, i) => (
+                <button key={i} onClick={() => goTo(i)}
+                  aria-label={`Go to item ${i + 1}`}
+                  style={{
+                    width: i === index ? '20px' : '8px', height: '8px',
+                    borderRadius: '9999px', border: 'none', cursor: 'pointer',
+                    padding: 0,
+                    background: i === index
+                      ? `linear-gradient(90deg, ${accentColor}, #FF4D8C)`
+                      : `${accentColor}30`,
+                    transition: 'all 0.3s ease'
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    };
 
     function playClickSound(type = 'soft') {
       try {
@@ -2091,10 +2212,7 @@
 
     const Projects = () => {
       const [filter, setFilter] = useState("All");
-      const [currentIndex, setCurrentIndex] = useState(0);
-      const carouselRef = React.useRef(null);
       const filters = ["All", "AI/ML", "Web Dev"];
-      React.useEffect(() => { setCurrentIndex(0); }, [filter]);
       const projects = [
         {
           title: "Iris Flower Classification",
@@ -2142,10 +2260,7 @@
       ];
 
       const filteredProjects = filter === "All" ? projects : projects.filter((project) => project.filter === filter);
-      
-      const visibleCount = typeof window !== 'undefined' && window.innerWidth >= 1024 ? 2 : 1;
-      const maxIndex = Math.max(0, filteredProjects.length - visibleCount);
-      const safeIndex = Math.min(currentIndex, maxIndex);
+      const carousel = useCarousel(filteredProjects, 2, 1);
 
       return (
         <section id="projects" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto relative">
@@ -2174,102 +2289,18 @@
                 );
               })}
             </div>
-            <div style={{ position: 'relative' }}>
-
-              {/* Navigation buttons row */}
-              <div style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
-                gap: '10px', marginBottom: '20px'
-              }}>
-                <span style={{
-                  fontSize: '0.72rem', fontFamily: '"Share Tech Mono", monospace',
-                  color: 'var(--color-text-muted)', opacity: 0.7
-                }}>
-                  {safeIndex + 1} / {filteredProjects.length}
-                </span>
-                <button
-                  onClick={() => { playClickSound('soft'); setCurrentIndex(i => Math.max(0, i - 1)); }}
-                  disabled={safeIndex === 0}
-                  className="btn-liquid"
-                  aria-label="Previous project"
-                  style={{
-                    width: '40px', height: '40px', borderRadius: '50%',
-                    border: '1px solid rgba(199,125,255,0.4)',
-                    background: safeIndex === 0 ? 'transparent' : 'rgba(199,125,255,0.08)',
-                    color: safeIndex === 0 ? 'var(--color-subtle)' : '#C77DFF',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    cursor: safeIndex === 0 ? 'not-allowed' : 'pointer',
-                    fontSize: '1rem', transition: 'all 0.2s ease',
-                    opacity: safeIndex === 0 ? 0.35 : 1
-                  }}
-                >‹</button>
-                <button
-                  onClick={() => { playClickSound('soft'); setCurrentIndex(i => Math.min(maxIndex, i + 1)); }}
-                  disabled={safeIndex >= maxIndex}
-                  className="btn-liquid"
-                  aria-label="Next project"
-                  style={{
-                    width: '40px', height: '40px', borderRadius: '50%',
-                    border: '1px solid rgba(199,125,255,0.4)',
-                    background: safeIndex >= maxIndex ? 'transparent' : 'rgba(199,125,255,0.08)',
-                    color: safeIndex >= maxIndex ? 'var(--color-subtle)' : '#C77DFF',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    cursor: safeIndex >= maxIndex ? 'not-allowed' : 'pointer',
-                    fontSize: '1rem', transition: 'all 0.2s ease',
-                    opacity: safeIndex >= maxIndex ? 0.35 : 1
-                  }}
-                >›</button>
-              </div>
-
-              {/* Carousel track */}
-              <div style={{ overflow: 'hidden', width: '100%' }} ref={carouselRef}>
-                <div style={{
-                  display: 'flex',
-                  gap: '32px',
-                  transition: 'transform 0.45s cubic-bezier(0.4, 0, 0.2, 1)',
-                  transform: `translateX(calc(-${safeIndex} * (100% / ${visibleCount} + ${visibleCount > 1 ? '16px' : '0px'})))`,
-                  willChange: 'transform'
-                }}>
-                  {filteredProjects.map((project) => (
-                    <div
-                      key={project.title}
-                      style={{
-                        flex: `0 0 calc(${100 / visibleCount}% - ${visibleCount > 1 ? '16px' : '0px'})`,
-                        minWidth: 0
-                      }}
-                    >
-                      <ProjectCard project={project} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Dot indicators */}
-              <div style={{
-                display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '24px'
-              }}>
-                {filteredProjects.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => { playClickSound('soft'); setCurrentIndex(i); }}
-                    aria-label={`Go to project ${i + 1}`}
-                    style={{
-                      width: i === safeIndex ? '20px' : '8px',
-                      height: '8px',
-                      borderRadius: '9999px',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: 0,
-                      background: i === safeIndex
-                        ? 'linear-gradient(90deg, #C77DFF, #FF4D8C)'
-                        : 'rgba(199,125,255,0.25)',
-                      transition: 'all 0.3s ease'
-                    }}
-                  />
-                ))}
-              </div>
-
-            </div>
+            <CarouselShell
+              items={filteredProjects}
+              index={carousel.index}
+              max={carousel.max}
+              visible={carousel.visible}
+              prev={carousel.prev}
+              next={carousel.next}
+              goTo={carousel.goTo}
+              accentColor="#C77DFF"
+              gap={28}
+              renderItem={(project) => <ProjectCard project={project} />}
+            />
           </FadeInSection>
         </section>
       );
@@ -2578,6 +2609,10 @@
         return () => { document.body.style.overflow = ''; };
       }, [activeCert]);
 
+      useEffect(() => {
+        // Empty - kept for backward compatibility
+      }, []);
+
       const certs = [
         {
           title: "Ask Questions to Make Data-Driven Decisions",
@@ -2608,64 +2643,65 @@
         }
       ];
 
+      const certCarousel = useCarousel(certs, 3, 1);
+
       return (
         <section id="certifications" className="py-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto overflow-hidden">
           <FadeInSection>
             <h2 className="gradient-text-gold-crimson font-heading font-bold text-3xl md:text-4xl text-center mb-2">Certifications</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-              {certs.map((cert) => (
-                <div key={cert.title}
-                  className="nebula-card p-6 relative group"
-                  style={{ borderLeft: `4px solid ${cert.color}` }}
-                >
-                  <div style={{
-                    position: 'absolute', top: '16px', right: '16px',
-                    width: '32px', height: '32px', opacity: 1
-                  }}>
-                    <img
-                      src={cert.logo}
-                      alt={cert.issuer}
-                      width="32" height="32"
-                      style={{ objectFit: 'contain' }}
-                      onError={e => {
-                        e.target.style.display = 'none';
+            <div style={{ marginTop: '40px' }}>
+              <CarouselShell
+                items={certs}
+                index={certCarousel.index}
+                max={certCarousel.max}
+                visible={certCarousel.visible}
+                prev={certCarousel.prev}
+                next={certCarousel.next}
+                goTo={certCarousel.goTo}
+                accentColor="#FFD166"
+                gap={24}
+                renderItem={(cert) => (
+                  <div className="nebula-card p-6 relative group h-full"
+                    style={{ borderLeft: `4px solid ${cert.color}` }}>
+
+                    <div style={{ position: 'absolute', top: '16px', right: '16px',
+                      width: '32px', height: '32px', opacity: 1 }}>
+                      <img src={cert.logo} alt={cert.issuer} width="32" height="32"
+                        style={{ objectFit: 'contain' }}
+                        onError={e => { e.target.style.display = 'none'; }} />
+                    </div>
+
+                    <h3 className="font-heading font-bold text-base mb-1 pr-10"
+                      style={{ color: 'var(--color-text)', lineHeight: '1.3' }}>
+                      {cert.title}
+                    </h3>
+                    <p className="font-body text-xs mb-1"
+                      style={{ color: cert.color, opacity: 0.85 }}>
+                      {cert.issuer} · {cert.platform}
+                    </p>
+                    <p className="font-body text-xs mb-4"
+                      style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>
+                      {cert.date}
+                    </p>
+                    <button
+                      onClick={() => { setActiveCert(cert); playClickSound('soft'); }}
+                      className="btn-liquid"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '6px',
+                        padding: '5px 14px', borderRadius: '9999px',
+                        fontSize: '0.7rem', fontFamily: 'Share Tech Mono, monospace',
+                        border: `1px solid ${cert.color}40`,
+                        color: cert.color, background: 'transparent',
+                        cursor: 'pointer', transition: 'all 0.2s ease'
                       }}
-                    />
+                      onMouseEnter={e => e.currentTarget.style.background = `${cert.color}15`}
+                      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                    >
+                      ✓ View Certificate
+                    </button>
                   </div>
-
-                  <h3 className="font-heading font-bold text-base mb-1 pr-10"
-                    style={{ color: 'var(--color-text)', lineHeight: '1.3' }}>
-                    {cert.title}
-                  </h3>
-
-                  <p className="font-body text-xs mb-1"
-                    style={{ color: cert.color, opacity: 0.85 }}>
-                    {cert.issuer} · {cert.platform}
-                  </p>
-
-                  <p className="font-body text-xs mb-4"
-                    style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>
-                    {cert.date}
-                  </p>
-
-                  <button
-                    onClick={() => { setActiveCert(cert); playClickSound('soft'); }}
-                    className="btn-liquid"
-                    style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '6px',
-                      padding: '5px 14px', borderRadius: '9999px',
-                      fontSize: '0.7rem', fontFamily: 'Share Tech Mono, monospace',
-                      border: `1px solid ${cert.color}40`,
-                      color: cert.color, background: 'transparent',
-                      cursor: 'pointer', transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = `${cert.color}15`}
-                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                  >
-                    ✓ View Certificate
-                  </button>
-                </div>
-              ))}
+                )}
+              />
             </div>
           </FadeInSection>
 
@@ -2744,6 +2780,83 @@
             </div>
           )}
         </section>
+      );
+    };
+
+    const BlogCarousel = ({ posts, isAuthor, expandedPosts, setExpandedPosts, handleDelete }) => {
+      const blogCarousel = useCarousel(posts, 2, 1);
+
+      const renderPost = (post) => {
+        const tagStyle = BLOG_TAG_STYLES[post.tag] || BLOG_TAG_STYLES.Thoughts;
+        return (
+          <div className="nebula-card p-6 flex flex-col h-full relative group"
+            style={{ borderTop: `3px solid ${tagStyle.color}`, minHeight: '280px' }}>
+            <div className="flex items-start justify-between gap-2 mb-3">
+              <h3 className="font-heading font-bold text-base"
+                style={{ color: "var(--color-text)" }}>{post.title}</h3>
+              {isAuthor && (
+                <button
+                  onClick={() => handleDelete(post.id)}
+                  className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 
+                    p-1 rounded hover:bg-[rgba(255,77,140,0.15)] flex-shrink-0"
+                  style={{ color: "#FF4D8C" }}
+                  aria-label="Delete post"
+                >
+                  <IconTrash size={14} />
+                </button>
+              )}
+            </div>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="font-body text-xs px-3 py-1 rounded-full border"
+                style={{ background: tagStyle.bg, color: tagStyle.color, 
+                  borderColor: tagStyle.border }}>{post.tag}</span>
+              <span className="font-body text-xs"
+                style={{ color: "var(--color-subtle)" }}>{post.date}</span>
+            </div>
+            <div
+              className="font-body text-sm leading-relaxed whitespace-pre-line"
+              style={{
+                color: "var(--color-text-muted)",
+                maxHeight: expandedPosts[post.id] ? "2000px" : "4.5rem",
+                overflow: "hidden",
+                transition: "max-height 0.4s ease"
+              }}
+            >
+              {post.body}
+            </div>
+            {post.body.length > 250 && (
+              <button
+                onClick={() => setExpandedPosts(prev => ({ 
+                  ...prev, [post.id]: !prev[post.id] 
+                }))}
+                style={{
+                  background: "none", border: "none", padding: 0,
+                  marginTop: "0.75rem", color: "var(--color-primary)",
+                  fontFamily: '"Share Tech Mono", monospace',
+                  fontSize: "0.75rem", cursor: "pointer",
+                  textDecoration: 'underline', textUnderlineOffset: '3px'
+                }}
+              >
+                {expandedPosts[post.id] ? "show less" : "...read more"}
+              </button>
+            )}
+          </div>
+        );
+      };
+
+      return (
+        <CarouselShell
+          items={posts}
+          index={blogCarousel.index}
+          max={blogCarousel.max}
+          visible={blogCarousel.visible}
+          prev={blogCarousel.prev}
+          next={blogCarousel.next}
+          goTo={blogCarousel.goTo}
+          accentColor="#C77DFF"
+          gap={24}
+          renderItem={renderPost}
+        />
       );
     };
 
@@ -2919,70 +3032,13 @@
               ) : posts.length === 0 ? (
                 <p className="text-center" style={{ color: "var(--color-text-muted)" }}>No posts yet.</p>
               ) : (
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 560px), 1fr))",
-                  gap: "24px",
-                  maxWidth: "760px",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  width: "100%"
-                }}>
-                  {posts.map((post) => {
-                    const tagStyle = BLOG_TAG_STYLES[post.tag] || BLOG_TAG_STYLES.Thoughts;
-                    return (
-                      <div key={post.id} className="nebula-card p-6 flex flex-col h-full relative group" style={{ borderTop: `3px solid ${tagStyle.color}` }}>
-                        <div className="flex items-start justify-between gap-2 mb-3">
-                          <h3 className="font-heading font-bold text-base" style={{ color: "var(--color-text)" }}>{post.title}</h3>
-                          {isAuthor && (
-                            <button
-                              onClick={() => handleDelete(post.id)}
-                              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-1 rounded hover:bg-[rgba(255,77,140,0.15)] flex-shrink-0"
-                              style={{ color: "#FF4D8C" }}
-                              aria-label="Delete post"
-                            >
-                              <IconTrash size={14} />
-                            </button>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-3 mb-4">
-                          <span className="font-body text-xs px-3 py-1 rounded-full border" style={{ background: tagStyle.bg, color: tagStyle.color, borderColor: tagStyle.border }}>{post.tag}</span>
-                          <span className="font-body text-xs" style={{ color: "var(--color-subtle)" }}>{post.date}</span>
-                        </div>
-                        <div
-                          className="font-body text-sm leading-relaxed whitespace-pre-line"
-                          style={{
-                            color: "var(--color-text-muted)",
-                            maxHeight: expandedPosts[post.id] ? "2000px" : "4.5rem",
-                            overflow: "hidden",
-                            transition: "max-height 0.4s ease"
-                          }}
-                        >
-                          {post.body}
-                        </div>
-                        {post.body.length > 250 && (
-                          <button
-                            onClick={() => setExpandedPosts((prev) => ({ ...prev, [post.id]: !prev[post.id] }))}
-                            style={{
-                              background: "none",
-                              border: "none",
-                              padding: 0,
-                              marginTop: "0.75rem",
-                              color: "var(--color-primary)",
-                              fontFamily: '"Share Tech Mono", monospace',
-                              fontSize: "0.75rem",
-                              cursor: "pointer",
-                              textDecoration: 'underline',
-                              textUnderlineOffset: '3px'
-                            }}
-                          >
-                            {expandedPosts[post.id] ? "show less" : "...read more"}
-                          </button>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
+                <BlogCarousel
+                  posts={posts}
+                  isAuthor={isAuthor}
+                  expandedPosts={expandedPosts}
+                  setExpandedPosts={setExpandedPosts}
+                  handleDelete={handleDelete}
+                />
               )}
             </FadeInSection>
           </div>
