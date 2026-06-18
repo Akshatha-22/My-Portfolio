@@ -22,15 +22,7 @@
     rel="stylesheet" />
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script>
-    Babel.registerPreset("portfolio-react", {
-      presets: [
-        ["env", { targets: { browsers: "last 2 versions" } }],
-        ["react", { runtime: "classic" }],
-      ],
-    });
-  </script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.9/babel.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -942,7 +934,7 @@
   </script>
   <script src="three-bg.js"></script>
 
-  <script type="text/babel" data-presets="portfolio-react">
+  <script type="text/babel">
     /*
       EMAILJS SETUP — do this once at emailjs.com (free):
       1. Sign up at https://www.emailjs.com
@@ -1525,8 +1517,8 @@
                 View Projects
               </button>
               <a
-                href="Akshatha_Resume_AI_ML.pdf"
-                download="Akshatha_Dungi_Resume.pdf"
+                href="Akshatha_Dungi_Full-Stack_Developer_Resume.pdf"
+                download="Akshatha_Dungi_Full-Stack_Developer_Resume.pdf"
                 onClick={() => playClickSound('soft')}
                 className="btn-liquid rounded-full border-2 px-8 py-3 font-heading transition-all duration-300 hover:scale-105 glow-violet"
                 style={{
