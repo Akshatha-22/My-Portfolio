@@ -2113,7 +2113,7 @@
       return (
         <div
           ref={cardRef}
-          className="nebula-card p-6 flex flex-col h-full relative overflow-hidden transition-all duration-300"
+          className="nebula-card flex flex-col h-full relative overflow-hidden transition-all duration-300"
           style={{ borderTop: `3px solid #39FF8E` }}
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = "#39FF8E";
@@ -2126,85 +2126,119 @@
             e.currentTarget.style.boxShadow = "";
           }}
         >
-          <div className="pointer-events-none select-none absolute left-1/2 top-1/2 z-0 whitespace-nowrap font-heading font-black" style={{ fontSize: "72px", color: "rgba(199,125,255,0.04)", transform: "translate(-50%, -50%) rotate(-30deg)" }}>PROJECT</div>
-          <h3 className="font-heading font-bold text-lg mb-2 z-10 relative" style={{ color: "var(--color-text)" }}>{project.title}</h3>
-          <p className="font-body text-sm mb-4 z-10 relative leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{project.desc}</p>
+          {project.image && (
+            <div style={{
+              width: '100%',
+              height: '180px',
+              overflow: 'hidden',
+              borderRadius: '12px 12px 0 0',
+              flexShrink: 0,
+              position: 'relative'
+            }}>
+              <img
+                src={project.image}
+                alt={project.title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center top',
+                  display: 'block',
+                  transition: 'transform 0.5s ease',
+                  filter: 'brightness(0.88) saturate(1.1)'
+                }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                onError={e => { e.target.parentElement.style.display = 'none'; }}
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to bottom, transparent 50%, rgba(10,6,24,0.85) 100%)',
+                pointerEvents: 'none'
+              }} />
+            </div>
+          )}
+          <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+            <div className="pointer-events-none select-none absolute left-1/2 top-1/2 z-0 whitespace-nowrap font-heading font-black" style={{ fontSize: "72px", color: "rgba(199,125,255,0.04)", transform: "translate(-50%, -50%) rotate(-30deg)" }}>PROJECT</div>
+            <h3 className="font-heading font-bold text-lg mb-2 z-10 relative" style={{ color: "var(--color-text)" }}>{project.title}</h3>
+            <p className="font-body text-sm mb-4 z-10 relative leading-relaxed" style={{ color: "var(--color-text-muted)" }}>{project.desc}</p>
 
-          <div style={{ marginBottom: '14px' }} className="z-10 relative">
-            {project.results.map((r, i) => (
-              <ResultStat key={i} result={r} started={started} />
-            ))}
-          </div>
+            <div style={{ marginBottom: '14px' }} className="z-10 relative">
+              {project.results.map((r, i) => (
+                <ResultStat key={i} result={r} started={started} />
+              ))}
+            </div>
 
-          <div className="flex flex-wrap gap-2 mb-6 z-10 relative">
-            {project.tags.map((tag) => (
-              <span key={tag} style={{
-                display: 'inline-flex', alignItems: 'center',
-                gap: '5px', background: 'var(--tech-tag-bg)', color: 'var(--tech-tag-text)',
-                border: '1px solid rgba(57,255,142,0.2)', borderRadius: '9999px',
-                fontSize: '0.7rem', padding: '3px 10px', fontFamily: '"Share Tech Mono", monospace'
-              }}>
-                {logoMap[tag] && (
-                  <img
-                    src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${logoMap[tag]}`}
-                    alt=""
-                    width="13" height="13"
-                    style={{ flexShrink: 0 }}
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                    }}
-                  />
-                )}
-                {tag}
-              </span>
-            ))}
-          </div>
+            <div className="flex flex-wrap gap-2 mb-6 z-10 relative">
+              {project.tags.map((tag) => (
+                <span key={tag} style={{
+                  display: 'inline-flex', alignItems: 'center',
+                  gap: '5px', background: 'var(--tech-tag-bg)', color: 'var(--tech-tag-text)',
+                  border: '1px solid rgba(57,255,142,0.2)', borderRadius: '9999px',
+                  fontSize: '0.7rem', padding: '3px 10px', fontFamily: '"Share Tech Mono", monospace'
+                }}>
+                  {logoMap[tag] && (
+                    <img
+                      src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${logoMap[tag]}`}
+                      alt=""
+                      width="13" height="13"
+                      style={{ flexShrink: 0 }}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  )}
+                  {tag}
+                </span>
+              ))}
+            </div>
 
-          <div className="border-t pt-4 mt-auto flex items-center gap-4 z-10 relative" style={{ borderColor: "var(--color-border)" }}>
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => playClickSound('soft')}
-              className="btn-liquid flex-1"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '6px',
-                padding: '8px 16px', borderRadius: '9999px', fontSize: '0.8rem',
-                border: '1px solid rgba(57,255,142,0.35)', color: '#39FF8E'
-              }}
-            >
-              <IconGithub size={16} /> Repository
-            </a>
-            {project.paperButton ? (
+            <div className="border-t pt-4 mt-auto flex items-center gap-4 z-10 relative" style={{ borderColor: "var(--color-border)" }}>
               <a
-                href={project.live}
+                href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => playClickSound('soft')}
-                className="btn-liquid flex-1 flex items-center justify-center gap-2"
+                className="btn-liquid flex-1"
                 style={{
-                  padding: '8px 16px',
-                  borderRadius: '9999px',
-                  fontSize: '0.8rem',
-                  border: '1px solid #c77dff',
-                  color: '#c77dff',
-                  background: 'transparent'
+                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  padding: '8px 16px', borderRadius: '9999px', fontSize: '0.8rem',
+                  border: '1px solid rgba(57,255,142,0.35)', color: '#39FF8E'
                 }}
               >
-                <IconPaper size={17} /> Read Conference Paper
+                <IconGithub size={16} /> Repository
               </a>
-            ) : (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => playClickSound('soft')}
-                className="transition-all duration-300 hover:scale-110 hover:text-[#4FC3F7]"
-                style={{ color: 'var(--color-text-muted)' }}
-              >
-                <IconExternalLink size={20} />
-              </a>
-            )}
+              {project.paperButton ? (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => playClickSound('soft')}
+                  className="btn-liquid flex-1 flex items-center justify-center gap-2"
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: '9999px',
+                    fontSize: '0.8rem',
+                    border: '1px solid #c77dff',
+                    color: '#c77dff',
+                    background: 'transparent'
+                  }}
+                >
+                  <IconPaper size={17} /> Read Conference Paper
+                </a>
+              ) : (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => playClickSound('soft')}
+                  className="transition-all duration-300 hover:scale-110 hover:text-[#4FC3F7]"
+                  style={{ color: 'var(--color-text-muted)' }}
+                >
+                  <IconExternalLink size={20} />
+                </a>
+              )}
+            </div>
           </div>
         </div>
       );
@@ -2215,6 +2249,7 @@
       const filters = ["All", "AI/ML", "Web Dev"];
       const projects = [
         {
+          image: "images/Iris_flower_classification.png",
           title: "Iris Flower Classification",
           filter: "AI/ML",
           desc: "Multi-class flower classification using a Keras neural network trained on the classic Iris dataset. Covers data preprocessing, model architecture design, training, and evaluation with visualised accuracy/loss curves.",
@@ -2228,6 +2263,7 @@
           live: "https://github.com/Akshatha-22/IRIS-dataset-classification"
         },
         {
+          image: "images/ai_confi_project_card.png",
           title: "AI Confidence Calibration Failure Detection",
           filter: "AI/ML",
           desc: "IEEE 2026 published research — First architecture-comparative study on confidence calibration across 5 neural networks (MLP, Deep MLP, Residual MLP, RNN, LSTM) on FinSen financial time-series dataset (160K records).",
@@ -2243,6 +2279,7 @@
           paperButton: true
         },
         {
+          image: "images/remi_project_card.png",
           title: "Remi — AI Chatbot Widget",
           filter: "Web Dev",
           desc: "Production-ready embeddable AI chatbot widget built solo in 1.5 weeks. React + FastAPI with SSE streaming, RAG document intelligence, natural language PDF generation, JWT auth, and full CI/CD. Zero manual deployment steps from commit to production.",
